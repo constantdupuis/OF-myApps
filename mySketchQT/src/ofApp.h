@@ -27,6 +27,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
+        void setupGrid();
+
     private:
 
         shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;

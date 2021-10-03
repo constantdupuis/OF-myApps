@@ -1,10 +1,16 @@
 #include "ofApp.h"
 
+
+void ofApp::setupGrid()
+{
+    valueGrid_.reset();
+    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(6, 6, ofGetHeight() *.8,ofGetHeight()*.8, glm::vec2(.5f, .5f));
+}
+
 //--------------------------------------------------------------
 void ofApp::setup(){
-
-    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(20, 20, ofGetWidth(),ofGetHeight(), glm::vec2(.5f, .5f));
-
+    setupGrid();
+    ofEnableAntiAliasing();
 }
 
 //--------------------------------------------------------------
@@ -17,11 +23,29 @@ void ofApp::draw(){
 
     ofBackground(255);
 
+    ofSetRectMode( OF_RECTMODE_CENTER );
+    ofNoFill();
+    ofSetLineWidth(4);
+
+    ofPushMatrix();
+
+    ofTranslate( (ofGetWidth()  - valueGrid_->width()) /2, (ofGetHeight() - valueGrid_->heigth()) /2 );
+
     for( const shared_ptr<CellWithSizeAndColor> &c : valueGrid_->cells() )
     {
-        ofSetColor(c->color_);
-        ofDrawCircle( c->mapx_, c->mapy_, c->size_ );
+        ofSetColor(0);
+        ofSetLineWidth(ofRandom(2, 8));
+        ofDrawRectangle( c->pointX(), c->pointY(), c->width() * 0.8, c->height() * 0.8 );
+
+        if( ofRandom(1.0) > 0.5){
+            ofSetLineWidth(ofRandom(2, 8));
+            ofDrawRectangle( c->pointX(), c->pointY(), c->width() * 0.6, c->height() * 0.6 );
+        }
+//        ofSetColor(c->color_);
+//        ofDrawCircle( c->pointX(), c->pointY(), c->size_ );
     }
+
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
@@ -67,8 +91,7 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    valueGrid_.reset();
-    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(20, 20, ofGetWidth(),ofGetHeight(), glm::vec2(.5f, .5f));
+    setupGrid();
 }
 
 //--------------------------------------------------------------
