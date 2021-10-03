@@ -32,5 +32,6 @@ class ofApp : public ofBaseApp{
     private:
 
         shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;
+        float animation = 0.0f;
 		
 };
