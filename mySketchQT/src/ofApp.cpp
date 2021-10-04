@@ -54,8 +54,9 @@ void ofApp::fractalBrownianMotion()
 
 void ofApp::circles()
 {
-    ofSetColor(0);
+    ofSetColor(255);
     ofNoFill();
+    ofSetRectMode(OF_RECTMODE_CENTER);
 
     ofPushMatrix();
 
@@ -63,15 +64,17 @@ void ofApp::circles()
 
     for (const auto& c : valueGrid_->cells())
     {
-        ofSetLineWidth(ofRandom(2, 8));
+        //ofSetLineWidth(ofRandom(2, 8));
+        ofSetLineWidth(2);
         ofDrawRectangle(c->pointX(), c->pointY(), c->width() * 0.8, c->height() * 0.8);
 
-       /* if (ofRandom(1.0) > 0.5) {
-            ofSetLineWidth(ofRandom(2, 8));
+        if (ofRandom(1.0) > 0.5) {
+            ofSetLineWidth(6);
             ofDrawRectangle(c->pointX(), c->pointY(), c->width() * 0.6, c->height() * 0.6);
         }
-        ofSetColor(c->color_);
-        ofDrawCircle(c->pointX(), c->pointY(), c->size_);*/
+
+        //ofSetColor(c->color_);
+        //ofDrawCircle(c->pointX(), c->pointY(), c->size_);
     }
     ofPopMatrix();
 }
