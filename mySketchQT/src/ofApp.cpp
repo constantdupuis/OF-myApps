@@ -4,13 +4,16 @@
 void ofApp::setupGrid()
 {
     valueGrid_.reset();
-    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(150, 150, ofGetHeight() *.9,ofGetHeight()*.9, glm::vec2(.5f, .5f));
+    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(10, 10, ofGetHeight() *.9,ofGetHeight()*.9, glm::vec2(.5f, .5f));
 }
+
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
     setupGrid();
     ofEnableAntiAliasing();
+    ofSetVerticalSync(true);
 }
 
 //--------------------------------------------------------------
@@ -20,52 +23,73 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    //fractalBrownianMotion();
+    circles();
+    //perlinNoise();
+}
 
+void ofApp::fractalBrownianMotion()
+{
     ofBackground(128);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    ofPushMatrix();
 
-    ofSetRectMode( OF_RECTMODE_CENTER );
-    //ofNoFill();
-    //ofSetLineWidth(4);
+    ofTranslate((ofGetWidth() - valueGrid_->width()) / 2, (ofGetHeight() - valueGrid_->heigth()) / 2);
+
+    for (const auto& c : valueGrid_->cells())
+    {
+        //auto noiseCol00 = ofNoise(c->pointX()*0.005, c->pointY()*0.005, animation*0.005) / 2.0;
+        auto noiseCol0 = ofNoise(c->pointX() * 0.01, c->pointY() * 0.01, animation * 0.01) / 2.0;
+        auto noiseCol1 = ofNoise(c->pointX() * 0.02, c->pointY() * 0.02, animation * 0.02) / 4.0;
+        auto noiseCol2 = ofNoise(c->pointX() * 0.04, c->pointY() * 0.04, animation * 0.04) / 8.0;
+        auto noiseCol3 = ofNoise(c->pointX() * 0.08, c->pointY() * 0.08, animation * 0.01) / 16.0;
+        //auto noiseCol4 = ofNoise(c->pointX()*0.16, c->pointY()*0.16, animation*0.01) / 32.0;
+        ofSetColor((noiseCol0 + noiseCol1 + noiseCol2 + noiseCol3) * 255);
+
+        ofDrawRectangle(c->pointX(), c->pointY(), c->width(), c->height());
+    }
+
+    ofPopMatrix();
+}
+
+void ofApp::circles()
+{
+    ofSetColor(0);
+    ofNoFill();
 
     ofPushMatrix();
 
-    ofTranslate( (ofGetWidth()-valueGrid_->width())/2, (ofGetHeight()-valueGrid_->heigth())/2 );
+    ofTranslate((ofGetWidth() - valueGrid_->width()) / 2, (ofGetHeight() - valueGrid_->heigth()) / 2);
 
-    for( const shared_ptr<CellWithSizeAndColor> &c : valueGrid_->cells() )
+    for (const auto& c : valueGrid_->cells())
     {
+        ofSetLineWidth(ofRandom(2, 8));
+        ofDrawRectangle(c->pointX(), c->pointY(), c->width() * 0.8, c->height() * 0.8);
 
-//        auto noiseCol0 = ofNoise(c->pointX()*0.04, c->pointY()*0.04, animation * 0.01);
-//        auto noiseCol1 = ofNoise(c->pointX()*0.01, c->pointY()*0.01, animation * 0.01);
-//        auto noiseCol2 = ofNoise(c->pointX()*0.003, c->pointY()*0.003, animation * 0.01);
-//        ofSetColor( noiseCol0 * noiseCol1 * noiseCol2 * 255);
-//        ofDrawRectangle( c->pointX(), c->pointY(), c->width(), c->height());
+       /* if (ofRandom(1.0) > 0.5) {
+            ofSetLineWidth(ofRandom(2, 8));
+            ofDrawRectangle(c->pointX(), c->pointY(), c->width() * 0.6, c->height() * 0.6);
+        }
+        ofSetColor(c->color_);
+        ofDrawCircle(c->pointX(), c->pointY(), c->size_);*/
+    }
+    ofPopMatrix();
+}
 
-//        auto noiseCol0 = ofNoise(c->pointX()*0.01, c->pointY()*0.01, animation*0.01);
-//        auto noiseCol1 = ofNoise(1.0 + c->pointX()*0.01, c->pointY()*0.01, animation*0.01);
-//        auto noiseCol2 = ofNoise(5.0 + c->pointX()*0.01, c->pointY()*0.01, animation*0.01);
-//        ofSetColor( noiseCol0 * 255, noiseCol1 * 255, noiseCol2 * 255);
-//        ofDrawRectangle( c->pointX(), c->pointY(), c->width(), c->height());
+void ofApp::perlinNoise()
+{
+    ofBackground(128);
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    ofPushMatrix();
 
+    ofTranslate((ofGetWidth() - valueGrid_->width()) / 2, (ofGetHeight() - valueGrid_->heigth()) / 2);
 
-        auto noiseCol00 = ofNoise(c->pointX()*0.005, c->pointY()*0.005, animation*0.005) / 2.0;
-        auto noiseCol0 = ofNoise(c->pointX()*0.01, c->pointY()*0.01, animation*0.01) / 4.0;
-        auto noiseCol1 = ofNoise(c->pointX()*0.02, c->pointY()*0.02, animation*0.02) / 8.0;
-        auto noiseCol2 = ofNoise(c->pointX()*0.04, c->pointY()*0.04, animation*0.04) / 16.0;
-        //auto noiseCol3 = ofNoise(c->pointX()*0.08, c->pointY()*0.08, animation*0.01) / 16.0;
-        //auto noiseCol4 = ofNoise(c->pointX()*0.16, c->pointY()*0.16, animation*0.01) / 32.0;
-        ofSetColor( (noiseCol00 + noiseCol0 + noiseCol1 + noiseCol2) * 255);
-        ofDrawRectangle( c->pointX(), c->pointY(), c->width(), c->height());
+    for (const auto& c : valueGrid_->cells())
+    {
+        auto noiseCol00 = ofNoise(c->pointX() * 0.002, c->pointY() * 0.002, animation * 0.05) / 1.0;
+        ofSetColor((noiseCol00) * 255);
 
-//        ofSetColor(0);
-//        ofSetLineWidth(ofRandom(2, 8));
-//        ofDrawRectangle( c->pointX(), c->pointY(), c->width() * 0.8, c->height() * 0.8 );
-
-//        if( ofRandom(1.0) > 0.5){
-//            ofSetLineWidth(ofRandom(2, 8));
-//            ofDrawRectangle( c->pointX(), c->pointY(), c->width() * 0.6, c->height() * 0.6 );
-//        }
-//        ofSetColor(c->color_);
-//        ofDrawCircle( c->pointX(), c->pointY(), c->size_ );
+        ofDrawRectangle(c->pointX(), c->pointY(), c->width(), c->height());
     }
 
     ofPopMatrix();

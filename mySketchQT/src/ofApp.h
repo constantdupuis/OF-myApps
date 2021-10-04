@@ -33,5 +33,11 @@ class ofApp : public ofBaseApp{
 
         shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;
         float animation = 0.0f;
+
+
+		void perlinNoise();
+		void fractalBrownianMotion();
+		void circles();
+
 		
 };
