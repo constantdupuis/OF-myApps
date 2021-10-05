@@ -101,11 +101,6 @@ void ofApp::perlinNoise()
     ofPopMatrix();
 }
 
-void ofApp::perlinNoiseFlow()
-{
-
-}
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     

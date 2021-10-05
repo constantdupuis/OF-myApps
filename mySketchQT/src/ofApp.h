@@ -39,11 +39,7 @@ class ofApp : public ofBaseApp{
 
         float animation = 0.0f;
 
-
 		void perlinNoise();
 		void fractalBrownianMotion();
-		void circles();
-		void perlinNoiseFlow();
-
-		
+        void circles();
 };

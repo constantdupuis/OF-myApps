@@ -12,18 +12,21 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
-            "src/CellWithSizeAndColor.cpp",
-            "src/CellWithSizeAndColor.h",
-            "src/ofxValueGrid.cpp",
-            "src/ofxValueGrid.h",
-            "src/main.cpp",
-            "src/ofApp.cpp",
-            "src/ofApp.h",
+            'src/CellWithSizeAndColor.h',
+            'src/PerlinFlowCellData.h',
+            'src/PerlinNoiseFlowSketch.h',
+            'src/SubSketchBase.h',
+            'src/main.cpp',
+            'src/ofApp.cpp',
+            'src/ofApp.h',
+            'src/ofxColorScale.h',
+            'src/ofxValueGrid.h',
         ]
 
         of.addons: [
             'ofxGui',
             'ofxOsc',
+            'ofxColorGradient',
         ]
 
         // additional flags for the project. the of module sets some
