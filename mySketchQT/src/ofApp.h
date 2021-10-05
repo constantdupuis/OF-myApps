@@ -5,6 +5,8 @@
 */
 
 #include "ofMain.h"
+#include "SubSketchBase.h"
+#include "PerlinNoiseFlowSketch.h"
 #include "ofxValueGrid.h"
 #include "CellWithSizeAndColor.h"
 
@@ -31,13 +33,17 @@ class ofApp : public ofBaseApp{
 
     private:
 
+		unique_ptr<SubSketchBase> subSketch;
+	
         shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;
+
         float animation = 0.0f;
 
 
 		void perlinNoise();
 		void fractalBrownianMotion();
 		void circles();
+		void perlinNoiseFlow();
 
 		
 };

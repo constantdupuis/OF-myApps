@@ -11,7 +11,7 @@ class ofxValueGridCell
                          float left, float top,
                          float width, float height,
                          float point_x, float point_y,
-                         float norm_left, float norm_right,
+                         float norm_left, float norm_top,
                          float norm_width, float norm_height,
                          float norm_point_x, float norm_point_y) {
             col_ = col;
@@ -23,7 +23,7 @@ class ofxValueGridCell
             point_x_ = point_x;
             point_y_ = point_y;
             norm_left_ = norm_left;
-            norm_right = norm_right;
+            norm_top_ = norm_top;
             norm_width_ = norm_width;
             norm_heigth_ = norm_width;
             norm_point_x_ = norm_point_x;
@@ -67,8 +67,9 @@ template<class CellT>
 class ofxValueGrid
 {
 public:
-    ofxValueGrid( int cols, int rows, float width, float height,
-                   glm::vec2 posInCell)
+    ofxValueGrid( int cols, int rows, 
+                  float width, float height,
+                  glm::vec2 posInCell)
     {
         cols_ = cols;
         rows_ = rows;
@@ -82,7 +83,7 @@ public:
         for( int c = 0; c <= cols_; c++)
         {
             for( int r = 0; r <= rows_; r++)
-                cells_.push_back( make_shared<CellT>( // row, col
+                cells_.push_back( make_shared<ofxValueGridCell>( // row, col
                                                       c, r,
                                                       // cell top left
                                                       cellw * c, cellh * r,
@@ -106,7 +107,7 @@ public:
     const float heigth() {return height_;}
     const glm::vec2 posInCell() { return posInCell_;}
 
-    const std::vector<std::shared_ptr<CellT>>& cells() { return cells_;}
+    const std::vector<std::shared_ptr<ofxValueGridCell>>& cells() { return cells_;}
 
 private:
     int cols_;
@@ -114,7 +115,7 @@ private:
     float width_;
     float height_;
     glm::vec2 posInCell_;
-    std::vector<std::shared_ptr<CellT>> cells_;
+    std::vector<std::shared_ptr<ofxValueGridCell>> cells_;
 
 };
 

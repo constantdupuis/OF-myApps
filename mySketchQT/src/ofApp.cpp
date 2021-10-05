@@ -1,30 +1,33 @@
 #include "ofApp.h"
 
-
-void ofApp::setupGrid()
-{
-    valueGrid_.reset();
-    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(10, 10, ofGetHeight() *.9,ofGetHeight()*.9, glm::vec2(.5f, .5f));
-}
-
-
+//void ofApp::setupGrid()
+//{
+//    valueGrid_.reset();
+//    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(10, 10, ofGetHeight() *.9,ofGetHeight()*.9, glm::vec2(.5f, .5f));
+//}
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    setupGrid();
-    ofEnableAntiAliasing();
-    ofSetVerticalSync(true);
+
+    subSketch = make_unique<PerlinNoiseFlowSketch>();
+    subSketch->setup();
+
+    //setupGrid();
+   /* ofEnableAntiAliasing();
+    ofSetVerticalSync(true);*/
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    animation += 1.0;
+    subSketch->update();
+    //animation += 1.0;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    subSketch->draw();
     //fractalBrownianMotion();
-    circles();
+    //circles();
     //perlinNoise();
 }
 
@@ -98,58 +101,67 @@ void ofApp::perlinNoise()
     ofPopMatrix();
 }
 
+void ofApp::perlinNoiseFlow()
+{
+
+}
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    
     if( key == 'f') ofToggleFullscreen();
     if( key == 'q') ofExit();
+
+    subSketch->keyPressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    subSketch->keyReleased(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    subSketch->mouseMoved(x,y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    subSketch->mouseDragged(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    subSketch->mousePressed(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    subSketch->mouseReleased(x, y, button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    subSketch->mouseEntered(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    subSketch->mouseExited(x, y);
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    setupGrid();
+    //setupGrid();
+    subSketch->windowResized(w, h);
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    subSketch->gotMessage(msg);
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+    subSketch->dragEvent(dragInfo);
 }
