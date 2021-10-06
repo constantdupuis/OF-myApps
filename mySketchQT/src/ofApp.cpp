@@ -9,7 +9,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    subSketch = make_unique<PerlinNoiseFlowSketch>();
+    //subSketch = make_unique<PerlinNoiseFlowSketch>();
+    subSketch = make_unique<PerlinFlowFeatherColor>();
     subSketch->setup();
 
     //setupGrid();

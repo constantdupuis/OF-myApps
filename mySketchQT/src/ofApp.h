@@ -7,6 +7,8 @@
 #include "ofMain.h"
 #include "SubSketchBase.h"
 #include "PerlinNoiseFlowSketch.h"
+#include "PerlinFlowFeatherColor.h"
+
 #include "ofxValueGrid.h"
 #include "CellWithSizeAndColor.h"
 
@@ -34,6 +36,9 @@ class ofApp : public ofBaseApp{
     private:
 
 		unique_ptr<SubSketchBase> subSketch;
+
+
+        // Legacy
 	
         shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;
 

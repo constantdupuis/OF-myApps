@@ -12,6 +12,7 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
+            "src/PerlinFlowFeatherColor.h",
             'src/CellWithSizeAndColor.h',
             'src/PerlinFlowCellData.h',
             'src/PerlinNoiseFlowSketch.h',
@@ -27,6 +28,7 @@ Project{
             'ofxGui',
             'ofxOsc',
             'ofxColorGradient',
+            'ofxImGui',
         ]
 
         // additional flags for the project. the of module sets some

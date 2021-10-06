@@ -2,15 +2,22 @@
 
 #include "SubSketchBase.h"
 #include "ofxValueGrid.h"
+#include "PerlinFlowCellData.h"
+#include "ofxColorGradient.h"
 #include "ofxImGui.h"
 
-class PerlinNoiseFlowSketch : public SubSketchBase
+class PerlinFlowFeatherColor : public SubSketchBase
 {
 public:
     ///
     /// \brief setup
     ///
 	void setup() {
+
+        gradiantImage_.load("gradiant01.png");
+        gradiantImageSize_.x = gradiantImage_.getWidth();
+        gradiantImageSize_.y = gradiantImage_.getHeight();
+
         gui.setup();
         setupResize();
 	}
@@ -61,11 +68,15 @@ private:
 
     float size_ = 0.0f;
     float animation_ = 0.0f;
+    //float animationSpeed_= 0.5f;
     ofColor background_ = ofColor(60);
     glm::vec2 topLeft_;
     bool animate_ = false;
     float animationSpeed_ = 0.5f;
     bool showImGuiDemoWin_ = false;
+
+    ofImage gradiantImage_;
+    glm::vec2 gradiantImageSize_;
 
     ofxImGui::Gui gui;
 
@@ -78,7 +89,7 @@ private:
         auto ww = ofGetWidth();
         auto wh = ofGetHeight();
         size_ = ofGetHeight() * 0.7f;
-        topLeft_ = glm::vec2((ww - size_)*.5, (wh - size_) *.5);
+        topLeft_ = glm::vec2((ww- size_)*.5, (wh - size_) *.5);
 
         valueGrid_ = make_shared<ofxValueGrid<ofxValueGridCell>>(55,55,size_,size_, glm::vec2(.5f,.5f));
 
@@ -114,13 +125,16 @@ private:
                     ofScale(2.0 + noiseCol00*10.0);
 
                     ofFill();
-                    ofSetColor(noiseCol00 * 255, 255);
+                    auto cx = (gradiantImageSize_.x * noiseCol00);
+                    ofColor col = gradiantImage_.getColor( cx , gradiantImageSize_.y*.5);
+                    ofSetColor(col);
                     ofDrawEllipse(0, 0, c->width()*2., c->height() * 0.4);
                     //ofDrawRectangle(0, 0, c->width()*2., c->height() * 0.4);
 
-                    ofNoFill();
-                    ofSetColor(255-(noiseCol00 * 255), 255);
-                    ofDrawEllipse(0, 0, c->width()*2., c->height() * 0.4);
+                    //ofNoFill();
+                    //ofSetColor(255-(noiseCol00 * 255), 255);
+                    //ofSetColor(255);
+                    //ofDrawEllipse(0, 0, c->width()*2., c->height() * 0.4);
                     //ofDrawRectangle(0, 0, c->width()*2., c->height() * 0.4);
 
                     ofPopMatrix();
