@@ -215,6 +215,7 @@
     <ClInclude Include="src\BronianMotionGrid.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\CellWithSizeAndColor.h" />
+    <ClInclude Include="src\ofxBasicParticle.h" />
     <ClInclude Include="src\ofxColorScale.h" />
     <ClInclude Include="src\ofxValueGrid.h" />
     <ClInclude Include="src\PerlinFlowCellData.h" />
@@ -257,6 +258,7 @@
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
     <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
+    <ClInclude Include="src\Trainees.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

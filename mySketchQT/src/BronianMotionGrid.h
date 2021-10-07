@@ -4,6 +4,14 @@
 #include "ofxValueGrid.h"
 #include "ofxImGui.h"
 
+/*
+
+Inspirations
+
+https://thebookofshaders.com/13/
+
+*/
+
 class BronianMotionGrid : public SubSketchBase
 {
 public:

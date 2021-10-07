@@ -5,10 +5,13 @@
 */
 
 #include "ofMain.h"
+
 #include "SubSketchBase.h"
+
 #include "PerlinNoiseFlowSketch.h"
 #include "PerlinFlowFeatherColor.h"
 #include "BronianMotionGrid.h"
+#include "Trainees.h"
 
 #include "ofxValueGrid.h"
 #include "CellWithSizeAndColor.h"
@@ -32,20 +35,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-        //void setupGrid();
-
     private:
 
 		unique_ptr<SubSketchBase> subSketch;
-
-
-        // Legacy
-	
-        shared_ptr<ofxValueGrid<CellWithSizeAndColor>> valueGrid_;
-
-        float animation = 0.0f;
-
-		void perlinNoise();
-		void fractalBrownianMotion();
-        void circles();
 };
