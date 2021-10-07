@@ -1,2 +1,4 @@
-ofxImGui
+ofxGui
 ofxOsc
+ofxColorGradient
+ofxImGui

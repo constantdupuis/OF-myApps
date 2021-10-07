@@ -12,22 +12,23 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
-            "src/PerlinFlowFeatherColor.h",
+            'src/BronianMotionGrid.h',
             'src/CellWithSizeAndColor.h',
             'src/PerlinFlowCellData.h',
+            'src/PerlinFlowFeatherColor.h',
             'src/PerlinNoiseFlowSketch.h',
             'src/SubSketchBase.h',
+            'src/Trainees.h',
             'src/main.cpp',
             'src/ofApp.cpp',
             'src/ofApp.h',
+            'src/ofxBasicParticle.h',
             'src/ofxColorScale.h',
             'src/ofxValueGrid.h',
         ]
 
         of.addons: [
-            'ofxGui',
             'ofxOsc',
-            'ofxColorGradient',
             'ofxImGui',
         ]
 

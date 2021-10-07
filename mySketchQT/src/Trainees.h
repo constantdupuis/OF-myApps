@@ -17,8 +17,15 @@ public:
     Goute(float x, float y) : ofxBasicParticle{ x, y }
     {}
 
+    Goute(float x, float y, float size) : ofxBasicParticle{ x, y }
+    {
+        size_ = size;
+    }
+
     void draw()
     {
+        ofSetColor(color_);
+        ofDrawCircle(pos_.x, pos_.y, size_);
     }
 
 private:
@@ -38,10 +45,30 @@ public:
         ofEnableAntiAliasing();
         ofSetVerticalSync(true);
 
+        drawArea_.x = 600;
+        drawArea_.y = 400;
+        setupResize();
 
+        fbo_.reset();
+        fbo_ = make_unique<ofFbo>();
+        fbo_->allocate(drawArea_.x, drawArea_.y, GL_RGBA);
+
+        //fbo_->begin();
+        ofSetBackgroundColor(background_);
+        //fbo_->end();
+
+        goute_count_ = 60;
+
+        float space = drawArea_.x / goute_count_;
+        for( int i = 0; i < goute_count_; i++)
+        {
+            goutes_.push_back( make_shared<Goute>(space * i, space * 0.5f, space * 0.5f) );
+        }
+
+        drawFrame();
 
         gui.setup();
-        setupResize();
+
     }
 
     ///
@@ -59,7 +86,11 @@ public:
     /// \brief draw
     ///
     void draw() {
-        fbo_->draw(0, 0);
+        ofPushMatrix();
+            ofTranslate( topLeft_);
+            fbo_->draw(0, 0);
+        ofPopMatrix();
+
         drawUI();
     }
 
@@ -90,14 +121,8 @@ private:
    ///
     void setupResize()
     {
-
-        float ww = ofGetWidth();
-        float wh = ofGetHeight();
-
-        drawArea_.x = 600;
-        drawArea_.y = 400;
-        topLeft_.x = (ww - drawArea_.x) * .5;
-        topLeft_.y = (wh - drawArea_.y) * .5;
+        topLeft_.x = (ofGetWidth() - drawArea_.x) * .5;
+        topLeft_.y = (ofGetHeight() - drawArea_.y) * .5;
 
     }
 
@@ -107,11 +132,10 @@ private:
     void drawFrame()
     {
         fbo_->begin();
-        
-        ofPushMatrix();
-
-        ofPopMatrix();
-
+        for( const auto& g : goutes_ )
+        {
+            g->draw();
+        }
         fbo_->end();
     }
 
@@ -119,7 +143,7 @@ private:
     {
         gui.begin();
         {
-            ImGui::Text("Trainées");
+            ImGui::Text("TrainÃ©es");
             ImGui::Checkbox("animate", &animate_);
             ImGui::SliderFloat("animation speed", &animationSpeed_, 0.0f, 10.0f);
             ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);
@@ -136,13 +160,13 @@ private:
     float animationSpeed_ = 5.0f;
     bool showImGuiDemoWin_ = false;
 
-    ofColor background_ = ofColor(60);
+    ofColor background_ = ofColor(255);
     glm::vec2 topLeft_;
     glm::vec2 drawArea_;
 
     ofxImGui::Gui gui;
 
-    std::vector<Goute> goutes_;
+    std::vector<shared_ptr<Goute>> goutes_;
     int goute_count_ = 60;
  
 };
