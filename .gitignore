@@ -1,7 +1,12 @@
 build-*
-bin
+
+!**/bin
+**/bin/*
+!**/bin/data
+
 obj
 *.obj
 *.tlog
 *.db
 v16
+
