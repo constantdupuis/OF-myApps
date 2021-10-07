@@ -1,27 +1,17 @@
 #include "ofApp.h"
 
-//void ofApp::setupGrid()
-//{
-//    valueGrid_.reset();
-//    valueGrid_ = make_shared<ofxValueGrid<CellWithSizeAndColor>>(10, 10, ofGetHeight() *.9,ofGetHeight()*.9, glm::vec2(.5f, .5f));
-//}
-
 //--------------------------------------------------------------
 void ofApp::setup(){
 
     //subSketch = make_unique<PerlinNoiseFlowSketch>();
-    subSketch = make_unique<PerlinFlowFeatherColor>();
+    //subSketch = make_unique<PerlinFlowFeatherColor>();
+    subSketch = make_unique<BronianMotionGrid>();
     subSketch->setup();
-
-    //setupGrid();
-   /* ofEnableAntiAliasing();
-    ofSetVerticalSync(true);*/
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     subSketch->update();
-    //animation += 1.0;
 }
 
 //--------------------------------------------------------------

@@ -11,6 +11,8 @@ public:
     /// \brief setup
     ///
 	void setup() {
+        ofEnableAntiAliasing();
+        ofSetVerticalSync(true);
         gui.setup();
         setupResize();
 	}

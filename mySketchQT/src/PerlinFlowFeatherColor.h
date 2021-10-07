@@ -2,8 +2,6 @@
 
 #include "SubSketchBase.h"
 #include "ofxValueGrid.h"
-#include "PerlinFlowCellData.h"
-#include "ofxColorGradient.h"
 #include "ofxImGui.h"
 
 class PerlinFlowFeatherColor : public SubSketchBase
@@ -13,6 +11,9 @@ public:
     /// \brief setup
     ///
 	void setup() {
+
+        ofEnableAntiAliasing();
+        ofSetVerticalSync(true);
 
         gradiantImage_.load("gradiant01.png");
         gradiantImageSize_.x = gradiantImage_.getWidth();
@@ -147,7 +148,7 @@ private:
     {
         gui.begin();
         {
-            ImGui::Text("Perlin Noie Flow");
+            ImGui::Text("Perlin Noise Flow");
             ImGui::Checkbox("animate", &animate_);
             ImGui::SliderFloat("animation speed", &animationSpeed_, 0.0f, 1.0f);
             ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);

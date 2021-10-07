@@ -8,6 +8,7 @@
 #include "SubSketchBase.h"
 #include "PerlinNoiseFlowSketch.h"
 #include "PerlinFlowFeatherColor.h"
+#include "BronianMotionGrid.h"
 
 #include "ofxValueGrid.h"
 #include "CellWithSizeAndColor.h"
@@ -31,7 +32,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-        void setupGrid();
+        //void setupGrid();
 
     private:
 
