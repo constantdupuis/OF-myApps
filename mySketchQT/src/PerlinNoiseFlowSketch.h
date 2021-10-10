@@ -69,6 +69,9 @@ private:
     float animationSpeed_ = 0.5f;
     bool showImGuiDemoWin_ = false;
 
+    float scaleBase_ = 2.0;
+    float scaleMultiplicator_ = 10.0;
+
     ofxImGui::Gui gui;
 
     ///
@@ -113,7 +116,7 @@ private:
 
                     ofTranslate(c->pointX(), c->pointY());
                     ofRotateDeg(noiseCol00*360);
-                    ofScale(2.0 + noiseCol00*10.0);
+                    ofScale(scaleBase_ + noiseCol00 * scaleMultiplicator_);
 
                     ofFill();
                     ofSetColor(noiseCol00 * 255, 255);
@@ -135,10 +138,21 @@ private:
     {
         gui.begin();
         {
-            ImGui::Text("Perlin Noie Flow");
+            ImGui::Text("BLack & White Feather");
+
             ImGui::Checkbox("animate", &animate_);
+
             ImGui::SliderFloat("animation speed", &animationSpeed_, 0.0f, 1.0f);
+
+            ImGui::SliderFloat("scale base", &scaleBase_, 0.0f, 10.0f);
+            ImGui::SliderFloat("scale multiplicator", &scaleMultiplicator_, 1.0f, 50.0f);
+
+            if( ImGui::Button("Quit") ) {
+                ofExit();
+            }
+
             ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);
+
             if( showImGuiDemoWin_) ImGui::ShowDemoWindow(&showImGuiDemoWin_);
         }
         gui.end();

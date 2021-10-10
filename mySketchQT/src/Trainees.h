@@ -24,12 +24,6 @@ public:
     }
 
     float& size() { return size_; }
-    glm::vec2& speed() { return speed_; }
-
-    void update()
-    {
-
-    }
 
     void draw()
     {
@@ -43,9 +37,8 @@ public:
     }
 
 private:
-    ofColor color_ = ofColor(0,100,200, 20);
+    ofColor color_ = ofColor(0,50,100, 20);
     float size_ = 5;
-    glm::vec2 speed_ = glm::vec2( 10.0f, 0.0f);
 };
 
 class Trainees : public SubSketchBase
@@ -59,8 +52,8 @@ public:
         ofEnableAntiAliasing();
         ofSetVerticalSync(true);
 
-        drawArea_.x = 600;
-        drawArea_.y = 400;
+        drawArea_.x = 1000;
+        drawArea_.y = 800;
         setupResize();
 
         fbo_.reset();
@@ -77,7 +70,9 @@ public:
         
         for( int i = 0; i < goute_count_; i++)
         {
-            goutes_.push_back( make_shared<Goute>(space/2 +(space * i), space * 0.5f, space * 0.5f) );
+            auto g = make_shared<Goute>(space/2 +(space * i), space * 0.5f, space * 0.5f);
+            g->velocity().y = 0.1f;
+            goutes_.push_back( g );
         }
 
         drawFrame();
@@ -93,7 +88,7 @@ public:
         if (animate_)
         {
             animation_ += ofGetLastFrameTime() * animationSpeed_;
-            drawFrame();
+
         }
     }
 
@@ -101,6 +96,12 @@ public:
     /// \brief draw
     ///
     void draw() {
+
+        if( animate_)
+        {
+            drawFrame();
+        }
+
         ofPushMatrix();
             ofTranslate( topLeft_);
             fbo_->draw(0, 0);
@@ -140,6 +141,15 @@ private:
         topLeft_.y = (ofGetHeight() - drawArea_.y) * .5;
     }
 
+
+    ///
+    /// \brief updateFrame
+    ///
+    void updateFrame()
+    {
+
+    }
+
     ///
     /// \brief drawPerlinFlow
     ///
@@ -150,18 +160,24 @@ private:
         for( const auto& g : goutes_ )
         {
             auto noise = glm::simplex( glm::vec2( g->x() * perlinResolution, animation_));
-            noise = (noise+1.0) / 2.0;
-            noise /= 10.0;
-            
-            ofSetColor(noise * 255);
+            auto noise01 = (noise+1.0) / 2.0;
+
+            ofSetColor(noise01 * 255);
             
             auto size = g->size() * 2.0;
             ofDrawRectangle( g->x() - size/2 , 0, size, 50  );
 
             ofPushMatrix();
                 ofTranslate(0, 55);
-                g->y() += noise;
+
+                g->velocity().y += noise*0.25f;
+
+                if( g->velocity().y < 0.01f ) g->velocity().y = 0.01f;
+                if( g->velocity().y > 0.5f ) g->velocity().y = 0.5f;
+
+                g->update(ofGetLastFrameTime());
                 g->draw();
+
             ofPopMatrix();
         }
         fbo_->end();
@@ -186,9 +202,10 @@ private:
     float size_ = 0.0f;
     float animation_ = 0.0f;
     bool animate_ = true;
-    float animationSpeed_ = 0.65f;
+    float animationSpeed_ = 0.044f;
+    float perlinResolution = 0.003f;
+
     bool showImGuiDemoWin_ = false;
-    float perlinResolution = 0.001f;
 
     ofColor background_ = ofColor(255);
     glm::vec2 topLeft_;
