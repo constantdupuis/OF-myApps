@@ -278,6 +278,9 @@
     <ClInclude Include="src\ofxBasicParticle.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\DrawingTest.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

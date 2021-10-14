@@ -12,6 +12,7 @@
 #include "PerlinFlowFeatherColor.h"
 #include "BronianMotionGrid.h"
 #include "Trainees.h"
+#include "DrawingTest.h"
 
 #include "ofxValueGrid.h"
 #include "CellWithSizeAndColor.h"
