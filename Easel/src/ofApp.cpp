@@ -5,35 +5,34 @@ void ofApp::setup(){
 
     gui.setup();
 
-    XML.addTag("root");
-    XML.pushTag("root");
-    XML.addValue("test","valeur");
-    XML.popTag();
+//    XML.addTag("root");
+//    XML.pushTag("root");
+//    XML.addValue("test","valeur");
+//    XML.popTag();
 
-    XML.saveFile("test.xml");
+//    XML.saveFile("test.xml");
 
-    canvasViewer_.setCanvas( canvas_ );
-    canvasViewer_.setSize( ofGetWidth(), ofGetHeight() );
-    canvasViewer_.setMargin( 10, 10 );
-    canvasViewer_.fitToView();
-    zoom_ = canvasViewer_.getScale();
+    spCanvas_ = make_shared<ofxCanvas>(800, 800);
+    spPainter_ = make_shared<BronianMotionPainter>();
+    spViewer_ = make_shared<ofxCanvasViewer>(ofGetWidth(), ofGetHeight(), spCanvas_);
 
+    spPainter_->setup( spCanvas_->getCanvasInfos());
 
-    canvas_.begin();
-        ofSetColor(0,200,100);
-        ofDrawRectRounded(0,0, canvas_.widht(), canvas_.height(), 15);
-    canvas_.end();
+    easel_ = make_shared<ofxEasel>( spCanvas_, spPainter_, spViewer_ );
+    easel_->setup();
+
+    zoom_ = easel_->getViewer()->fitToView();
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    easel_->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    canvasViewer_.draw();
+    easel_->draw();
     drawUI();
 }
 
@@ -48,20 +47,21 @@ void ofApp::drawUI()
 
         ImGui::SliderInt("x", &marginx_, 0, 1000);
         ImGui::SliderInt("y", &marginy_, 0, 1000);
-        canvasViewer_.setMargin(marginx_, marginy_);
+        easel_->getViewer()->setMargin(marginx_, marginy_);
+
         if( ImGui::Button("fit to screen"))
         {
-            zoom_ = canvasViewer_.fitToView();
+            zoom_ = easel_->getViewer()->fitToView();
         }
 
         ImGui::NewLine();
 
         ImGui::Text("Scale");
         ImGui::SliderFloat("factor", &zoom_, 0.01f, 10.0);
-        canvasViewer_.setScale(zoom_);
+        easel_->getViewer()->setScale(zoom_);
         if( ImGui::Button("reset scale"))
         {
-            zoom_ = canvasViewer_.resetScale();
+            zoom_ = easel_->getViewer()->resetScale();
         }
 
         ImGui::NewLine();
@@ -79,54 +79,57 @@ void ofApp::drawUI()
 void ofApp::keyPressed(int key){
     if( key == 'f') ofToggleFullscreen();
     if( key == 'q') ofExit();
+
+    easel_->keyPressed(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    easel_->keyReleased(key);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    // need to scale mouse pos, for all othe rmouse related method also !
+    easel_->mouseMoved(x,y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    easel_->mouseDragged(x,y,button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    easel_->mousePressed(x,y,button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    easel_->mouseReleased(x,y,button);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    easel_->mouseEntered(x,y);
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    easel_->mouseExited(x,y);
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    canvasViewer_.setSize(w, h);
+    easel_->windowsResized(w, h);
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    easel_->gotMessage(msg);
 }
 
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+    easel_->dragEvent(dragInfo);
 }

@@ -12,10 +12,6 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
-            "src/celldata.cpp",
-            "src/celldata.h",
-            "src/ofxGridValueCell.cpp",
-            "src/ofxGridValueCell.h",
             "src/main.cpp",
             "src/ofApp.cpp",
             "src/ofApp.h",

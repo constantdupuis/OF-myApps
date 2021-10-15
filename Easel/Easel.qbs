@@ -12,9 +12,15 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
+            "src/BronianMotionPainter.h",
+            "src/TestPainter.h",
+            "src/ofxBasicParticle.h",
+            "src/ofxBronianMotion.h",
             "src/ofxCanvas.h",
+            "src/ofxCanvasPainterBase.h",
             "src/ofxCanvasViewer.h",
             "src/ofxEasel.h",
+            "src/ofxValueGrid.h",
             'src/main.cpp',
             'src/ofApp.cpp',
             'src/ofApp.h',

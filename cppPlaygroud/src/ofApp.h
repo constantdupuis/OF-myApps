@@ -1,8 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-#include "ofxGridValueCell.h"
-#include "celldata.h"
 
 class ofApp : public ofBaseApp{
 
@@ -23,6 +21,18 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    ofxGridValueCells<CellData, 10> cells_;
+    void func01( shared_ptr<float> v)
+    {
+        ofLog() << "func01 count " << v.use_count();
+    }
+
+    void func02( float& )
+    {
+
+    }
+
+private:
+    shared_ptr<float> value_;
+
 
 };

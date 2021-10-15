@@ -9,6 +9,8 @@
 #include "ofxXmlSettings.h"
 
 #include "ofxEasel.h"
+#include "TestPainter.h"
+#include "BronianMotionPainter.h"
 
 class ofApp : public ofBaseApp{
 
@@ -34,13 +36,14 @@ class ofApp : public ofBaseApp{
         ofxImGui::Gui gui;
         bool showImGuiDemoWin_ = false;
 
-        ofxCanvas canvas_ = ofxCanvas();
-        ofxCanvasViewer canvasViewer_;
+        shared_ptr<ofxEasel> easel_;
+        shared_ptr<ofxCanvas> spCanvas_;
+        shared_ptr<ofxCanvasViewer> spViewer_;
+        shared_ptr<ofxCanvasPainterBase> spPainter_;
 
-        bool noscale_ = false;
         int marginx_ = 10;
         int marginy_ = 10;
-        bool usezoom_ = false;
+
         float zoom_ = 1.0;
 
         void drawUI();

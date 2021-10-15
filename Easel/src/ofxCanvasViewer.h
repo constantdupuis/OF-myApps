@@ -2,13 +2,14 @@
 #define OFXCANVASVIEWER_H
 
 #include "ofxCanvas.h"
+#include "ofxCanvasPainterBase.h"
 
 class ofxCanvasViewer {
 public:
 
     ofxCanvasViewer() {}
 
-    ofxCanvasViewer(int width, int height, ofxCanvas& canvas)
+    ofxCanvasViewer(int width, int height, shared_ptr<ofxCanvas> canvas)
     {
         width_ = width;
         height_ = height;
@@ -26,13 +27,13 @@ public:
 
     float fitToView()
     {
-        if( canvas_.widht() > canvas_.height())
+        if( canvas_->getWidth() > canvas_->getHeight())
         {
-            scale_ = (float)(width_ - margin_.x * 2.0) / (float)canvas_.widht();
+            scale_ = (float)(width_ - margin_.x * 2.0) / (float)canvas_->getWidth();
         }
         else
         {
-            scale_ = (float)(height_ - margin_.y * 2.0) / (float)canvas_.height();
+            scale_ = (float)(height_ - margin_.y * 2.0) / (float)canvas_->getHeight();
         }
         calculate();
         return scale_;
@@ -70,13 +71,14 @@ public:
         ofPushMatrix();
           ofTranslate( topLeft_ );
           ofScale( scale_ );
-          canvas_.fbo().draw( 0.0f, 0.0f );
+          canvas_->draw( 0.0f, 0.0f );
         ofPopMatrix();
     }
 
-    void setCanvas( ofxCanvas& canvas)
+    void setCanvas( shared_ptr<ofxCanvas> canvas)
     {
         canvas_ = canvas;
+        fitToView();
     }
 
 private:
@@ -84,14 +86,14 @@ private:
     int height_;
     glm::vec2 topLeft_;
     glm::vec2 margin_ = glm::vec2(10.0f, 10.0f);
-    float scale_;
+    float scale_ = 1.0f;
 
-    ofxCanvas canvas_;
+    shared_ptr<ofxCanvas> canvas_;
 
     void calculate()
     {
-        topLeft_.x = (width_-(canvas_.widht()*scale_))/2.0f;
-        topLeft_.y = (height_-(canvas_.height()*scale_))/2.0f;
+        topLeft_.x = (width_-(canvas_->getWidth()*scale_))/2.0f;
+        topLeft_.y = (height_-(canvas_->getHeight()*scale_))/2.0f;
     }
 };
 

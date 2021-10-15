@@ -2,7 +2,11 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    cells_.init(10, CellData());
+
+    value_ = make_shared<float>(10.0);
+    ofLog() << "ptr counter " << value_.use_count();
+    func01( value_ );
+    ofLog() << "ptr counter " << value_.use_count();
 }
 
 //--------------------------------------------------------------
