@@ -37,7 +37,7 @@ public:
     void setCanvasSize(int width, int height)
     {
         canvas_->reallocate(width, height);
-        painter_->setup(canvas_->getCanvasInfos());
+        painter_->canvasChanged(canvas_->getCanvasInfos());
         viewer_->fitToView();
     }
 
@@ -53,13 +53,13 @@ public:
 
     void update()
     {
-        painter_->update(canvas_->getCanvasInfos());
+        painter_->update();
     }
 
     void draw()
     {
         canvas_->begin();
-        painter_->draw(canvas_->getCanvasInfos());
+        painter_->draw();
         canvas_->end();
         viewer_->draw();
     }
@@ -106,7 +106,7 @@ public:
         viewer_->setSize(w, h);
         view_width_ = w;
         view_height_ = h;
-        painter_->windowResized(w,h);
+
     }
 
     void gotMessage(ofMessage msg){
@@ -121,8 +121,8 @@ public:
     {
         if(ImGui::CollapsingHeader("Canvas", ImGuiTreeNodeFlags_DefaultOpen))
         {
-            ImGui::SliderInt("width", &canvas_width_, 100, 1000);
-            ImGui::SliderInt("height", &canvas_height_, 100, 1000);
+            ImGui::InputInt("canvas width", &canvas_width_);
+            ImGui::InputInt("canvas height", &canvas_height_);
             if( ImGui::Button("apply"))
             {
                 setCanvasSize(canvas_width_, canvas_height_);
@@ -131,9 +131,12 @@ public:
 
         if (ImGui::CollapsingHeader("View", ImGuiTreeNodeFlags_DefaultOpen ))
         {
-            ImGui::SliderInt("width", &view_width_, 0, 10000);
-            ImGui::SliderInt("height", &view_height_, 0, 10000);
-
+            ImGui::SliderInt("view width", &view_width_, 50, ofGetWidth());
+            ImGui::SliderInt("view height", &view_height_, 50, ofGetHeight());
+            if( ImGui::Button("apply"))
+            {
+                setViewSize(view_width_, view_height_);
+            }
             ImGui::SliderInt("horizontal margin", &margin_x_, 0, 1000);
             ImGui::SliderInt("vertical magrin", &margin_y_, 0, 1000);
 
@@ -151,6 +154,11 @@ public:
             }
 
             zoom_ = getViewer()->setScale(zoom_);
+        }
+
+        if (ImGui::CollapsingHeader("Painter", ImGuiTreeNodeFlags_DefaultOpen ))
+        {
+            painter_->drawImGui();
         }
 
 

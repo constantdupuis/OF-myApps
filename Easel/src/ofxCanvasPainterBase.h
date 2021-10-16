@@ -11,9 +11,11 @@ class ofxCanvasPainterBase
 public:
     ofxCanvasPainterBase(){}
 
-    virtual void setup( const ofxCanvasInfos& cNfo ){}
-    virtual void update( const ofxCanvasInfos& cNfo ){}
-    virtual void draw( const ofxCanvasInfos& cNfo ){}
+    virtual void setup( const ofxCanvasInfos& cNfo ){ canvasInfos_ = cNfo; }
+    virtual void update(){}
+    virtual void draw(){}
+
+    virtual void drawImGui(){}
 
     virtual void keyPressed(int key){}
     virtual void keyReleased(int key){}
@@ -23,12 +25,12 @@ public:
     virtual void mouseReleased(int x, int y, int button){}
     virtual void mouseEntered(int x, int y){}
     virtual void mouseExited(int x, int y){}
-    virtual void windowResized(int w, int h){}
+    virtual void canvasChanged(const ofxCanvasInfos& cNfo){ canvasInfos_ = cNfo; }
     virtual void gotMessage(ofMessage msg){}
     virtual void dragEvent(ofDragInfo dragInfo){}
 
-private:
-
+protected:
+    ofxCanvasInfos canvasInfos_;
 };
 
 #endif // OFXCANVASPAINTERBASE_H

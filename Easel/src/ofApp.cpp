@@ -43,15 +43,17 @@ void ofApp::drawUI()
 {
     gui.begin();
     {
-        if( !ImGui::Begin("Easel", &b_ui))
+        if( ImGui::Begin("Easel", &b_ui))
         {
-            ImGui::End();
-            return;
-        }
-        easel_->drawImGui();
+            easel_->drawImGui();
 
-        ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);
-        if (showImGuiDemoWin_) ImGui::ShowDemoWindow(&showImGuiDemoWin_);
+            if (ImGui::CollapsingHeader("ImGui", ImGuiTreeNodeFlags_DefaultOpen ))
+            {
+                ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);
+                if (showImGuiDemoWin_) ImGui::ShowDemoWindow(&showImGuiDemoWin_);
+            }
+        }
+
         ImGui::End();
     }
     gui.end();

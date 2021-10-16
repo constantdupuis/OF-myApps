@@ -9,20 +9,20 @@ class TestPainter : public ofxCanvasPainterBase
 public:
     void setup( const ofxCanvasInfos& cNfo ) override
     {
-
+        canvasInfos_ = cNfo;
     }
 
-    void update( const ofxCanvasInfos& cNfo ) override
+    void update() override
     {
         animation_ += 1.0f * ofGetLastFrameTime();
     }
 
-    void draw( const ofxCanvasInfos& cNfo ) override
+    void draw() override
     {
         auto v = glm::sin( animation_ );
         v = (v+1.0f)*.5f;
         ofSetColor(255*v);
-        ofDrawRectangle(0,0,cNfo.width,cNfo.height);
+        ofDrawRectangle(0,0,canvasInfos_.width,canvasInfos_.height);
     }
 private:
     float animation_ = 0.0f;
