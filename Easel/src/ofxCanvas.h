@@ -36,6 +36,15 @@ public:
         localAllocate(width, height, internalFormat);
     }
 
+    void reallocate(int width, int height)
+    {
+        if( isAllocated() )
+        {
+            clear();
+        }
+        localAllocate(width, height, GL_RGBA);
+    }
+
     const ofxCanvasInfos& getCanvasInfos() { return canvasInfos_; }
 
 private:

@@ -12,13 +12,15 @@ void ofApp::setup(){
 
 //    XML.saveFile("test.xml");
 
-    spCanvas_ = make_shared<ofxCanvas>(800, 800);
+    //spCanvas_ = make_shared<ofxCanvas>(800, 800);
     spPainter_ = make_shared<BronianMotionPainter>();
-    spViewer_ = make_shared<ofxCanvasViewer>(ofGetWidth(), ofGetHeight(), spCanvas_);
+    //spViewer_ = make_shared<ofxCanvasViewer>(ofGetWidth(), ofGetHeight(), spCanvas_);
 
-    spPainter_->setup( spCanvas_->getCanvasInfos());
+    //spPainter_->setup( spCanvas_->getCanvasInfos());
 
-    easel_ = make_shared<ofxEasel>( spCanvas_, spPainter_, spViewer_ );
+    //easel_ = make_shared<ofxEasel>( spCanvas_, spPainter_, spViewer_ );
+
+    easel_ = make_shared<ofxEasel>( 800, 800, ofGetWidth(), ofGetHeight() , spPainter_);
     easel_->setup();
 
     zoom_ = easel_->getViewer()->fitToView();
@@ -41,36 +43,16 @@ void ofApp::drawUI()
 {
     gui.begin();
     {
-
-        ImGui::Text("View");
-        ImGui::Separator();
-
-        ImGui::SliderInt("x", &marginx_, 0, 1000);
-        ImGui::SliderInt("y", &marginy_, 0, 1000);
-        easel_->getViewer()->setMargin(marginx_, marginy_);
-
-        if( ImGui::Button("fit to screen"))
+        if( !ImGui::Begin("Easel", &b_ui))
         {
-            zoom_ = easel_->getViewer()->fitToView();
+            ImGui::End();
+            return;
         }
-
-        ImGui::NewLine();
-
-        ImGui::Text("Scale");
-        ImGui::SliderFloat("factor", &zoom_, 0.01f, 10.0);
-        easel_->getViewer()->setScale(zoom_);
-        if( ImGui::Button("reset scale"))
-        {
-            zoom_ = easel_->getViewer()->resetScale();
-        }
-
-        ImGui::NewLine();
-
-        ImGui::Text("Autre");
-        ImGui::Separator();
+        easel_->drawImGui();
 
         ImGui::Checkbox("ImGui Demo Window", &showImGuiDemoWin_);
         if (showImGuiDemoWin_) ImGui::ShowDemoWindow(&showImGuiDemoWin_);
+        ImGui::End();
     }
     gui.end();
 }

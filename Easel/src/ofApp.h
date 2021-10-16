@@ -46,6 +46,8 @@ class ofApp : public ofBaseApp{
 
         float zoom_ = 1.0;
 
+        bool b_ui = true;
+
         void drawUI();
 		
 };

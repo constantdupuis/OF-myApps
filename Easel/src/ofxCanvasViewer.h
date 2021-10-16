@@ -81,6 +81,9 @@ public:
         fitToView();
     }
 
+    int getWidth() { return width_;}
+    int getHeight() { return height_;}
+
 private:
     int width_;
     int height_;
