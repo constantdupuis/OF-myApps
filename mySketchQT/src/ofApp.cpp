@@ -4,10 +4,10 @@
 void ofApp::setup(){
 
     //subSketch = make_unique<PerlinNoiseFlowSketch>();
-    //subSketch = make_unique<PerlinFlowFeatherColor>();
+    subSketch = make_unique<PerlinFlowFeatherColor>();
     //subSketch = make_unique<BronianMotionGrid>();
     //subSketch = make_unique<Trainees>();
-    subSketch = make_unique<DrawingTest>();
+    //subSketch = make_unique<DrawingTest>();
     subSketch->setup();
 }
 
@@ -67,7 +67,6 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    //setupGrid();
     subSketch->windowResized(w, h);
 }
 

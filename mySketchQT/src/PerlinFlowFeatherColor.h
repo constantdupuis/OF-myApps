@@ -78,6 +78,7 @@ private:
 
     float scaleBase_ = 2.0;
     float scaleMultiplicator_ = 10.0;
+    float rotationFactor_ = 0.5f;
 
     ofImage gradiantImage_;
     glm::vec2 gradiantImageSize_;
@@ -125,7 +126,7 @@ private:
                 ofPushMatrix();
 
                     ofTranslate(c->pointX(), c->pointY());
-                    ofRotateDeg(noiseCol00*360);
+                    ofRotateDeg(noiseCol00*360*rotationFactor_);
                     ofScale(scaleBase_ + noiseCol00 * scaleMultiplicator_);
 
                     ofFill();
@@ -157,6 +158,7 @@ private:
 
             ImGui::SliderFloat("scale base", &scaleBase_, 0.0f, 10.0f);
             ImGui::SliderFloat("scale multiplicator", &scaleMultiplicator_, 1.0f, 50.0f);
+            ImGui::SliderFloat("rotation factor", &rotationFactor_, 0.0f, 1.0f);
 
             if( ImGui::Button("Quit") ) {
                 ofExit();
