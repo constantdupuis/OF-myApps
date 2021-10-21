@@ -26,6 +26,7 @@ Project{
             "src/ofxBasicParticle.h",
             "src/ofxColorScale.h",
             "src/ofxValueGrid.h",
+            "src/painters/NoiseFlowWormPainter.h",
         ]
 
         of.addons: [
