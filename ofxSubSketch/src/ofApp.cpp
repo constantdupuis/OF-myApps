@@ -5,6 +5,7 @@
 #include "BronianMotionGrid.h"
 #include "Trainees.h"
 #include "DrawingTest.h"
+#include "painters/NoiseFlowWormPainter.h"
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -13,7 +14,8 @@ void ofApp::setup(){
     //subSketch = make_unique<PerlinFlowFeather>();
     //subSketch = make_unique<BronianMotionGrid>();
     //subSketch = make_unique<Trainees>();
-    subSketch = make_unique<DrawingTest>();
+    //subSketch = make_unique<DrawingTest>();
+    subSketch = make_unique<NoiseFlowWormPainter>();
 
     subSketch->setup();
 }

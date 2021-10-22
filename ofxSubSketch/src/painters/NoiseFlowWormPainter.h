@@ -44,7 +44,7 @@ public:
 
     void setViewSize(int view_width, int view_height) {
         view_size_.x = view_width;
-        view_size_.x = view_height;
+        view_size_.y = view_height;
         calculate();
     }
 
@@ -99,17 +99,35 @@ class NoiseFlowWormPainter : public SubSketchBase
 public:
     void setup()
     {
+        gui_.setup();
+
         ofEnableAntiAliasing();
         ofSetVerticalSync(true);
-        ofSetBackgroundAuto(false);
+        ofSetBackgroundAuto(true);
+
+        int w = ofGetWidth() * 0.85;
+        int h = ofGetHeight() * 0.85;
 
         easel_.setViewSize(ofGetWidth(), ofGetHeight());
-        easel_.setCanvasSize(ofGetHeight() * 0.75, ofGetHeight() * 0.75);
+        easel_.setCanvasSize(w, h);
+
+        for( int i = 0; i < 50; i++)
+        {
+            particles_.push_back( make_shared<ofxBasicParticle>(
+                w * .5 + ofRandomf() * 400, h * .5 + ofRandomf() * 400,ofRandomf(), ofRandomf() ));
+        }
+
     }
 
     void update()
     {
-
+        for( auto& p : particles_)
+        {
+            float rotation = ofNoise( p->pos() * 0.005);
+            //p->velocity() = glm::rotate( glm::vec2(0.2,0.1), rotation * 360);
+            p->velocity() = glm::rotate( p->velocity(), rotation * 360);
+            p->update(ofGetLastFrameTime());
+        }
     }
 
     void draw()
@@ -117,27 +135,43 @@ public:
         // draw on the canvas (ofFbo)
         easel_.begin();
             // draw on canvas here
+            //ofBackground(255);
+            ofSetColor(ofColor().limeGreen, 128);
+            ofFill();
+            for( auto& p : particles_)
+            {
+                ofDrawCircle(p->pos(), 1 );
+            }
         easel_.end();
 
-        // draw the canvas (ofFbo)
+        // draw the canvas (ofFbo), centered by default
         easel_.drawCanvas();
+
+        // draw UI
+        drawGui();
     }
 
     void windowResized(int w, int h) {
         easel_.setViewSize(w,h);
+        easel_.setCanvasSize(w * 0.85, h * 0.85);
     }
 
 private:
     Easel easel_;
-    ofxImGui::Gui gui;
+    ofxImGui::Gui gui_;
 
-    glm::vec2 canvas_size_;
-    glm::vec2 canvas_top_left_;
+    std::vector<shared_ptr<ofxBasicParticle>> particles_;
 
     void localSetup()
     {
         easel_.setViewSize(ofGetWidth(), ofGetHeight());
-        easel_.setCanvasSize(ofGetHeight() * 0.75, ofGetHeight() * 0.75);
+        easel_.setCanvasSize(ofGetHeight() * 0.85, ofGetHeight() * 0.85);
+    }
+
+    void drawGui()
+    {
+        gui_.begin();
+        gui_.end();
     }
 };
 

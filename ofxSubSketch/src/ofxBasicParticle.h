@@ -11,7 +11,10 @@ public:
     }
 
     ofxBasicParticle(float x, float y) {
-        pos_ = glm::vec2(x, y);
+        pos_.x = x;
+        pos_.y = y;
+        velocity_ = glm::vec2(0.0f, 0.0f);
+        acceleration_ = glm::vec2(0.0f, 0.0f);
     }
 
     ofxBasicParticle(glm::vec2 pos) {
@@ -21,8 +24,10 @@ public:
     }
 
     ofxBasicParticle(float x, float y, float velocity_x, float velocity_y) {
-        pos_ = glm::vec2(x, y);
-        velocity_ = glm::vec2(velocity_x, velocity_y);
+        pos_.x = x;
+        pos_.y = y;
+        velocity_.x = velocity_x;
+        velocity_.y = velocity_y;
         acceleration_ = glm::vec2(0.0f, 0.0f);
     }
 
@@ -32,10 +37,13 @@ public:
         acceleration_ = glm::vec2(0.0f, 0.0f);
     }
 
-    ofxBasicParticle(float x, float y, float velocity_x_, float velocity_y_, float acceleration_x, float acceleration_y) {
-        pos_ = glm::vec2(x, y);
-        velocity_ = glm::vec2(velocity_x_, velocity_y_);
-        acceleration_ = glm::vec2(acceleration_x, acceleration_y);
+    ofxBasicParticle(float x, float y, float velocity_x, float velocity_y, float acceleration_x, float acceleration_y) {
+        pos_.x = x;
+        pos_.y = y;
+        velocity_.x = velocity_x;
+        velocity_.y = velocity_y;
+        acceleration_.x = acceleration_x;
+        acceleration_.y = acceleration_y;
     }
 
     ofxBasicParticle(glm::vec2 pos, glm::vec2 velocity, glm::vec2 acceleration) {
@@ -57,8 +65,8 @@ public:
     }
 
     glm::vec2& pos() { return pos_; }
-    float& x() { return pos_.x; }
-    float& y() { return pos_.y; }
+    float x() { return pos_.x; }
+    float y() { return pos_.y; }
 
     glm::vec2& velocity() {return velocity_;}
     glm::vec2& acceleration() { return acceleration_;}
