@@ -124,7 +124,7 @@ public:
     }
 
     void windowResized(int w, int h) {
-        localSetup();
+        easel_.setViewSize(w,h);
     }
 
 private:
