@@ -12,25 +12,27 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
-            "src/BronianMotionGrid.h",
-            "src/CellWithSizeAndColor.h",
-            "src/DrawingTest.h",
-            "src/PerlinFlowCellData.h",
-            "src/PerlinFlowFeather.h",
-            "src/PerlinNoiseFlowSketch.h",
-            "src/SubSketchBase.h",
-            "src/Trainees.h",
-            "src/main.cpp",
-            "src/ofApp.cpp",
-            "src/ofApp.h",
-            "src/ofxBasicParticle.h",
-            "src/ofxColorScale.h",
-            "src/ofxValueGrid.h",
+            'src/BronianMotionGrid.h',
+            'src/CellWithSizeAndColor.h',
+            'src/DrawingTest.h',
+            'src/PerlinFlowCellData.h',
+            'src/PerlinFlowFeather.h',
+            'src/PerlinNoiseFlowSketch.h',
+            'src/SubSketchBase.h',
+            'src/Trainees.h',
+            'src/main.cpp',
+            'src/ofApp.cpp',
+            'src/ofApp.h',
+            'src/ofxBasicParticle.h',
+            'src/ofxColorScale.h',
+            'src/ofxValueGrid.h',
         ]
 
         of.addons: [
             'ofxOsc',
             'ofxImGui',
+            'ofxColorGradient',
+            'ofxGui',
         ]
 
         // additional flags for the project. the of module sets some

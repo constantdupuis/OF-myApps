@@ -6,6 +6,8 @@
 class DrawingTest : public SubSketchBase
 {
 public:
+    DrawingTest() {}
+
     void setup() {
         gui.setup();
         ofEnableAntiAliasing();

@@ -1,4 +1,4 @@
-ofxGui
-ofxOsc
 ofxColorGradient
+ofxGui
 ofxImGui
+ofxOsc
