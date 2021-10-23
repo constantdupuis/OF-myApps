@@ -108,7 +108,7 @@ public:
         ofEnableAntiAliasing();
         ofSetVerticalSync(true);
         ofSetBackgroundAuto(true);
-        ofBackground(233, 203, 133);
+        ofBackground(background_);
 
         int w = ofGetWidth() * 0.85;
         int h = ofGetHeight() * 0.85;
@@ -126,6 +126,7 @@ public:
 
     void update()
     {
+        if( !drawing_) return;
         for( auto& p : particles_)
         {
             if( !easel_.getCanvasRect().inside(p->pos()))
@@ -144,26 +145,29 @@ public:
             p->velocity().x = glm::cos(rotation);
             p->velocity().y = glm::sin(rotation);
 
-            p->update(ofGetLastFrameTime());
+            p->update();
         }
     }
 
     void draw()
     {
-        // draw on the canvas (ofFbo)
-        easel_.begin();
-            // draw on canvas here
-            //ofBackground(255);
-            ofSetColor(ofColor().black, 150);
-            ofFill();
-            for( auto& p : particles_)
-            {
-                ofDrawCircle(p->pos(), 0.5 );
-            }
-        easel_.end();
-
+        if( drawing_)
+        {
+            // draw on the canvas (ofFbo)
+            easel_.begin();
+                // draw on canvas here
+                //ofBackground(255);
+                ofSetColor(ofColor().black, 150);
+                ofFill();
+                for( auto& p : particles_)
+                {
+                    ofDrawCircle(p->pos(), 0.5 );
+                }
+            easel_.end();
+        }
         // draw the canvas (ofFbo), centered by default
         easel_.drawCanvas();
+
 
         // draw UI
         drawGui();
@@ -184,7 +188,8 @@ private:
     Easel easel_;
     ofxImGui::Gui gui_;
     glm::vec2 noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
-
+    bool drawing_ = false;
+    ofColor background_ = ofColor(233, 203, 133);
     std::vector<shared_ptr<ofxBasicParticle>> particles_;
 
     void localSetup()
@@ -196,6 +201,32 @@ private:
     void drawGui()
     {
         gui_.begin();
+            ImGui::Begin("PNoise FField");
+
+            if( !drawing_)
+            {
+                if( ImGui::Button("Start drawing") )
+                    drawing_ = true;
+            }
+            else{
+                if( ImGui::Button("Stop drawing"))
+                    drawing_ = false;
+            }
+
+            if( ImGui::Button("Save"))
+            {
+
+            }
+
+            ImGui::SameLine();
+            if( ImGui::Button("Clear"))
+            {
+                easel_.begin();
+                ofBackground(background_);
+                easel_.end();
+            }
+
+            ImGui::End();
         gui_.end();
     }
 };

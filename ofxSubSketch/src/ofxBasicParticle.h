@@ -82,6 +82,7 @@ public:
 
     void setLife(int start_life) {
         life_ = start_life_ = start_life;
+        if( life_ > 0) dead_ = false;
     }
     int life() { return life_;}
     bool isDead() { return dead_;}
@@ -100,10 +101,12 @@ protected:
     int life_ = std::numeric_limits<int>::max();
     int start_life_ = std::numeric_limits<int>::max();
     bool dead_ = false;
+    float normalized_life_ = 1.0;
 
     void updateLife()
     {
        life_--;
        if( life_ == 0) dead_ = true;
+       normalized_life_ = (float)life_/(float)start_life_;
     }
 };
