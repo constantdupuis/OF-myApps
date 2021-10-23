@@ -101,6 +101,10 @@ private:
     }
 };
 
+
+
+
+
 class NoiseFlowWormPainter : public SubSketchBase
 {
 public:
@@ -119,7 +123,7 @@ public:
         ofEnableAntiAliasing();
         //ofSetVerticalSync(true);
         ofSetBackgroundAuto(true);
-        ofBackground(ofColor().black);
+        ofBackground(ofColor().white);
 
         int w = ofGetWidth() * 0.85;
         int h = ofGetHeight() * 0.85;
@@ -172,21 +176,23 @@ public:
         {
             // draw on the canvas (ofFbo)
             easel_.begin();
+                glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
                 // draw on canvas here
-                ofSetColor(ofColor().red, 150);
+                //ofSetColor(139, 91, 8, 255);
+                ofSetColor(ofColor().black, 10);
                 //ofFill();
                 for( auto& p : particles_)
                 {
-                    ofDrawCircle(p->pos(), 0.5 );
+                    ofDrawCircle(p->pos(), 1.0 );
                 }
 
             easel_.end();
-            ofClearAlpha();
         }
         // draw the canvas (ofFbo), centered by default
+        //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         easel_.drawCanvas();
 
-
+        ofEnableAlphaBlending();
         // draw UI
         drawGui();
     }
@@ -199,7 +205,12 @@ public:
             p->pos() = glm::vec2(easel_.getCanvasWidth() * ofRandomuf(), easel_.getCanvasHeight() * ofRandomuf());
             p->velocity() = glm::vec2(0.0,0.0);
         }
-        noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
+
+        easel_.begin();
+        ofSetColor(background_);
+        ofFill();
+        ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
+        easel_.end();
     }
 
 private:
@@ -234,18 +245,7 @@ private:
             if( ImGui::Button("Save"))
             {
                 string fn = GenDateFileName();
-
-                ofFbo background_fbo_;
-                background_fbo_.allocate( easel_.getCanvasWidth(), easel_.getCanvasHeight(), GL_RGBA);
-                background_fbo_.begin();
-                    ofSetColor(background_);
-                    //ofBackground(background_);
-                    ofFill();
-                    ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
-                    easel_.fbo().draw(0,0);
-                background_fbo_.end();
-
-                SaveFbo( background_fbo_, "render/" + fn + ".png");
+                SaveFbo( easel_.fbo(), "render/" + fn + ".png");
             }
 
             ImGui::SameLine();
@@ -256,6 +256,8 @@ private:
                 ofFill();
                 ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
                 easel_.end();
+
+                noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
             }
 
             ImGui::End();
