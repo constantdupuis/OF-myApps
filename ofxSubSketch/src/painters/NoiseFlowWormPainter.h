@@ -6,6 +6,7 @@
 #include "ofxValueGrid.h"
 #include "ofxBasicParticle.h"
 #include "glm/gtx/rotate_vector.hpp"
+#include "../lib/helpers.h"
 
 
 class Easel {
@@ -74,6 +75,8 @@ public:
     }
     void drawCanvas(int x, int y) {fbo_.draw(x,y);}
 
+    const ofFbo& fbo() { return fbo_;}
+
 private:
     glm::vec2 canvas_pos_;
     glm::vec2 view_size_ {1000,1000};
@@ -103,12 +106,20 @@ class NoiseFlowWormPainter : public SubSketchBase
 public:
     void setup()
     {
+        ofSetEscapeQuitsApp(false);
+
+        // ofLog will write in a log file, it will be created in data folder
+        ofSetLogLevel(OF_LOG_VERBOSE);
+        ofLogToFile("app.log");
+
+        ofSetWindowTitle("Perlin Noise Force Field");
+
         gui_.setup();
 
         ofEnableAntiAliasing();
-        ofSetVerticalSync(true);
+        //ofSetVerticalSync(true);
         ofSetBackgroundAuto(true);
-        ofBackground(background_);
+        ofBackground(ofColor().black);
 
         int w = ofGetWidth() * 0.85;
         int h = ofGetHeight() * 0.85;
@@ -121,6 +132,12 @@ public:
             particles_.push_back( make_shared<ofxBasicParticle>(
                 w * ofRandomuf(), h * ofRandomuf(), 0.0f, 0.0f ));
         }
+
+        easel_.begin();
+        ofSetColor(background_);
+        ofFill();
+        ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
+        easel_.end();
 
     }
 
@@ -156,14 +173,15 @@ public:
             // draw on the canvas (ofFbo)
             easel_.begin();
                 // draw on canvas here
-                //ofBackground(255);
-                ofSetColor(ofColor().black, 150);
-                ofFill();
+                ofSetColor(ofColor().red, 150);
+                //ofFill();
                 for( auto& p : particles_)
                 {
                     ofDrawCircle(p->pos(), 0.5 );
                 }
+
             easel_.end();
+            ofClearAlpha();
         }
         // draw the canvas (ofFbo), centered by default
         easel_.drawCanvas();
@@ -189,7 +207,7 @@ private:
     ofxImGui::Gui gui_;
     glm::vec2 noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
     bool drawing_ = false;
-    ofColor background_ = ofColor(233, 203, 133);
+    ofColor background_ = ofColor(233, 203, 133, 255);
     std::vector<shared_ptr<ofxBasicParticle>> particles_;
 
     void localSetup()
@@ -215,14 +233,28 @@ private:
 
             if( ImGui::Button("Save"))
             {
+                string fn = GenDateFileName();
 
+                ofFbo background_fbo_;
+                background_fbo_.allocate( easel_.getCanvasWidth(), easel_.getCanvasHeight(), GL_RGBA);
+                background_fbo_.begin();
+                    ofSetColor(background_);
+                    //ofBackground(background_);
+                    ofFill();
+                    ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
+                    easel_.fbo().draw(0,0);
+                background_fbo_.end();
+
+                SaveFbo( background_fbo_, "render/" + fn + ".png");
             }
 
             ImGui::SameLine();
             if( ImGui::Button("Clear"))
             {
                 easel_.begin();
-                ofBackground(background_);
+                ofSetColor(background_);
+                ofFill();
+                ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
                 easel_.end();
             }
 

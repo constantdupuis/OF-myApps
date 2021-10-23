@@ -20,6 +20,7 @@ Project{
             "src/PerlinNoiseFlowSketch.h",
             "src/SubSketchBase.h",
             "src/Trainees.h",
+            "src/lib/helpers.h",
             "src/main.cpp",
             "src/ofApp.cpp",
             "src/ofApp.h",
