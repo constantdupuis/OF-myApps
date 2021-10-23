@@ -37,6 +37,8 @@ public:
     const glm::vec2& getCanvasSize() { return canvas_size_;}
     const glm::vec2& getCanvasPos() { return canvas_pos_;}
 
+    const ofRectangle& getCanvasRect() { return canvas_rect_;}
+
     void setViewSize(glm::vec2 view_size) {
         view_size_ = view_size;
         calculate();
@@ -57,6 +59,7 @@ public:
     void setCanvasSize(int canvas_width, int canvas_height) {
         canvas_size_.x = canvas_width;
         canvas_size_.y = canvas_height;
+        canvas_rect_.setSize(canvas_width, canvas_height);
         allocateFbo();
         calculate();
     }
@@ -75,6 +78,7 @@ private:
     glm::vec2 canvas_pos_;
     glm::vec2 view_size_ {1000,1000};
     glm::vec2 canvas_size_ {400,400};
+    ofRectangle canvas_rect_ = ofRectangle(0.0,0.0, 400,400);
     ofFbo fbo_;
 
     void calculate()
@@ -104,6 +108,7 @@ public:
         ofEnableAntiAliasing();
         ofSetVerticalSync(true);
         ofSetBackgroundAuto(true);
+        ofBackground(233, 203, 133);
 
         int w = ofGetWidth() * 0.85;
         int h = ofGetHeight() * 0.85;
@@ -111,10 +116,10 @@ public:
         easel_.setViewSize(ofGetWidth(), ofGetHeight());
         easel_.setCanvasSize(w, h);
 
-        for( int i = 0; i < 50; i++)
+        for( int i = 0; i < 5000; i++)
         {
             particles_.push_back( make_shared<ofxBasicParticle>(
-                w * .5 + ofRandomf() * 400, h * .5 + ofRandomf() * 400,ofRandomf(), ofRandomf() ));
+                w * ofRandomuf(), h * ofRandomuf(), 0.0f, 0.0f ));
         }
 
     }
@@ -123,9 +128,22 @@ public:
     {
         for( auto& p : particles_)
         {
-            float rotation = ofNoise( p->pos() * 0.005);
+            if( !easel_.getCanvasRect().inside(p->pos()))
+            {
+                p->pos() = glm::vec2(easel_.getCanvasWidth() * ofRandomuf(), easel_.getCanvasHeight() * ofRandomuf());
+                p->velocity() = glm::vec2(0.0,0.0);
+            }
+
+            float rotation = ofNoise( (p->pos() + noise_shift_) * 0.001);
+
             //p->velocity() = glm::rotate( glm::vec2(0.2,0.1), rotation * 360);
-            p->velocity() = glm::rotate( p->velocity(), rotation * 360);
+
+            //p->velocity() = glm::rotate( p->velocity(), rotation * 360);
+
+            rotation *= glm::two_pi<float>();
+            p->velocity().x = glm::cos(rotation);
+            p->velocity().y = glm::sin(rotation);
+
             p->update(ofGetLastFrameTime());
         }
     }
@@ -136,11 +154,11 @@ public:
         easel_.begin();
             // draw on canvas here
             //ofBackground(255);
-            ofSetColor(ofColor().limeGreen, 128);
+            ofSetColor(ofColor().black, 150);
             ofFill();
             for( auto& p : particles_)
             {
-                ofDrawCircle(p->pos(), 1 );
+                ofDrawCircle(p->pos(), 0.5 );
             }
         easel_.end();
 
@@ -154,11 +172,18 @@ public:
     void windowResized(int w, int h) {
         easel_.setViewSize(w,h);
         easel_.setCanvasSize(w * 0.85, h * 0.85);
+        for( auto& p : particles_)
+        {
+            p->pos() = glm::vec2(easel_.getCanvasWidth() * ofRandomuf(), easel_.getCanvasHeight() * ofRandomuf());
+            p->velocity() = glm::vec2(0.0,0.0);
+        }
+        noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
     }
 
 private:
     Easel easel_;
     ofxImGui::Gui gui_;
+    glm::vec2 noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
 
     std::vector<shared_ptr<ofxBasicParticle>> particles_;
 
