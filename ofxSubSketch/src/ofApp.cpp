@@ -9,7 +9,6 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
     //subSketch = make_unique<PerlinNoiseFlowSketch>();
     //subSketch = make_unique<PerlinFlowFeather>();
     //subSketch = make_unique<BronianMotionGrid>();

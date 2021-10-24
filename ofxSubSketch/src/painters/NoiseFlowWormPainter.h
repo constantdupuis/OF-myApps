@@ -108,6 +108,11 @@ private:
 class NoiseFlowWormPainter : public SubSketchBase
 {
 public:
+    NoiseFlowWormPainter()
+    {
+        resetRandomSeed();
+    }
+
     void setup()
     {
         ofSetEscapeQuitsApp(false);
@@ -123,7 +128,11 @@ public:
         ofEnableAntiAliasing();
         //ofSetVerticalSync(true);
         ofSetBackgroundAuto(true);
-        ofBackground(ofColor().white);
+        ofBackground(60);
+
+        backgroundf_[0] = (float)background_.r/(float)255;
+        backgroundf_[1] = (float)background_.g/(float)255;
+        backgroundf_[2] = (float)background_.b/(float)255;
 
         int w = ofGetWidth() * 0.85;
         int h = ofGetHeight() * 0.85;
@@ -179,7 +188,7 @@ public:
                 glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
                 // draw on canvas here
                 //ofSetColor(139, 91, 8, 255);
-                ofSetColor(ofColor().black, 10);
+                ofSetColor(draw_color_);
                 //ofFill();
                 for( auto& p : particles_)
                 {
@@ -200,11 +209,6 @@ public:
     void windowResized(int w, int h) {
         easel_.setViewSize(w,h);
         easel_.setCanvasSize(w * 0.85, h * 0.85);
-        for( auto& p : particles_)
-        {
-            p->pos() = glm::vec2(easel_.getCanvasWidth() * ofRandomuf(), easel_.getCanvasHeight() * ofRandomuf());
-            p->velocity() = glm::vec2(0.0,0.0);
-        }
 
         easel_.begin();
         ofSetColor(background_);
@@ -216,9 +220,11 @@ public:
 private:
     Easel easel_;
     ofxImGui::Gui gui_;
-    glm::vec2 noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
+    glm::vec2 noise_shift_;
     bool drawing_ = false;
-    ofColor background_ = ofColor(233, 203, 133, 255);
+    float backgroundf_[3] = {0.5f, 0.5f, 0.5f};
+    ofColor background_ = ofColor(233, 203, 133);
+    ofColor draw_color_ = ofColor( ofColor().black, 10);
     std::vector<shared_ptr<ofxBasicParticle>> particles_;
 
     void localSetup()
@@ -231,37 +237,56 @@ private:
     {
         gui_.begin();
             ImGui::Begin("PNoise FField");
-
-            if( !drawing_)
+            if(ImGui::CollapsingHeader("Canvas", ImGuiTreeNodeFlags_DefaultOpen))
             {
-                if( ImGui::Button("Start drawing") )
-                    drawing_ = true;
-            }
-            else{
-                if( ImGui::Button("Stop drawing"))
-                    drawing_ = false;
+                ImGui::ColorEdit3(" background", backgroundf_);
+                background_.r = backgroundf_[0] * 255;
+                background_.g = backgroundf_[1] * 255;
+                background_.b = backgroundf_[2] * 255;
+                if( ImGui::Button("Clear"))
+                {
+                    easel_.begin();
+                    ofSetColor(background_);
+                    ofFill();
+                    ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
+                    easel_.end();
+
+                    for( auto& p : particles_)
+                    {
+                        p->pos() = glm::vec2(easel_.getCanvasWidth() * ofRandomuf(), easel_.getCanvasHeight() * ofRandomuf());
+                        p->velocity() = glm::vec2(0.0,0.0);
+                    }
+
+                    resetRandomSeed();
+                }
+
+                if( ImGui::Button("Save"))
+                {
+                    string fn = GenDateFileName();
+                    SaveFbo( easel_.fbo(), "render/" + fn + ".png");
+                }
             }
 
-            if( ImGui::Button("Save"))
+            if(ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen))
             {
-                string fn = GenDateFileName();
-                SaveFbo( easel_.fbo(), "render/" + fn + ".png");
-            }
-
-            ImGui::SameLine();
-            if( ImGui::Button("Clear"))
-            {
-                easel_.begin();
-                ofSetColor(background_);
-                ofFill();
-                ofDrawRectangle(0,0, easel_.getCanvasWidth(), easel_.getCanvasHeight());
-                easel_.end();
-
-                noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
+                if( !drawing_)
+                {
+                    if( ImGui::Button("Start drawing") )
+                        drawing_ = true;
+                }
+                else{
+                    if( ImGui::Button("Stop drawing"))
+                        drawing_ = false;
+                }
             }
 
             ImGui::End();
         gui_.end();
+    }
+
+    void resetRandomSeed()
+    {
+        noise_shift_ = glm::vec2( ofRandomuf() * 1000, ofRandomuf() * 1000);
     }
 };
 
