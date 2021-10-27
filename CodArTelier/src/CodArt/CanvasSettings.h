@@ -3,7 +3,7 @@
 
 #include "ofMain.h"
 
-namespace CorArtelier
+namespace CodArTelier
 {
     enum class CanvasSizeMode {Raw, PaperFormat, ViewPercentage};
 

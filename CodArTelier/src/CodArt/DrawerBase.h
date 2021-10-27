@@ -1,14 +1,15 @@
-#ifndef DRAWER_H
-#define DRAWER_H
+#ifndef DRAWERBASE_H
+#define DRAWERBASE_H
 
 #include "ofMain.h"
 
-namespace CorArtelier
+namespace CodArTelier
 {
-    class BrawerBase{
+    class DrawerBase{
     public:
-        BrawerBase() {
-
+        DrawerBase() {
+            name_ = "_to_define_";
+            description_ = "_to_define_";
         }
 
         virtual void update(){}
@@ -26,10 +27,14 @@ namespace CorArtelier
         }
 
         bool isDrawing() { return is_drawing_;}
+        string name() { return name_;}
 
+    protected:
+        string name_;
+        string description_;
     private:
         bool is_drawing_ = true;
     };
 }
 
-#endif // DRAWER_H
+#endif // DRAWERBASE_H

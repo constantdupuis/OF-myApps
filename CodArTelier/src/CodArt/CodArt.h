@@ -3,8 +3,9 @@
 
 #include "ofMain.h"
 #include "Canvas.h"
+#include "DrawerBase.h"
 
-namespace CorArtelier
+namespace CodArTelier
 {
     class CodArt{
     public:
@@ -13,6 +14,7 @@ namespace CorArtelier
 
     private:
         shared_ptr<Canvas> canvas_;
+        shared_ptr<DrawerBase> rawer_;
     };
 }
 

@@ -5,6 +5,12 @@
 */
 
 #include "ofMain.h"
+#include "ofxImGui.h"
+#include "CodArt/CodArt.h"
+#include "CodArt/DrawerBase.h"
+#include "CodArt/Drawers/Noise.h"
+
+using namespace CodArTelier;
 
 class ofApp : public ofBaseApp{
 
@@ -24,5 +30,14 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+   private:
+        bool show_ui_ = true;
+        ofxImGui::Gui gui;
+        bool show_imgui_demo_ = false;
+
+        std::vector<shared_ptr<DrawerBase>> drawers_;
+
+        void UIDrawMenu();
+        void setupApp();
+
 };

@@ -4,7 +4,7 @@
 #include "ofMain.h"
 #include "CanvasSettings.h"
 
-namespace CorArtelier
+namespace CodArTelier
 {
     class Canvas : public ofFbo
     {

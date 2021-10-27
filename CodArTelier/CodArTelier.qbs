@@ -15,10 +15,11 @@ Project{
             "src/CodArt/Canvas.h",
             "src/CodArt/CanvasSettings.h",
             "src/CodArt/CodArt.h",
-            "src/CodArt/Drawer.h",
-            'src/main.cpp',
-            'src/ofApp.cpp',
-            'src/ofApp.h',
+            "src/CodArt/DrawerBase.h",
+            "src/CodArt/Drawers/Noise.h",
+            "src/main.cpp",
+            "src/ofApp.cpp",
+            "src/ofApp.h",
         ]
 
         of.addons: [
