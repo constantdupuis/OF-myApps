@@ -20,8 +20,8 @@ namespace CodArTelier
                 int resolution {300};
             };
             struct view_percentage{
-                float width {100.0f};
-                float height {100.0f};
+                float width {90.0f};
+                float height {90.0f};
             };
         };
     };

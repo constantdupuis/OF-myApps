@@ -21,25 +21,21 @@ void ofApp::draw(){
 
         UIDrawMenu();
 
+        ShowNewDialog();
+
         gui.end();
     }
 }
 
 void ofApp::UIDrawMenu()
 {
+    bool show_new_codart = false;
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("File"))
     {
-        if (ImGui::BeginMenu("New ...", "")) {
-            for (auto& d : drawers_)
-            {
-                if (ImGui::MenuItem(d->Name().c_str()))
-                {
-                    // TODO : ask if any already openned CodArt want to saved parameters
-                    newCodArt( d->Build() );
-                }
-            }
-            ImGui::EndMenu();
+        if( ImGui::MenuItem("New ...", "CTRL+N"))
+        {
+            show_new_codart = true;
         }
 
         if (ImGui::MenuItem("Open ...", "")) {
@@ -68,20 +64,6 @@ void ofApp::UIDrawMenu()
 
         ImGui::EndMenu();
     }
-
-    /*if (ImGui::BeginMenu("Info"))
-    {
-        if(ImGui::BeginMenu("Drawer list"))
-        {
-            for( auto& d: drawers_)
-            {
-                ImGui::MenuItem(d->Name().c_str());
-            }
-            ImGui::EndMenu();
-        }
-        ImGui::EndMenu();
-    }*/
-
     if (ImGui::BeginMenu("Help"))
     {
         if (ImGui::MenuItem("ImGui demo", "")) {
@@ -92,26 +74,39 @@ void ofApp::UIDrawMenu()
 
     ImGui::EndMainMenuBar();
 
+    if( show_new_codart ) ImGui::OpenPopup("New CodArt");
     if( show_imgui_demo_ ) ImGui::ShowDemoWindow( &show_imgui_demo_ );
 }
 
 void ofApp::setupApp()
 {
     // push drawers in list for later selection
-    drawers_.push_back( make_shared<CodArTelier::Drawer::NoiseInfoFactory>() );
+    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::NoiseInfoFactory>();
+    drawers_.push_back( d );
+    drawers_names_.push_back( d->Name());
 }
 
-void ofApp::newCodArt( shared_ptr<DrawerBase> drawBase )
+void ofApp::ShowNewDialog()
 {
-    if (activeCodArt_)
+    if (ImGui::BeginPopupModal("New CodArt", NULL))
     {
-        activeCodArt_->Stop();
-        activeCodArt_->Release();
-        activeCodArt_.reset();
-    }
+        int selected_drawer = 0;
+        if( ofxImGui::VectorCombo(" Drawer", &selected_drawer, drawers_names_))
+        {
+            ofLog() << "Selected Drawer id [" << selected_drawer << "]";
+        }
+        if (ImGui::Button("Create"))
+        {
+            auto drawer_info = drawers_[selected_drawer];
+            ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::SameLine();
+        if (ImGui::Button("Close"))
+            ImGui::CloseCurrentPopup();
 
-    activeCodArt_ = make_shared<CodArt>();
-    activeCodArt_->SetDrawer(drawBase);
+        ImGui::EndPopup();
+    }
 }
 
 //--------------------------------------------------------------
