@@ -35,9 +35,12 @@ class ofApp : public ofBaseApp{
         ofxImGui::Gui gui;
         bool show_imgui_demo_ = false;
 
-        std::vector<shared_ptr<DrawerBase>> drawers_;
+        std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
+
+		std::shared_ptr<CodArt> activeCodArt_;
 
         void UIDrawMenu();
         void setupApp();
+		void newCodArt(shared_ptr<DrawerBase> drawBase);
 
 };

@@ -11,11 +11,25 @@ namespace CodArTelier
         {
         public:
             Noise() {
-                name_ = "Noise Simple";
-                description_ = "Simple CODART pour jouer avec le Perlin Noise";
             }
         private:
         };
+
+        class NoiseInfoFactory : public DrawerInfoAndFactoryBase
+        {
+        public:
+            NoiseInfoFactory(){
+                name_ = "Simple Perlin Noise";
+                description_ = "Simple démo du Perlin Noiser avec la possibilité d'ajouter des harmoniques (Factal Bronian Motion).";
+            }
+
+            shared_ptr<DrawerBase> Build(){
+                return make_shared<Noise>();
+            }
+
+        };
+
+        
     }
 }
 

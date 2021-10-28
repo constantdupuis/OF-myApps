@@ -12,9 +12,25 @@ namespace CodArTelier
         CodArt() {
         }
 
+        void Stop()
+        {
+        }
+
+        void Release()
+        {
+        }
+
+        void SetDrawer(shared_ptr<DrawerBase> drawer)
+        {
+            drawer_ = drawer;
+        }
+
+
+        void keyPressed(int key) { if (drawer_) drawer_->keyPressed(key); }
+
     private:
-        shared_ptr<Canvas> canvas_;
-        shared_ptr<DrawerBase> rawer_;
+        Canvas canvas_;
+        shared_ptr<DrawerBase> drawer_;
     };
 }
 
