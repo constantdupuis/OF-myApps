@@ -31,6 +31,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
    private:
+	    std::vector<std::string> paper_formats_ {"A0","A1","A2","A3","A4","A5","A6","A7","A8"};
         bool show_ui_ = true;
         ofxImGui::Gui gui;
         bool show_imgui_demo_ = false;

@@ -90,11 +90,46 @@ void ofApp::ShowNewDialog()
 {
     if (ImGui::BeginPopupModal("New CodArt", NULL))
     {
-        int selected_drawer = 0;
+        static int selected_drawer = 0;
+        static int selected_canvas_size_mode = 0;
+        static int selected_paper_size = 0;
+        static int orientation = 0;
+
+        int canvas_width = 400;
+        int canvas_heigth = 400;
+        int canvas_resolution = 300;
+
         if( ofxImGui::VectorCombo(" Drawer", &selected_drawer, drawers_names_))
         {
             ofLog() << "Selected Drawer id [" << selected_drawer << "]";
         }
+        ImGui::Spacing();
+        if ( ImGui::Combo(" Canvas Size Mode", &selected_canvas_size_mode, "Raw\0Paper Format\0View Percent"))
+        {
+            ofLog() << "Selected Canvas Size Mode [" << selected_canvas_size_mode << "]";
+        }
+        ImGui::Spacing();
+        ImGui::Text("Canvas Size");
+        switch (selected_canvas_size_mode)
+        {
+        case 0:
+            ImGui::InputInt(" Width", &canvas_width);
+            ImGui::InputInt(" Height", &canvas_heigth);
+            break;
+        case 1:
+            ofxImGui::VectorCombo(" Paper Format", &selected_paper_size, paper_formats_);
+            ImGui::InputInt(" dpi", &canvas_resolution);
+            ImGui::RadioButton(" Portrait", &orientation, 0); ImGui::SameLine();
+            ImGui::RadioButton(" Landscape", &orientation, 1);
+            break;
+        case 2:
+            break;
+        }
+
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
         if (ImGui::Button("Create"))
         {
             auto drawer_info = drawers_[selected_drawer];
