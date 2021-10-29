@@ -22,6 +22,8 @@ namespace CodArTelier
             struct view_percentage{
                 float width {90.0f};
                 float height {90.0f};
+                bool square_canvas = false;
+                bool resize_when_view_change = false;
             };
         };
     };

@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetWindowTitle("CodarTelier");
+    ofSetEscapeQuitsApp(false );
     setupApp();
     gui.setup();
 }
@@ -95,9 +96,14 @@ void ofApp::ShowNewDialog()
         static int selected_paper_size = 0;
         static int orientation = 0;
 
-        int canvas_width = 400;
-        int canvas_heigth = 400;
-        int canvas_resolution = 300;
+        static int canvas_width = 400;
+        static int canvas_heigth = 400;
+        static int canvas_resolution = 300;
+
+        static int view_percent_width = 85;
+        static int view_percent_heigth = 85;
+        static bool square_canvas = false;
+        static bool resize_canvas_when_view_change = false;
 
         if( ofxImGui::VectorCombo(" Drawer", &selected_drawer, drawers_names_))
         {
@@ -123,6 +129,17 @@ void ofApp::ShowNewDialog()
             ImGui::RadioButton(" Landscape", &orientation, 1);
             break;
         case 2:
+            ImGui::Checkbox(" square canvas", &square_canvas);
+            if (square_canvas)
+            {
+                ImGui::InputInt(" Height percentage", &view_percent_heigth);
+            }
+            else
+            {
+                ImGui::InputInt(" Width percentage", &view_percent_width);
+                ImGui::InputInt(" Height percentage", &view_percent_heigth);
+            }
+            ImGui::Checkbox(" resize canvas when view change", &resize_canvas_when_view_change);
             break;
         }
 
