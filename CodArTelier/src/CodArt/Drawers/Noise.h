@@ -12,6 +12,9 @@ namespace CodArTelier
         public:
             Noise() {
             }
+            void Draw() {
+
+            }
         private:
         };
 

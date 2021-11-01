@@ -11,18 +11,18 @@ namespace CodArTelier
 
         }
 
-        virtual void update() {}
-        virtual void draw() {}
-        virtual void reset() {}
+        virtual void Update() {}
+        virtual void Draw() {}
+        virtual void Reset() {}
 
         virtual void keyPressed(int key) {}
 
-        void start()
+        void Start()
         {
             is_drawing_ = true;
         }
 
-        void stop()
+        void Stop()
         {
             is_drawing_ = true;
         }
@@ -48,6 +48,7 @@ namespace CodArTelier
     protected:
         string name_;
         string description_;
+        ofRectangle canvas_rect_;
     private:
     
     };

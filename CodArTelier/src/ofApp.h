@@ -46,4 +46,6 @@ class ofApp : public ofBaseApp{
         void setupApp();
         void ShowNewDialog();
 
+        void CreateCodArt( shared_ptr<CanvasSettings> settings, shared_ptr<DrawerInfoAndFactoryBase> drawer_nfo_factory);
+
 };

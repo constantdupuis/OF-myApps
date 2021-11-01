@@ -9,20 +9,18 @@ namespace CodArTelier
     class Canvas : public ofFbo
     {
     public:
-        Canvas() {
-
+        // create raw sized canvas
+        Canvas(int width, int height) {
+            allocate(width, height, GL_RGBA);
         }
 
-        void allocate()
+        ~Canvas()
         {
-
+         ofFbo::~ofFbo();
         }
-
-        CanvasSettings& settings()
-        { return settings_;}
 
     private:
-        CanvasSettings settings_;
+
     };
 }
 

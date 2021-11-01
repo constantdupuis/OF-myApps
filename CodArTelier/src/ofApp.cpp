@@ -10,11 +10,15 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    if( activeCodArt_)
+        activeCodArt_->Update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+
+    if( activeCodArt_)
+        activeCodArt_->Draw();
 
     if( show_ui_)
     {
@@ -92,7 +96,7 @@ void ofApp::ShowNewDialog()
     if (ImGui::BeginPopupModal("New CodArt", NULL))
     {
         static int selected_drawer = 0;
-        static int selected_canvas_size_mode = 0;
+        static int selected_canvas_size_mode = 2;
         static int selected_paper_size = 0;
         static int orientation = 0;
 
@@ -102,31 +106,31 @@ void ofApp::ShowNewDialog()
 
         static int view_percent_width = 85;
         static int view_percent_heigth = 85;
-        static bool square_canvas = false;
-        static bool resize_canvas_when_view_change = false;
+        static bool square_canvas = true;
+        static bool resize_canvas_when_view_change = true;
 
-        if( ofxImGui::VectorCombo(" Drawer", &selected_drawer, drawers_names_))
+        if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawers_names_))
         {
-            ofLog() << "Selected Drawer id [" << selected_drawer << "]";
+            ofLog() << "Selected drawer id [" << selected_drawer << "]";
         }
         ImGui::Spacing();
-        if ( ImGui::Combo(" Canvas Size Mode", &selected_canvas_size_mode, "Raw\0Paper Format\0View Percent"))
+        if ( ImGui::Combo(" canvas size mode", &selected_canvas_size_mode, "Raw\0Paper Format\0View Percentage\0"))
         {
             ofLog() << "Selected Canvas Size Mode [" << selected_canvas_size_mode << "]";
         }
         ImGui::Spacing();
-        ImGui::Text("Canvas Size");
+        ImGui::Text("canvas size");
         switch (selected_canvas_size_mode)
         {
         case 0:
-            ImGui::InputInt(" Width", &canvas_width);
-            ImGui::InputInt(" Height", &canvas_heigth);
+            ImGui::InputInt(" width", &canvas_width);
+            ImGui::InputInt(" height", &canvas_heigth);
             break;
         case 1:
-            ofxImGui::VectorCombo(" Paper Format", &selected_paper_size, paper_formats_);
+            ofxImGui::VectorCombo(" paper format", &selected_paper_size, paper_formats_);
             ImGui::InputInt(" dpi", &canvas_resolution);
-            ImGui::RadioButton(" Portrait", &orientation, 0); ImGui::SameLine();
-            ImGui::RadioButton(" Landscape", &orientation, 1);
+            ImGui::RadioButton(" portrait", &orientation, 0); ImGui::SameLine();
+            ImGui::RadioButton(" landscape", &orientation, 1);
             break;
         case 2:
             ImGui::Checkbox(" square canvas", &square_canvas);
@@ -139,7 +143,7 @@ void ofApp::ShowNewDialog()
                 ImGui::InputInt(" Width percentage", &view_percent_width);
                 ImGui::InputInt(" Height percentage", &view_percent_heigth);
             }
-            ImGui::Checkbox(" resize canvas when view change", &resize_canvas_when_view_change);
+            ImGui::Checkbox(" resize canvas when view changes", &resize_canvas_when_view_change);
             break;
         }
 
@@ -147,17 +151,62 @@ void ofApp::ShowNewDialog()
         ImGui::Separator();
         ImGui::Spacing();
 
-        if (ImGui::Button("Create"))
+        if (ImGui::Button("create"))
         {
             auto drawer_info = drawers_[selected_drawer];
             ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
             ImGui::CloseCurrentPopup();
+
+            if( activeCodArt_)
+            {
+                activeCodArt_.reset();
+            }
+
+            switch( selected_canvas_size_mode)
+            {
+            case 0:
+                activeCodArt_ = make_shared<CodArt>(canvas_width, canvas_heigth);
+                break;
+            case 1:
+                // todo
+                break;
+            case 2:
+                if( square_canvas)
+                {
+                    activeCodArt_ = make_shared<CodArt>(view_percent_heigth, resize_canvas_when_view_change);
+                }
+                else
+                {
+                    activeCodArt_ = make_shared<CodArt>(view_percent_width, view_percent_heigth, resize_canvas_when_view_change);
+                }
+                break;
+            }
+
+
         }
+
         ImGui::SameLine();
-        if (ImGui::Button("Close"))
+        if (ImGui::Button("cancel"))
             ImGui::CloseCurrentPopup();
 
         ImGui::EndPopup();
+    }
+}
+
+void ofApp::CreateCodArt( shared_ptr<CanvasSettings> settings, shared_ptr<DrawerInfoAndFactoryBase> drawer_nfo_factory)
+{
+    switch(settings->size_mode)
+    {
+
+    case CanvasSizeMode::Raw:
+    break;
+
+    case CanvasSizeMode::PaperFormat:
+    break;
+
+    case CanvasSizeMode::ViewPercentage:
+
+    break;
     }
 }
 
