@@ -8,7 +8,6 @@ namespace CodArTelier
     class DrawerBase {
     public:
         DrawerBase() {
-
         }
 
         virtual void Update() {}
@@ -29,6 +28,13 @@ namespace CodArTelier
 
         bool isDrawing() { return is_drawing_; }
 
+        void setCanvasSize( glm::vec2 canvas_size )
+        {
+            canvas_size_ = canvas_size;
+        }
+
+    protected:
+        glm::vec2 canvas_size_;
     private:
         bool is_drawing_ = true;
     };
@@ -48,7 +54,6 @@ namespace CodArTelier
     protected:
         string name_;
         string description_;
-        ofRectangle canvas_rect_;
     private:
     
     };

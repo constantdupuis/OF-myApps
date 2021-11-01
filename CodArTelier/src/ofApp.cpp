@@ -17,6 +17,8 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
+    //ofBackground( ofColor().whiteSmoke);
+
     if( activeCodArt_)
         activeCodArt_->Draw();
 
@@ -136,12 +138,12 @@ void ofApp::ShowNewDialog()
             ImGui::Checkbox(" square canvas", &square_canvas);
             if (square_canvas)
             {
-                ImGui::InputInt(" Height percentage", &view_percent_heigth);
+                ImGui::InputInt(" height %", &view_percent_heigth);
             }
             else
             {
-                ImGui::InputInt(" Width percentage", &view_percent_width);
-                ImGui::InputInt(" Height percentage", &view_percent_heigth);
+                ImGui::InputInt(" width %", &view_percent_width);
+                ImGui::InputInt(" height %", &view_percent_heigth);
             }
             ImGui::Checkbox(" resize canvas when view changes", &resize_canvas_when_view_change);
             break;
@@ -165,24 +167,25 @@ void ofApp::ShowNewDialog()
             switch( selected_canvas_size_mode)
             {
             case 0:
-                activeCodArt_ = make_shared<CodArt>(canvas_width, canvas_heigth);
+                activeCodArt_ = make_shared<CodArt>();
+                activeCodArt_->SetupRaw(drawer_info->Build(), canvas_width, canvas_heigth);
                 break;
             case 1:
                 // todo
                 break;
             case 2:
-                if( square_canvas)
+                if(square_canvas)
                 {
-                    activeCodArt_ = make_shared<CodArt>(view_percent_heigth, resize_canvas_when_view_change);
+                    activeCodArt_ = make_shared<CodArt>();
+                    activeCodArt_->SetupPercentSquare(drawer_info->Build(), view_percent_heigth, resize_canvas_when_view_change);
                 }
                 else
                 {
-                    activeCodArt_ = make_shared<CodArt>(view_percent_width, view_percent_heigth, resize_canvas_when_view_change);
+                    activeCodArt_ = make_shared<CodArt>();
+                     activeCodArt_->SetupPercent(drawer_info->Build(), view_percent_width, view_percent_heigth, resize_canvas_when_view_change);
                 }
                 break;
             }
-
-
         }
 
         ImGui::SameLine();
@@ -193,22 +196,6 @@ void ofApp::ShowNewDialog()
     }
 }
 
-void ofApp::CreateCodArt( shared_ptr<CanvasSettings> settings, shared_ptr<DrawerInfoAndFactoryBase> drawer_nfo_factory)
-{
-    switch(settings->size_mode)
-    {
-
-    case CanvasSizeMode::Raw:
-    break;
-
-    case CanvasSizeMode::PaperFormat:
-    break;
-
-    case CanvasSizeMode::ViewPercentage:
-
-    break;
-    }
-}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -254,7 +241,10 @@ void ofApp::mouseExited(int x, int y){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    if( activeCodArt_)
+    {
+        activeCodArt_->windowResized(w, h);
+    }
 }
 
 //--------------------------------------------------------------

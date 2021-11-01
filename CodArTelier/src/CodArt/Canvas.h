@@ -16,7 +16,13 @@ namespace CodArTelier
 
         ~Canvas()
         {
-         ofFbo::~ofFbo();
+         //ofFbo::~ofFbo();
+        }
+
+        void Resize( int width, int height)
+        {
+            clear();
+            allocate(width, height, GL_RGBA);
         }
 
     private:

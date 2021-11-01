@@ -9,17 +9,24 @@ namespace CodArTelier
 {
     class CodArt{
     public:
+        CodArt()
+        {
 
-        CodArt(shared_ptr<DrawerBase> drawer, int width, int heigth)
+        }
+
+        void SetupRaw(shared_ptr<DrawerBase> drawer, int width, int heigth)
         {
             drawer_ = drawer;
             canvas_settings_.size_mode = CanvasSizeMode::Raw;
             canvas_settings_.raw.width = width;
             canvas_settings_.raw.height = heigth;
+
             canvas_ = make_shared<Canvas>(width, heigth);
+
+            drawer_->setCanvasSize(glm::vec2(width, heigth));
         }
 
-        CodArt(shared_ptr<DrawerBase> drawer, float percent_width, float percent_heigth, bool resize_when_view_change = false)
+        void SetupPercent(shared_ptr<DrawerBase> drawer, float percent_width, float percent_heigth, bool resize_when_view_change = false)
         {
             drawer_ = drawer;
             canvas_settings_.size_mode = CanvasSizeMode::ViewPercentage;
@@ -28,16 +35,24 @@ namespace CodArTelier
             canvas_settings_.view_percentage.square_canvas = false;
             canvas_settings_.view_percentage.resize_when_view_change = resize_when_view_change;
 
-            auto w = ofGetWidth() * percent_width;
-            auto h = ofGetHeight() * percent_heigth;
+            int w = (int)((float)ofGetWidth() * (percent_width/100.0));
+            int h = (int)((float)ofGetHeight() * (percent_heigth/100.0));
+
+            if( !resize_when_view_change)
+            {
+                canvas_calculated_size_.x = w;
+                canvas_calculated_size_.y = h;
+            }
 
             canvas_ = make_shared<Canvas>(w, h);
+
+            drawer_->setCanvasSize(glm::vec2(w, h));
 
             translate_.x = (ofGetWidth() - w ) / 2;
             translate_.y = (ofGetHeight() - h ) / 2;
         }
 
-        CodArt(shared_ptr<DrawerBase> drawer, float percent_heigth, bool resize_when_view_change = false)
+        void SetupPercentSquare(shared_ptr<DrawerBase> drawer, float percent_heigth, bool resize_when_view_change = false)
         {
             drawer_ = drawer;
             canvas_settings_.size_mode = CanvasSizeMode::ViewPercentage;
@@ -46,9 +61,17 @@ namespace CodArTelier
             canvas_settings_.view_percentage.square_canvas = true;
             canvas_settings_.view_percentage.resize_when_view_change = resize_when_view_change;
 
-            auto h = ofGetHeight() * percent_heigth;
+            int h = (int)((float)ofGetHeight() * (percent_heigth/100.0));
+
+            if( !resize_when_view_change)
+            {
+                canvas_calculated_size_.x = h;
+                canvas_calculated_size_.y = h;
+            }
 
             canvas_ = make_shared<Canvas>(h, h);
+
+            drawer_->setCanvasSize(glm::vec2(h, h));
 
             translate_.x = (ofGetWidth() - h ) / 2;
             translate_.y = (ofGetHeight() - h ) / 2;
@@ -100,11 +123,46 @@ namespace CodArTelier
 
         void keyPressed(int key) { if (drawer_) drawer_->keyPressed(key); }
 
+        void windowResized(int w, int h){
+            if( !drawer_) return;
+
+            if( canvas_settings_.size_mode == CanvasSizeMode::ViewPercentage)
+            {
+                if( canvas_settings_.view_percentage.resize_when_view_change)
+                {
+                    if( canvas_settings_.view_percentage.square_canvas)
+                    {
+                        int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
+                        translate_.x = (ofGetWidth() - h ) / 2;
+                        translate_.y = (ofGetHeight() - h ) / 2;
+                        canvas_->Resize(h, h);
+                        drawer_->setCanvasSize(glm::vec2(h,h));
+                    }
+                    else
+                    {
+                        int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
+                        int w = (int)((float)ofGetWidth() * (canvas_settings_.view_percentage.width/100.0));
+                        translate_.x = (ofGetWidth() - w ) / 2;
+                        translate_.y = (ofGetHeight() - h ) / 2;
+                        canvas_->Resize(w, h);
+                        drawer_->setCanvasSize(glm::vec2(w,h));
+                    }
+
+                }
+                else
+                {
+                    translate_.x = (ofGetWidth() - canvas_calculated_size_.x ) / 2;
+                    translate_.y = (ofGetHeight() - canvas_calculated_size_.y ) / 2;
+                }
+            }
+        }
+
     private:
         shared_ptr<Canvas> canvas_;
         shared_ptr<DrawerBase> drawer_;
         CanvasSettings canvas_settings_;
         glm::vec2 translate_;
+        glm::vec2 canvas_calculated_size_;
     };
 }
 
