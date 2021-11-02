@@ -22,7 +22,7 @@ namespace CodArTelier
             canvas_settings_.raw.height = heigth;
 
             canvas_ = make_shared<Canvas>(width, heigth);
-
+            // TODO : handle case if canvas size is greater then view size
             drawer_->setCanvasSize(glm::vec2(width, heigth));
         }
 
@@ -106,20 +106,17 @@ namespace CodArTelier
             ofPopMatrix();
         }
 
+        void DrawUI()
+        {
+            if( drawer_)
+            {
+                drawer_->DrawUI();
+            }
+        }
+
         void Release()
         {
         }
-
-//        void SetDrawer(shared_ptr<DrawerBase> drawer)
-//        {
-//            drawer_ = drawer;
-//        }
-
-//        void SetCanvas(shared_ptr <Canvas> canvas)
-//        {
-//            canvas_ = canvas;
-//        }
-
 
         void keyPressed(int key) { if (drawer_) drawer_->keyPressed(key); }
 

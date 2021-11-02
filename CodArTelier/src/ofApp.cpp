@@ -30,6 +30,9 @@ void ofApp::draw(){
 
         ShowNewDialog();
 
+        if( activeCodArt_)
+            activeCodArt_->DrawUI();
+
         gui.end();
     }
 }
@@ -58,6 +61,10 @@ void ofApp::UIDrawMenu()
         }
 
         if (ImGui::MenuItem("Save As ...", "")) {
+
+        }
+
+        if (ImGui::MenuItem("Save As Image", "")) {
 
         }
 

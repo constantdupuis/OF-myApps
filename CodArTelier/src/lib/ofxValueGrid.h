@@ -69,7 +69,7 @@ class ofxValueGrid
 public:
     ofxValueGrid( int cols, int rows, 
                   float width, float height,
-                  glm::vec2 posInCell)
+                  glm::vec2 posInCell = glm::vec2(0.5f,0.5f))
     {
         cols_ = cols;
         rows_ = rows;
@@ -83,7 +83,8 @@ public:
         for( int c = 0; c <= cols_; c++)
         {
             for( int r = 0; r <= rows_; r++)
-                cells_.push_back( make_shared<ofxValueGridCell>( // row, col
+                cells_.push_back( make_shared<ofxValueGridCell>(
+                                                      // row, col
                                                       c, r,
                                                       // cell top left
                                                       cellw * c, cellh * r,

@@ -10,9 +10,11 @@ namespace CodArTelier
         DrawerBase() {
         }
 
+        virtual void Setup() {}
         virtual void Update() {}
         virtual void Draw() {}
         virtual void Reset() {}
+        virtual void CanvasResized() {}
 
         virtual void DrawUI() {}
 
@@ -33,6 +35,7 @@ namespace CodArTelier
         void setCanvasSize( glm::vec2 canvas_size )
         {
             canvas_size_ = canvas_size;
+            CanvasResized();
         }
 
     protected:

@@ -1,7 +1,11 @@
 #ifndef NOISE_H
 #define NOISE_H
 
+//#include "ofMain.h"
 #include "../DrawerBase.h"
+#include "../../lib/ofxValueGrid.h"
+#include "../../lib/ofxBronianMotion.h"
+#include "ofxImGui.h"
 
 namespace CodArTelier
 {
@@ -22,11 +26,44 @@ namespace CodArTelier
             }
 
             void Draw() {
-                ofBackground( ofColor().limeGreen);
-                ofSetColor( ofColor(ofColor().orangeRed ));
-                ofDrawRectRounded(10,10, canvas_size_.x-20, canvas_size_.y-20, 5);
+                ofBackground( 60 );
+                for( auto& c : value_grid_->cells() ){
+                    ofSetColor( ofColor(ofColor().orangeRed ));
+                    ofDrawRectRounded(c->left(),c->top(), c->width() * 0.8, c->height() * 0.8, 5);
+                }
+//                ofBackground( ofColor().limeGreen);
+//                ofSetColor( ofColor(ofColor().orangeRed ));
+//                ofDrawRectRounded(10,10, canvas_size_.x-20, canvas_size_.y-20, 5);
             }
+
+            void DrawUI()
+            {
+                auto current_col_nbr = grid_col_nbr_;
+                auto current_row_nbr = grid_row_nbr_;
+                ImGui::InputInt("col nbr", &current_col_nbr);
+                ImGui::InputInt("row nbr", &current_row_nbr);
+                if( current_col_nbr != grid_col_nbr_ || current_row_nbr != grid_row_nbr_)
+                {
+                    grid_col_nbr_ = current_col_nbr;
+                    grid_row_nbr_ = current_row_nbr;
+                    CanvasResized();
+                }
+            }
+
+            void CanvasResized()
+            {
+                if( value_grid_)
+                {
+                    value_grid_.reset();
+                }
+
+                value_grid_ = make_shared<ofxValueGrid<ofxValueGridCell>>(grid_col_nbr_,grid_row_nbr_, canvas_size_.x, canvas_size_.y);
+            }
+
         private:
+            shared_ptr<ofxValueGrid<ofxValueGridCell>> value_grid_;
+            int grid_col_nbr_ = 10;
+            int grid_row_nbr_ = 10;
         };
 
 
