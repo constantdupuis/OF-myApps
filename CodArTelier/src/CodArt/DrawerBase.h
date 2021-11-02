@@ -14,6 +14,8 @@ namespace CodArTelier
         virtual void Draw() {}
         virtual void Reset() {}
 
+        virtual void DrawUI() {}
+
         virtual void keyPressed(int key) {}
 
         void Start()

@@ -16,6 +16,11 @@ namespace CodArTelier
             Noise() {
 
             }
+
+            void Update()
+            {
+            }
+
             void Draw() {
                 ofBackground( ofColor().limeGreen);
                 ofSetColor( ofColor(ofColor().orangeRed ));
@@ -28,12 +33,12 @@ namespace CodArTelier
         ///
         /// \brief The NoiseInfoFactory class
         ///
-        class NoiseInfoFactory : public DrawerInfoAndFactoryBase
+        class NoiseInfoNFactory : public DrawerInfoAndFactoryBase
         {
         public:
-            NoiseInfoFactory(){
+            NoiseInfoNFactory(){
                 name_ = "Simple Perlin Noise";
-                description_ = "Simple démo du Perlin Noiser avec la possibilité d'ajouter des harmoniques (Factal Bronian Motion).";
+                description_ = "Simple démo du Perlin Noise avec la possibilité d'ajouter des harmoniques (Factal Bronian Motion).";
             }
 
             shared_ptr<DrawerBase> Build(){

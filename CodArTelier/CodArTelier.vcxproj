@@ -221,6 +221,10 @@
     <ClInclude Include="src\CodArt\CodArt.h" />
     <ClInclude Include="src\CodArt\DrawerBase.h" />
     <ClInclude Include="src\CodArt\Drawers\Noise.h" />
+    <ClInclude Include="src\lib\ofxBasicParticle.h" />
+    <ClInclude Include="src\lib\ofxBronianMotion.h" />
+    <ClInclude Include="src\lib\ofxHelpers.h" />
+    <ClInclude Include="src\lib\ofxValueGrid.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseTheme.h" />

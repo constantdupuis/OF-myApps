@@ -153,6 +153,9 @@
     <Filter Include="src\CodArt\Drawers">
       <UniqueIdentifier>{fcd0e173-ea0c-4da3-b6dc-f0197af5adcd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\lib">
+      <UniqueIdentifier>{e3b04751-8605-43e9-914b-2fd67b4f81ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -286,6 +289,18 @@
     </ClInclude>
     <ClInclude Include="src\CodArt\Drawers\Noise.h">
       <Filter>src\CodArt\Drawers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxBasicParticle.h">
+      <Filter>src\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxBronianMotion.h">
+      <Filter>src\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxHelpers.h">
+      <Filter>src\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxValueGrid.h">
+      <Filter>src\lib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

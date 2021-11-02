@@ -88,7 +88,7 @@ void ofApp::UIDrawMenu()
 void ofApp::setupApp()
 {
     // push drawers in list for later selection
-    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::NoiseInfoFactory>();
+    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::NoiseInfoNFactory>();
     drawers_.push_back( d );
     drawers_names_.push_back( d->Name());
 }
