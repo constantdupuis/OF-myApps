@@ -209,6 +209,7 @@ void ofApp::keyPressed(int key){
     if( key == 'f') ofToggleFullscreen();
     if( key == 'q') ofExit();
     if( key == 'h') show_ui_ = !show_ui_;
+    if( activeCodArt_) activeCodArt_->keyPressed(key);
 }
 
 //--------------------------------------------------------------

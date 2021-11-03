@@ -23,12 +23,14 @@ namespace CodArTelier
 
             void Update()
             {
+                animation_ += animation_speed_;
             }
 
             void Draw() {
                 ofBackground( 60 );
                 for( auto& c : value_grid_->cells() ){
-                    ofSetColor( ofColor(ofColor().orangeRed ));
+                    auto a = bronian_motion_.get(c->left(), c->top(), animation_);
+                    ofSetColor( ofColor(ofColor().orangeRed ), a*255);
                     ofDrawRectRounded(c->left(),c->top(), c->width() * 0.8, c->height() * 0.8, 5);
                 }
 //                ofBackground( ofColor().limeGreen);
@@ -40,14 +42,15 @@ namespace CodArTelier
             {
                 auto current_col_nbr = grid_col_nbr_;
                 auto current_row_nbr = grid_row_nbr_;
-                ImGui::InputInt("col nbr", &current_col_nbr);
-                ImGui::InputInt("row nbr", &current_row_nbr);
+                ImGui::InputInt(" col nbr", &current_col_nbr);
+                ImGui::InputInt(" row nbr", &current_row_nbr);
                 if( current_col_nbr != grid_col_nbr_ || current_row_nbr != grid_row_nbr_)
                 {
                     grid_col_nbr_ = current_col_nbr;
                     grid_row_nbr_ = current_row_nbr;
                     CanvasResized();
                 }
+                ImGui::SliderFloat(" animation speed", &animation_speed_, 0.1, 50.0);
             }
 
             void CanvasResized()
@@ -61,6 +64,9 @@ namespace CodArTelier
             }
 
         private:
+            float animation_ = 0.0f;
+            float animation_speed_ = 1.0f;
+            ofxBronianMotion bronian_motion_;
             shared_ptr<ofxValueGrid<ofxValueGridCell>> value_grid_;
             int grid_col_nbr_ = 10;
             int grid_row_nbr_ = 10;
