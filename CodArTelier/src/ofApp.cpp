@@ -5,7 +5,7 @@ void ofApp::setup(){
     ofSetWindowTitle("CodarTelier");
     ofSetEscapeQuitsApp(false );
     setupApp();
-    gui.setup();
+    setupImGui();
 }
 
 //--------------------------------------------------------------
@@ -28,10 +28,9 @@ void ofApp::draw(){
 
         UIDrawMenu();
 
-        ShowNewDialog();
+        UIShowNewDialogs();
 
-        if( activeCodArt_)
-            activeCodArt_->DrawUI();
+        UICodArt();
 
         gui.end();
     }
@@ -100,7 +99,24 @@ void ofApp::setupApp()
     drawers_names_.push_back( d->Name());
 }
 
-void ofApp::ShowNewDialog()
+void ofApp::setupImGui()
+{
+    ImGuiIO& io = ImGui::GetIO();
+    io.Fonts->AddFontFromFileTTF("./data/fonts/Roboto-Regular.ttf", 18);
+
+    gui.setup();
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 4.0f;
+    style.PopupRounding = 4.0f;
+    style.FrameRounding = 4.0f;
+    style.GrabRounding = 2.0f;
+    style.ScrollbarRounding = 2.0f;
+    style.ChildRounding = 4.0f;
+    style.TabRounding = 2.0f;
+}
+
+void ofApp::UIShowNewDialogs()
 {
     if (ImGui::BeginPopupModal("New CodArt", NULL))
     {
@@ -201,6 +217,25 @@ void ofApp::ShowNewDialog()
 
         ImGui::EndPopup();
     }
+}
+
+void ofApp::UICodArt()
+{
+    if( activeCodArt_)
+    {
+        //if (!ImGui::Begin("CodArt [name]", &ui_show_codart_settings))
+        if (!ImGui::Begin("CodArt [name]"))
+        {
+            ImGui::End();
+            return;
+        }
+        if( ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+        {
+            activeCodArt_->DrawUI();
+        }
+        ImGui::End();
+    }
+
 }
 
 
