@@ -6,7 +6,6 @@
 class ofxBronianMotion
 {
 public:
-    //ofxBronianMotion() {}
 
     ofxBronianMotion( int octaves = 2, float frequency = 0.005f, float frequencyMultiplier = 2.0f ) {
         octaves_ = octaves;
@@ -42,7 +41,9 @@ public:
 
         for (int i = 0; i < octaves_; i++)
         {
-            val += abs( ofSignedNoise(glm::vec3(x * freq, y * freq, z * freq))) * amplitude;
+            float n = abs( ofSignedNoise(glm::vec3(x * freq, y * freq, z * freq))) * amplitude;
+            //n = n * n;
+            val += n;
             amplitude *= 0.5f;
             freq *= frequencyMultiplier_;
         }

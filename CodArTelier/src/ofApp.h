@@ -7,6 +7,7 @@
 #include "ofMain.h"
 #include "ofxImGui.h"
 #include "CodArt/CodArt.h"
+#include "CodArt/CodArtDocument.h"
 #include "CodArt/DrawerBase.h"
 #include "CodArt/Drawers/Noise.h"
 
@@ -43,6 +44,7 @@ class ofApp : public ofBaseApp{
         std::vector<std::string> drawers_names_;
 
 		std::shared_ptr<CodArt> activeCodArt_;
+        CodArtDocument codArtDoc_;
 
         void setupApp();
         void setupImGui();

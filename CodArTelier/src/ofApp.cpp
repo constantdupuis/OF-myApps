@@ -42,27 +42,21 @@ void ofApp::UIDrawMenu()
         {
             show_imgui_new_ = true;
         }
-
         if (ImGui::MenuItem("Open ...", "")) {
 
         }
-
         if (ImGui::BeginMenu("Open recent ...", "")) {
             ImGui::EndMenu();
         }
-
         if (ImGui::MenuItem("Save", "")) {
 
         }
-
         if (ImGui::MenuItem("Save As ...", "")) {
 
         }
-
         if (ImGui::MenuItem("Save As Image", "")) {
 
         }
-
         if (ImGui::MenuItem("Exit", "ALT+F4")) {
             
             // TODO : check if any openned CodArt doesn't need to be saved
@@ -129,6 +123,9 @@ void ofApp::UIShowNewDialogs()
         static int view_percent_heigth = 85;
         static bool square_canvas = true;
         static bool resize_canvas_when_view_change = true;
+        static char filename[128] = "";
+
+        ImGui::InputTextWithHint("filename", "enter filename", filename, IM_ARRAYSIZE(filename));
 
         if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawers_names_))
         {

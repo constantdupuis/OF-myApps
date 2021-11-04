@@ -15,6 +15,7 @@ Project{
             "src/CodArt/Canvas.h",
             "src/CodArt/CanvasSettings.h",
             "src/CodArt/CodArt.h",
+            "src/CodArt/CodArtDocument.h",
             "src/CodArt/DrawerBase.h",
             "src/CodArt/Drawers/Noise.h",
             "src/lib/ofxBasicParticle.h",

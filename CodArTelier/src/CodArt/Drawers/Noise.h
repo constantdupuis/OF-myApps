@@ -94,9 +94,9 @@ namespace CodArTelier
                 ImGui::Spacing();
                 ImGui::Text(" draw mode");
                 int fm = static_cast<int>(fbm_mode_);
-                ImGui::RadioButton("normal", &fm, 0); ImGui::SameLine();
-                ImGui::RadioButton("turbulence", &fm, 1); ImGui::SameLine();
-                ImGui::RadioButton("ridge", &fm, 2);
+                ImGui::RadioButton(" normal", &fm, 0); ImGui::SameLine();
+                ImGui::RadioButton(" turbulence", &fm, 1); ImGui::SameLine();
+                ImGui::RadioButton(" ridge", &fm, 2);
                 fbm_mode_ = static_cast<FbmMode>(fm);
             }
 
