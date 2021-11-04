@@ -32,8 +32,20 @@ namespace CodArTelier
 
                 ofBackground( 60 );
                 for( auto& c : value_grid_->cells() ){
-                    auto a = bronian_motion_.get(c->left(), c->top(), animation_);
-                    //ofSetColor( ofColor(ofColor().orangeRed ), a*255);
+                    float a;
+                    if (fbm_mode_ == FbmMode::normal)
+                        a = bronian_motion_.fbm(c->left(), c->top(), animation_);
+                    else if (fbm_mode_ == FbmMode::turbulence)
+                        a = bronian_motion_.fbmTurbulence(c->left(), c->top(), animation_);
+                    else if (fbm_mode_ == FbmMode::ridge)
+                        a = bronian_motion_.fbmRidge(c->left(), c->top(), animation_);
+                    else
+                    {
+                        // TODO
+                    }
+
+                    if (a > 1.0f) a = 1.0f;
+                    
                     ofSetColor(255 * a);
                     ofDrawRectangle(c->left(),c->top(), c->width(), c->height());
                 }
@@ -78,6 +90,14 @@ namespace CodArTelier
                 ImGui::SliderInt(" octaves number", &bronian_motion_.octavesNbr(), 1, 10);
                 ImGui::SliderFloat(" frequency", &bronian_motion_.frequency(), 0.001, 0.01);
                 ImGui::SliderFloat(" frequency multiplier", &bronian_motion_.frequencyMultiplier(), 0.5, 4.0);
+
+                ImGui::Spacing();
+                ImGui::Text(" draw mode");
+                int fm = static_cast<int>(fbm_mode_);
+                ImGui::RadioButton("normal", &fm, 0); ImGui::SameLine();
+                ImGui::RadioButton("turbulence", &fm, 1); ImGui::SameLine();
+                ImGui::RadioButton("ridge", &fm, 2);
+                fbm_mode_ = static_cast<FbmMode>(fm);
             }
 
             void CanvasResized()
@@ -91,12 +111,14 @@ namespace CodArTelier
             }
 
         private:
+            enum class FbmMode {normal = 0, turbulence, ridge};
+            FbmMode fbm_mode_ = FbmMode::normal;
             float animation_ = 0.0f;
             float animation_speed_ = 1.0f;
             ofxBronianMotion bronian_motion_;
             shared_ptr<ofxValueGrid<ofxValueGridCell>> value_grid_;
-            int grid_col_nbr_ = 10;
-            int grid_row_nbr_ = 10;
+            int grid_col_nbr_ = 150;
+            int grid_row_nbr_ = 150;
         };
 
 

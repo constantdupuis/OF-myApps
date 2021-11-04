@@ -259,24 +259,9 @@ void ofApp::keyPressed(int key){
         return;
     }
 
-    /*if (ofGetKeyPressed(OF_KEY_ALT))
-    {
-        ofLog() << "ALT pressed key [" << (char)key << "]";
-    }
-    if (ofGetKeyPressed(OF_KEY_CONTROL))
-    {
-        ofLog() << "CTRL pressed key [" << (char)key << "]";
-        switch (key)
-        {
-        case 'n':
-        case 'N':
-            show_imgui_demo_ = true;
-            break;
-        }
-    }*/
     if( key == 'f') ofToggleFullscreen();
-    //if( key == 'q') ofExit();
     if( key == 'h') show_ui_ = !show_ui_;
+
     if( activeCodArt_ ) activeCodArt_->keyPressed(key);
 }
 
