@@ -25,26 +25,22 @@ void ofApp::draw(){
     if( show_ui_)
     {
         gui.begin();
-
         UIDrawMenu();
-
         UIShowNewDialogs();
-
         UICodArt();
-
         gui.end();
     }
 }
 
 void ofApp::UIDrawMenu()
 {
-    bool show_new_codart = false;
+    //bool show_new_codart = false;
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("File"))
     {
         if( ImGui::MenuItem("New ...", "CTRL+N"))
         {
-            show_new_codart = true;
+            show_imgui_new_ = true;
         }
 
         if (ImGui::MenuItem("Open ...", "")) {
@@ -87,7 +83,7 @@ void ofApp::UIDrawMenu()
 
     ImGui::EndMainMenuBar();
 
-    if( show_new_codart ) ImGui::OpenPopup("New CodArt");
+    if( show_imgui_new_ ) ImGui::OpenPopup("New CodArt");
     if( show_imgui_demo_ ) ImGui::ShowDemoWindow( &show_imgui_demo_ );
 }
 
@@ -180,6 +176,7 @@ void ofApp::UIShowNewDialogs()
         {
             auto drawer_info = drawers_[selected_drawer];
             ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
+            show_imgui_new_ = false;
             ImGui::CloseCurrentPopup();
 
             if( activeCodArt_)
@@ -213,7 +210,11 @@ void ofApp::UIShowNewDialogs()
 
         ImGui::SameLine();
         if (ImGui::Button("cancel"))
+        {
+            show_imgui_new_ = false;
             ImGui::CloseCurrentPopup();
+        }
+            
 
         ImGui::EndPopup();
     }
@@ -241,10 +242,42 @@ void ofApp::UICodArt()
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+    //ofLog() << "KeyPressed entered key  [" << key << "] char ["<< (char)key <<"]";
+
+    if (ctrl_key_was_pressed_ && !(key == OF_KEY_CONTROL || key == OF_KEY_LEFT_CONTROL || key == OF_KEY_RIGHT_CONTROL))
+    {
+        //ofLog() << "CTRL+Key post received [" << key << "]";
+        if( key == 14) show_imgui_new_ = true;
+        ctrl_key_was_pressed_ = false;
+        return;
+    }
+
+    if (key == OF_KEY_CONTROL || key == OF_KEY_LEFT_CONTROL || key == OF_KEY_RIGHT_CONTROL)
+    {
+        //ofLog() << "CTRL pressed key";
+        ctrl_key_was_pressed_ = true;
+        return;
+    }
+
+    /*if (ofGetKeyPressed(OF_KEY_ALT))
+    {
+        ofLog() << "ALT pressed key [" << (char)key << "]";
+    }
+    if (ofGetKeyPressed(OF_KEY_CONTROL))
+    {
+        ofLog() << "CTRL pressed key [" << (char)key << "]";
+        switch (key)
+        {
+        case 'n':
+        case 'N':
+            show_imgui_demo_ = true;
+            break;
+        }
+    }*/
     if( key == 'f') ofToggleFullscreen();
-    if( key == 'q') ofExit();
+    //if( key == 'q') ofExit();
     if( key == 'h') show_ui_ = !show_ui_;
-    if( activeCodArt_) activeCodArt_->keyPressed(key);
+    if( activeCodArt_ ) activeCodArt_->keyPressed(key);
 }
 
 //--------------------------------------------------------------

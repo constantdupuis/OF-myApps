@@ -37,6 +37,7 @@ class ofApp : public ofBaseApp{
         bool show_imgui_demo_ = false;
         bool show_imgui_new_ = false;
         bool ui_show_codart_settings = true;
+		bool ctrl_key_was_pressed_ = false;
 
         std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
         std::vector<std::string> drawers_names_;
