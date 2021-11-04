@@ -16,13 +16,16 @@ public:
 
     float get( float x, float y, float z)
     {
-        float divider = 2.0f;
+        float amplitude = 0.5f;
         float freq = frequency_;
         float val = 0.0f;
+
+        if( octaves_ == 1) amplitude = 1.0f;
+
         for( int i = 0; i < octaves_; i++)
         {
-            val += ofNoise(glm::vec3(x*freq,y*freq,z*freq)) / divider;
-            divider *= 2.0;
+            val += ofNoise(glm::vec3(x*freq,y*freq,z*freq)) * amplitude;
+            amplitude *= 0.5f;
             freq *= frequencyMultiplier_;
         }
 
@@ -35,6 +38,10 @@ public:
         octaves_ = octaves_nbr;
         return prev;
     }
+    int& octavesNbr()
+    {
+        return octaves_;
+    }
 
     float setFrequency(float frequency)
     {
@@ -43,11 +50,21 @@ public:
         return prev;
     }
 
+    float& frequency()
+    {
+        return frequency_;
+    }
+
     float setFrequencyMultiplier( float freq_multiplier)
     {
         float prev = frequencyMultiplier_;
         frequencyMultiplier_ = freq_multiplier;
         return prev;
+    }
+
+    float& frequencyMultiplier()
+    {
+        return frequencyMultiplier_;
     }
 
 private:

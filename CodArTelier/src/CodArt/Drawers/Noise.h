@@ -23,23 +23,25 @@ namespace CodArTelier
 
             void Update()
             {
+                if (!is_drawing_) return;
                 animation_ += animation_speed_;
             }
 
             void Draw() {
+                if (!is_drawing_) return;
+
                 ofBackground( 60 );
                 for( auto& c : value_grid_->cells() ){
                     auto a = bronian_motion_.get(c->left(), c->top(), animation_);
-                    ofSetColor( ofColor(ofColor().orangeRed ), a*255);
-                    ofDrawRectRounded(c->left(),c->top(), c->width() * 0.8, c->height() * 0.8, 5);
+                    //ofSetColor( ofColor(ofColor().orangeRed ), a*255);
+                    ofSetColor(255 * a);
+                    ofDrawRectangle(c->left(),c->top(), c->width(), c->height());
                 }
-//                ofBackground( ofColor().limeGreen);
-//                ofSetColor( ofColor(ofColor().orangeRed ));
-//                ofDrawRectRounded(10,10, canvas_size_.x-20, canvas_size_.y-20, 5);
             }
 
             void DrawUI()
             {
+                ImGui::Text(" grid settings");
                 auto current_col_nbr = grid_col_nbr_;
                 auto current_row_nbr = grid_row_nbr_;
                 ImGui::InputInt(" col nbr", &current_col_nbr);
@@ -50,7 +52,32 @@ namespace CodArTelier
                     grid_row_nbr_ = current_row_nbr;
                     CanvasResized();
                 }
+
+                ImGui::Spacing();
+                ImGui::Text(" animation");
                 ImGui::SliderFloat(" animation speed", &animation_speed_, 0.1, 50.0);
+                ImGui::Spacing();
+                if (isDrawing())
+                {
+                    if (ImGui::Button("stop"))
+                    {
+                        Stop();
+                    }
+                }
+                else
+                {
+                    if (ImGui::Button("start"))
+                    {
+                        Start();
+                    }
+                }
+                ImGui::Spacing();
+                
+                ImGui::Spacing();
+                ImGui::Text(" bfm settigns");
+                ImGui::SliderInt(" octaves number", &bronian_motion_.octavesNbr(), 1, 10);
+                ImGui::SliderFloat(" frequency", &bronian_motion_.frequency(), 0.001, 0.01);
+                ImGui::SliderFloat(" frequency multiplier", &bronian_motion_.frequencyMultiplier(), 0.5, 4.0);
             }
 
             void CanvasResized()

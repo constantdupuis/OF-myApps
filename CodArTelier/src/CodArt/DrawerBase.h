@@ -27,7 +27,7 @@ namespace CodArTelier
 
         void Stop()
         {
-            is_drawing_ = true;
+            is_drawing_ = false;
         }
 
         bool isDrawing() { return is_drawing_; }
@@ -40,10 +40,14 @@ namespace CodArTelier
 
     protected:
         glm::vec2 canvas_size_;
-    private:
         bool is_drawing_ = true;
+    private:
+        
     };
 
+    // -------------------------------------------------------------------
+    // DrawerInfoAndFactoryBase
+    // -------------------------------------------------------------------
     class DrawerInfoAndFactoryBase {
     public:
         DrawerInfoAndFactoryBase()
