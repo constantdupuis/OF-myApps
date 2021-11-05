@@ -122,6 +122,7 @@ namespace CodArTelier
                 settings.setValue("fbm:frequency", bronian_motion_.frequency());
                 settings.setValue("fbm:frequency_multiplier", bronian_motion_.frequencyMultiplier());
             }
+
             void PopSettings(ofxXmlSettings& settings) {
             }
 

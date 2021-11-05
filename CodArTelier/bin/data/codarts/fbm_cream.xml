@@ -1,0 +1,25 @@
+<codart>
+    <canvas>
+        <size_mode>2</size_mode>
+        <view_percentage>
+            <square_canvas>1</square_canvas>
+            <resize_when_view_change>1</resize_when_view_change>
+            <width>85.000000000</width>
+            <height>85.000000000</height>
+        </view_percentage>
+    </canvas>
+    <drawer>
+        <id>ArdoiseFbm</id>
+        <fbm_mode>1</fbm_mode>
+        <animation_speed>10.045999527</animation_speed>
+        <grid>
+            <cols>200</cols>
+            <rows>200</rows>
+        </grid>
+        <fbm>
+            <octaves>10</octaves>
+            <frequency>0.002000000</frequency>
+            <frequency_multiplier>1.041000009</frequency_multiplier>
+        </fbm>
+    </drawer>
+</codart>

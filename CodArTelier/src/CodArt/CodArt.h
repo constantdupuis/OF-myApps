@@ -167,12 +167,22 @@ namespace CodArTelier
             settings.pushTag("canvas");
             settings.setValue("size_mode", (int)canvas_settings_.size_mode);
             // TODO : only save settings for active mode !!!!!
-            settings.setValue("raw:width", canvas_settings_.raw.width);
-            settings.setValue("raw:height", canvas_settings_.raw.height);
-            settings.setValue("view_percentage:square_canvas", canvas_settings_.view_percentage.square_canvas);
-            settings.setValue("view_percentage:resize_when_view_change", canvas_settings_.view_percentage.resize_when_view_change);
-            settings.setValue("view_percentage:width", canvas_settings_.view_percentage.width);
-            settings.setValue("view_percentage:height", canvas_settings_.view_percentage.height);
+            switch(canvas_settings_.size_mode)
+            {
+                case CanvasSizeMode::Raw :
+                    settings.setValue("raw:width", canvas_settings_.raw.width);
+                    settings.setValue("raw:height", canvas_settings_.raw.height);
+                    break;
+                case CanvasSizeMode::PaperFormat:
+                    settings.setValue("paper", "not yet implemented");
+                    break;
+                case CanvasSizeMode::ViewPercentage:
+                    settings.setValue("view_percentage:square_canvas", canvas_settings_.view_percentage.square_canvas);
+                    settings.setValue("view_percentage:resize_when_view_change", canvas_settings_.view_percentage.resize_when_view_change);
+                    settings.setValue("view_percentage:width", canvas_settings_.view_percentage.width);
+                    settings.setValue("view_percentage:height", canvas_settings_.view_percentage.height);
+                    break;
+            }
             settings.popTag();
 
             settings.addTag("drawer");
