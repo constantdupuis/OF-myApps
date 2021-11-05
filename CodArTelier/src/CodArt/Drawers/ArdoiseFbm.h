@@ -6,6 +6,7 @@
 #include "../../lib/ofxValueGrid.h"
 #include "../../lib/ofxBronianMotion.h"
 #include "ofxImGui.h"
+#include "ofxXmlSettings.h"
 
 namespace CodArTelier
 {
@@ -14,10 +15,10 @@ namespace CodArTelier
         ///
         /// \brief The Noise class
         ///
-        class Noise : public DrawerBase
+        class ArdoiseFbm : public DrawerBase
         {
         public:
-            Noise() {
+            ArdoiseFbm() {
 
             }
 
@@ -110,6 +111,11 @@ namespace CodArTelier
                 value_grid_ = make_shared<ofxValueGrid<ofxValueGridCell>>(grid_col_nbr_,grid_row_nbr_, canvas_size_.x, canvas_size_.y);
             }
 
+            void PushSettings(ofxXmlSettings& settings) {
+            }
+            void PopSettings(ofxXmlSettings& settings) {
+            }
+
         private:
             enum class FbmMode {normal = 0, turbulence, ridge};
             FbmMode fbm_mode_ = FbmMode::normal;
@@ -125,16 +131,17 @@ namespace CodArTelier
         ///
         /// \brief The NoiseInfoFactory class
         ///
-        class NoiseInfoNFactory : public DrawerInfoAndFactoryBase
+        class ArdoiseFbmInfoNFactory : public DrawerInfoAndFactoryBase
         {
         public:
-            NoiseInfoNFactory(){
-                name_ = "Simple Perlin Noise";
-                description_ = "Simple démo du Perlin Noise avec la possibilité d'ajouter des harmoniques (Factal Bronian Motion).";
+            ArdoiseFbmInfoNFactory(){
+                id_ = "ArdoiseFbm";
+                name_ = "Ardoise Fbm";
+                description_ = "Adrdoise pour jouer avec le Fractal Bronian Motion";
             }
 
             shared_ptr<DrawerBase> Build(){
-                return make_shared<Noise>();
+                return make_shared<ArdoiseFbm>();
             }
 
         };

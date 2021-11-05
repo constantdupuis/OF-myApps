@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "Canvas.h"
 #include "DrawerBase.h"
+#include "ofxXmlSettings.h"
 
 namespace CodArTelier
 {
@@ -152,6 +153,26 @@ namespace CodArTelier
                     translate_.y = (ofGetHeight() - canvas_calculated_size_.y ) / 2;
                 }
             }
+        }
+
+        /// <summary>
+        /// Push current CodArt settings to ofxXmlSettings
+        /// </summary>
+        /// <param name="settings"></param>
+        void PushSettings(ofxXmlSettings& settings) {
+            settings.setValue("codart:canvas:size_mode", (int)canvas_settings_.size_mode);
+            settings.setValue("codart:canvas:raw:width", canvas_settings_.raw.width);
+            settings.setValue("codart:canvas:raw:height", canvas_settings_.raw.height);
+            settings.setValue("codart:canvas:view_percentage:square_canvas", canvas_settings_.view_percentage.square_canvas);
+            settings.setValue("codart:canvas:view_percentage:resize_when_view_change", canvas_settings_.view_percentage.resize_when_view_change);
+            settings.setValue("codart:canvas:view_percentage:width", canvas_settings_.view_percentage.width);
+            settings.setValue("codart:canvas:view_percentage:height", canvas_settings_.view_percentage.height);
+
+            settings.setValue("codart:drawer:id", canvas_settings_.view_percentage.height);
+
+        }
+
+        void PopSettings(ofxXmlSettings& settings) {
         }
 
     private:

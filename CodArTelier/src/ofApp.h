@@ -9,7 +9,7 @@
 #include "CodArt/CodArt.h"
 #include "CodArt/CodArtDocument.h"
 #include "CodArt/DrawerBase.h"
-#include "CodArt/Drawers/Noise.h"
+#include "CodArt/Drawers/ArdoiseFbm.h"
 
 using namespace CodArTelier;
 
@@ -35,9 +35,10 @@ class ofApp : public ofBaseApp{
 	    std::vector<std::string> paper_formats_ {"A0","A1","A2","A3","A4","A5","A6","A7","A8"};
         bool show_ui_ = true;
         ofxImGui::Gui gui;
-        bool show_imgui_demo_ = false;
-        bool show_imgui_new_ = false;
-        bool ui_show_codart_settings = true;
+        bool ui_show_imgui_demo_ = false;
+        bool ui_show_new_dialog_ = false;
+		bool ui_show_save_dialog_ = false;
+
 		bool ctrl_key_was_pressed_ = false;
 
         std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
@@ -50,6 +51,7 @@ class ofApp : public ofBaseApp{
         void setupImGui();
         void UIDrawMenu();
         void UIShowNewDialogs();
+		void UIShowMessageBoxes();
         void UICodArt();
 
 };

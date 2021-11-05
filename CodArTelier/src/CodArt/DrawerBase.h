@@ -2,6 +2,7 @@
 #define DRAWERBASE_H
 
 #include "ofMain.h"
+#include "ofxXmlSettings.h"
 
 namespace CodArTelier
 {
@@ -15,10 +16,10 @@ namespace CodArTelier
         virtual void Draw() {}
         virtual void Reset() {}
         virtual void CanvasResized() {}
-
         virtual void DrawUI() {}
-
         virtual void keyPressed(int key) {}
+        virtual void PushSettings(ofxXmlSettings& settings) {}
+        virtual void PopSettings(ofxXmlSettings& settings) {}
 
         void Start()
         {
@@ -38,6 +39,8 @@ namespace CodArTelier
             CanvasResized();
         }
 
+        
+
     protected:
         glm::vec2 canvas_size_;
         bool is_drawing_ = true;
@@ -52,6 +55,7 @@ namespace CodArTelier
     public:
         DrawerInfoAndFactoryBase()
         {
+            id_ = "_to_define_";
             name_ = "_to_define_";
             description_ = "_to_define_";
         }
@@ -61,6 +65,7 @@ namespace CodArTelier
         virtual shared_ptr<DrawerBase> Build() = 0;
 
     protected:
+        string id_;
         string name_;
         string description_;
     private:

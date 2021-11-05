@@ -287,7 +287,7 @@
     <ClInclude Include="src\CodArt\DrawerBase.h">
       <Filter>src\CodArt</Filter>
     </ClInclude>
-    <ClInclude Include="src\CodArt\Drawers\Noise.h">
+    <ClInclude Include="src\CodArt\Drawers\ArdoiseFbm.h">
       <Filter>src\CodArt\Drawers</Filter>
     </ClInclude>
     <ClInclude Include="src\lib\ofxBasicParticle.h">
@@ -301,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="src\lib\ofxValueGrid.h">
       <Filter>src\lib</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CodArt\CodArtDocument.h">
+      <Filter>src\CodArt</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

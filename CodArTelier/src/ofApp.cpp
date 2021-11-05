@@ -27,6 +27,7 @@ void ofApp::draw(){
         gui.begin();
         UIDrawMenu();
         UIShowNewDialogs();
+        UIShowMessageBoxes();
         UICodArt();
         gui.end();
     }
@@ -40,7 +41,7 @@ void ofApp::UIDrawMenu()
     {
         if( ImGui::MenuItem("New ...", "CTRL+N"))
         {
-            show_imgui_new_ = true;
+            ui_show_new_dialog_ = true;
         }
         if (ImGui::MenuItem("Open ...", "")) {
 
@@ -49,7 +50,7 @@ void ofApp::UIDrawMenu()
             ImGui::EndMenu();
         }
         if (ImGui::MenuItem("Save", "")) {
-
+            ui_show_save_dialog_ = true;
         }
         if (ImGui::MenuItem("Save As ...", "")) {
 
@@ -57,7 +58,7 @@ void ofApp::UIDrawMenu()
         if (ImGui::MenuItem("Save As Image", "")) {
 
         }
-        if (ImGui::MenuItem("Exit", "ALT+F4")) {
+        if (ImGui::MenuItem("Exit", "")) {
             
             // TODO : check if any openned CodArt doesn't need to be saved
             // TODO : stop ArtCode Drawer
@@ -70,21 +71,41 @@ void ofApp::UIDrawMenu()
     if (ImGui::BeginMenu("Help"))
     {
         if (ImGui::MenuItem("ImGui demo", "")) {
-            show_imgui_demo_ = !show_imgui_demo_;
+            ui_show_imgui_demo_ = !ui_show_imgui_demo_;
         }
         ImGui::EndMenu();
     }
 
     ImGui::EndMainMenuBar();
 
-    if( show_imgui_new_ ) ImGui::OpenPopup("New CodArt");
-    if( show_imgui_demo_ ) ImGui::ShowDemoWindow( &show_imgui_demo_ );
+    if( ui_show_new_dialog_ ) ImGui::OpenPopup("New CodArt");
+    if( ui_show_imgui_demo_ ) ImGui::ShowDemoWindow( &ui_show_imgui_demo_ );
+    if (ui_show_save_dialog_)
+    {
+        // TODO : First check is any CodArt exists
+        ui_show_save_dialog_ = false;
+
+        if (!activeCodArt_)
+        {
+            ImGui::OpenPopup("No CodArt");
+            //ofSystemAlertDialog("No CodArt to save !");
+        }
+        else {
+            auto ret = ofSystemSaveDialog("filename.cod", "Save your CodArt");
+            if (ret.bSuccess)
+            {
+
+            }
+        }
+
+        
+    }
 }
 
 void ofApp::setupApp()
 {
     // push drawers in list for later selection
-    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::NoiseInfoNFactory>();
+    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
     drawers_.push_back( d );
     drawers_names_.push_back( d->Name());
 }
@@ -125,7 +146,7 @@ void ofApp::UIShowNewDialogs()
         static bool resize_canvas_when_view_change = true;
         static char filename[128] = "";
 
-        ImGui::InputTextWithHint("filename", "enter filename", filename, IM_ARRAYSIZE(filename));
+        ImGui::InputTextWithHint("name", "enter a name", filename, IM_ARRAYSIZE(filename));
 
         if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawers_names_))
         {
@@ -173,7 +194,7 @@ void ofApp::UIShowNewDialogs()
         {
             auto drawer_info = drawers_[selected_drawer];
             ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
-            show_imgui_new_ = false;
+            ui_show_new_dialog_ = false;
             ImGui::CloseCurrentPopup();
 
             if( activeCodArt_)
@@ -183,14 +204,14 @@ void ofApp::UIShowNewDialogs()
 
             switch( selected_canvas_size_mode)
             {
-            case 0:
+            case 0: // RAW width and heigth
                 activeCodArt_ = make_shared<CodArt>();
                 activeCodArt_->SetupRaw(drawer_info->Build(), canvas_width, canvas_heigth);
                 break;
-            case 1:
-                // todo
+            case 1: // paper size based width and heigth
+                // TODO
                 break;
-            case 2:
+            case 2: // percent of view based width and heigth
                 if(square_canvas)
                 {
                     activeCodArt_ = make_shared<CodArt>();
@@ -204,11 +225,12 @@ void ofApp::UIShowNewDialogs()
                 break;
             }
         }
+        ImGui::SetItemDefaultFocus();
 
         ImGui::SameLine();
         if (ImGui::Button("cancel"))
         {
-            show_imgui_new_ = false;
+            ui_show_new_dialog_ = false;
             ImGui::CloseCurrentPopup();
         }
             
@@ -217,11 +239,33 @@ void ofApp::UIShowNewDialogs()
     }
 }
 
+void ofApp::UIShowMessageBoxes()
+{
+    if (ImGui::BeginPopupModal("No CodArt", NULL, ImGuiWindowFlags_AlwaysAutoResize))
+    {
+        ImGui::Text("No CodArt openned to save !\n\n");
+        ImGui::Separator();
+
+        //static int dummy_i = 0;
+        //ImGui::Combo("Combo", &dummy_i, "Delete\0Delete harder\0");
+
+        /*static bool dont_ask_me_next_time = false;
+        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
+        ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
+        ImGui::PopStyleVar();*/
+
+        ImGui::Spacing();
+        if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
+        ImGui::SetItemDefaultFocus();
+
+        ImGui::EndPopup();
+    }
+}
+
 void ofApp::UICodArt()
 {
-    if( activeCodArt_)
+    if( activeCodArt_ )
     {
-        //if (!ImGui::Begin("CodArt [name]", &ui_show_codart_settings))
         if (!ImGui::Begin("CodArt [name]"))
         {
             ImGui::End();
@@ -244,7 +288,7 @@ void ofApp::keyPressed(int key){
     if (ctrl_key_was_pressed_ && !(key == OF_KEY_CONTROL || key == OF_KEY_LEFT_CONTROL || key == OF_KEY_RIGHT_CONTROL))
     {
         //ofLog() << "CTRL+Key post received [" << key << "]";
-        if( key == 14) show_imgui_new_ = true;
+        if( key == 14) ui_show_new_dialog_ = true;
         ctrl_key_was_pressed_ = false;
         return;
     }
