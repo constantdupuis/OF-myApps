@@ -18,7 +18,7 @@ namespace CodArTelier
         class ArdoiseFbm : public DrawerBase
         {
         public:
-            ArdoiseFbm() {
+            ArdoiseFbm(string id ) : DrawerBase(id) {
 
             }
 
@@ -112,6 +112,15 @@ namespace CodArTelier
             }
 
             void PushSettings(ofxXmlSettings& settings) {
+                settings.setValue("id", id_);
+                settings.setValue("fbm_mode", (int)fbm_mode_);
+                settings.setValue("animation_speed", animation_speed_);
+                settings.setValue("grid:cols", grid_col_nbr_);
+                settings.setValue("grid:rows", grid_row_nbr_);
+
+                settings.setValue("fbm:octaves", bronian_motion_.octavesNbr());
+                settings.setValue("fbm:frequency", bronian_motion_.frequency());
+                settings.setValue("fbm:frequency_multiplier", bronian_motion_.frequencyMultiplier());
             }
             void PopSettings(ofxXmlSettings& settings) {
             }
@@ -141,7 +150,7 @@ namespace CodArTelier
             }
 
             shared_ptr<DrawerBase> Build(){
-                return make_shared<ArdoiseFbm>();
+                return make_shared<ArdoiseFbm>(id_);
             }
 
         };

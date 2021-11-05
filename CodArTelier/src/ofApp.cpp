@@ -39,7 +39,7 @@ void ofApp::UIDrawMenu()
     ImGui::BeginMainMenuBar();
     if (ImGui::BeginMenu("File"))
     {
-        if( ImGui::MenuItem("New ...", "CTRL+N"))
+        if( ImGui::MenuItem("New ...", ""))
         {
             ui_show_new_dialog_ = true;
         }
@@ -94,7 +94,9 @@ void ofApp::UIDrawMenu()
             auto ret = ofSystemSaveDialog("filename.cod", "Save your CodArt");
             if (ret.bSuccess)
             {
-
+                ofxXmlSettings settings;
+                activeCodArt_->PushSettings(settings);
+                settings.saveFile(ret.filePath);
             }
         }
 
@@ -108,6 +110,7 @@ void ofApp::setupApp()
     shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
     drawers_.push_back( d );
     drawers_names_.push_back( d->Name());
+    drawers_by_id_[d->Id()] = d;
 }
 
 void ofApp::setupImGui()
@@ -246,14 +249,6 @@ void ofApp::UIShowMessageBoxes()
         ImGui::Text("No CodArt openned to save !\n\n");
         ImGui::Separator();
 
-        //static int dummy_i = 0;
-        //ImGui::Combo("Combo", &dummy_i, "Delete\0Delete harder\0");
-
-        /*static bool dont_ask_me_next_time = false;
-        ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0, 0));
-        ImGui::Checkbox("Don't ask me next time", &dont_ask_me_next_time);
-        ImGui::PopStyleVar();*/
-
         ImGui::Spacing();
         if (ImGui::Button("OK", ImVec2(120, 0))) { ImGui::CloseCurrentPopup(); }
         ImGui::SetItemDefaultFocus();
@@ -266,6 +261,7 @@ void ofApp::UICodArt()
 {
     if( activeCodArt_ )
     {
+        //auto drawers_by_id_[activeCodArt_->id]
         if (!ImGui::Begin("CodArt [name]"))
         {
             ImGui::End();

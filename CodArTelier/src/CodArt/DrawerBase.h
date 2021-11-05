@@ -8,7 +8,8 @@ namespace CodArTelier
 {
     class DrawerBase {
     public:
-        DrawerBase() {
+        DrawerBase( string id) {
+            id_ = id;
         }
 
         virtual void Setup() {}
@@ -39,12 +40,15 @@ namespace CodArTelier
             CanvasResized();
         }
 
-        
+        const string& Id() {return id_;}
 
     protected:
         glm::vec2 canvas_size_;
         bool is_drawing_ = true;
+        string id_;
+        //DrawerInfoAndFactoryBase
     private:
+
         
     };
 
@@ -60,6 +64,7 @@ namespace CodArTelier
             description_ = "_to_define_";
         }
 
+        const string& Id() { return id_;}
         const string& Name() { return name_; }
         const string& Description() { return description_; }
         virtual shared_ptr<DrawerBase> Build() = 0;

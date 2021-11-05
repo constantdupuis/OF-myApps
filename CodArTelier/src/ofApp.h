@@ -43,6 +43,7 @@ class ofApp : public ofBaseApp{
 
         std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
         std::vector<std::string> drawers_names_;
+        std::map<string, shared_ptr<DrawerInfoAndFactoryBase>> drawers_by_id_;
 
 		std::shared_ptr<CodArt> activeCodArt_;
         CodArtDocument codArtDoc_;
