@@ -78,6 +78,11 @@ namespace CodArTelier
             translate_.y = (ofGetHeight() - h ) / 2;
         }
 
+        void SetupFromXmlSettings( ofxXmlSettings settings)
+        {
+
+        }
+
         void Start() 
         {
             drawer_->Start();
@@ -124,6 +129,7 @@ namespace CodArTelier
         void windowResized(int w, int h){
             if( !drawer_) return;
 
+            // TODO handle other SizeModes
             if( canvas_settings_.size_mode == CanvasSizeMode::ViewPercentage)
             {
                 if( canvas_settings_.view_percentage.resize_when_view_change)

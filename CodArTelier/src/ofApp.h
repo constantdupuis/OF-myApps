@@ -9,6 +9,7 @@
 #include "CodArt/CodArt.h"
 #include "CodArt/CodArtDocument.h"
 #include "CodArt/DrawerBase.h"
+#include "CodArt/DrawerManager.h"
 #include "CodArt/Drawers/ArdoiseFbm.h"
 
 using namespace CodArTelier;
@@ -41,6 +42,8 @@ class ofApp : public ofBaseApp{
         bool ui_show_open_dialog_ = false;
 
 		bool ctrl_key_was_pressed_ = false;
+
+        DrawerManager drawer_manager_;
 
         std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
         std::vector<std::string> drawers_names_;
