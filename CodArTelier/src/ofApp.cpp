@@ -96,7 +96,7 @@ void ofApp::UIDrawMenu()
             if (ret.bSuccess)
             {
                 ofxXmlSettings settings;
-                activeCodArt_->PushSettings(settings);
+                activeCodArt_->PushConfigToXmlSettings(settings);
                 settings.saveFile(ret.filePath);
             }
         }
@@ -138,6 +138,17 @@ void ofApp::loadCodArt( ofxXmlSettings settings ){
         activeCodArt_.reset();
     }
 
+    auto drawer_id = settings.getValue("codart:drawer:id", "");
+
+    auto drawer_info_n_factory = drawer_manager_.DrawerInfoNFactory(drawer_id);
+    if( drawer_info_n_factory)
+    {
+
+    }
+    else
+    {
+        // TODO : error message, drawer with id [drawer_id]
+    }
 
 }
 
@@ -162,7 +173,7 @@ void ofApp::UIShowNewDialogs()
 
         ImGui::InputTextWithHint("name", "enter a name", filename, IM_ARRAYSIZE(filename));
 
-        if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawers_names_))
+        if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawer_manager_.DrawerNames()))
         {
             ofLog() << "Selected drawer id [" << selected_drawer << "]";
         }
@@ -206,37 +217,46 @@ void ofApp::UIShowNewDialogs()
 
         if (ImGui::Button("create"))
         {
-            auto drawer_info = drawers_[selected_drawer];
-            ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
             ui_show_new_dialog_ = false;
-            ImGui::CloseCurrentPopup();
-
-            if( activeCodArt_)
+            //auto drawer_info = drawers_[selected_drawer];
+            auto drawer_info = drawer_manager_.DrawerInfoNFactory(selected_drawer);
+            if( drawer_info )
             {
-                activeCodArt_.reset();
+                ofLog() << "Create CodArt with drawer [" << drawer_info->Name() << "]";
+
+                ImGui::CloseCurrentPopup();
+
+                if( activeCodArt_)
+                {
+                    activeCodArt_.reset();
+                }
+
+                switch(selected_canvas_size_mode)
+                {
+                case 0: // RAW, width and heigth
+                    activeCodArt_ = make_shared<CodArt>();
+                    activeCodArt_->SetupRaw(drawer_info->Build(), canvas_width, canvas_heigth);
+                    break;
+                case 1: // paper size based width and heigth
+                    // TODO
+                    break;
+                case 2: // percent of view based width and heigth
+                    if(square_canvas)
+                    {
+                        activeCodArt_ = make_shared<CodArt>();
+                        activeCodArt_->SetupPercentSquare(drawer_info->Build(), view_percent_heigth, resize_canvas_when_view_change);
+                    }
+                    else
+                    {
+                        activeCodArt_ = make_shared<CodArt>();
+                        activeCodArt_->SetupPercent(drawer_info->Build(), view_percent_width, view_percent_heigth, resize_canvas_when_view_change);
+                    }
+                    break;
+                }
             }
-
-            switch( selected_canvas_size_mode)
+            else
             {
-            case 0: // RAW width and heigth
-                activeCodArt_ = make_shared<CodArt>();
-                activeCodArt_->SetupRaw(drawer_info->Build(), canvas_width, canvas_heigth);
-                break;
-            case 1: // paper size based width and heigth
-                // TODO
-                break;
-            case 2: // percent of view based width and heigth
-                if(square_canvas)
-                {
-                    activeCodArt_ = make_shared<CodArt>();
-                    activeCodArt_->SetupPercentSquare(drawer_info->Build(), view_percent_heigth, resize_canvas_when_view_change);
-                }
-                else
-                {
-                    activeCodArt_ = make_shared<CodArt>();
-                     activeCodArt_->SetupPercent(drawer_info->Build(), view_percent_width, view_percent_heigth, resize_canvas_when_view_change);
-                }
-                break;
+                // TODO : show a error message
             }
         }
         ImGui::SetItemDefaultFocus();
@@ -247,7 +267,6 @@ void ofApp::UIShowNewDialogs()
             ui_show_new_dialog_ = false;
             ImGui::CloseCurrentPopup();
         }
-            
 
         ImGui::EndPopup();
     }

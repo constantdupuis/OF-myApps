@@ -3,6 +3,10 @@
 
 #include "ofMain.h"
 
+#define CANVAS_SIZE_MODE_RAW "Raw"
+#define CANVAS_SIZE_MODE_PAPER_FORMAT "PaperFormat"
+#define CANVAS_SIZE_MODE_VIEW_PERCENT "ViewPercent"
+
 namespace CodArTelier
 {
     enum class CanvasSizeMode {Raw = 0, PaperFormat, ViewPercentage};
@@ -11,7 +15,7 @@ namespace CodArTelier
         CanvasSettings() {}
         ~CanvasSettings() {}
 
-        CanvasSizeMode size_mode { CanvasSizeMode::ViewPercentage };
+        string size_mode {CANVAS_SIZE_MODE_VIEW_PERCENT};
         union {
             struct {
                 int width { 400 };

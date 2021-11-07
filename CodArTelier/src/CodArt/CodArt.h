@@ -18,7 +18,7 @@ namespace CodArTelier
         void SetupRaw(shared_ptr<DrawerBase> drawer, int width, int heigth)
         {
             drawer_ = drawer;
-            canvas_settings_.size_mode = CanvasSizeMode::Raw;
+            canvas_settings_.size_mode = CANVAS_SIZE_MODE_RAW;
             canvas_settings_.raw.width = width;
             canvas_settings_.raw.height = heigth;
 
@@ -30,7 +30,7 @@ namespace CodArTelier
         void SetupPercent(shared_ptr<DrawerBase> drawer, float percent_width, float percent_heigth, bool resize_when_view_change = false)
         {
             drawer_ = drawer;
-            canvas_settings_.size_mode = CanvasSizeMode::ViewPercentage;
+            canvas_settings_.size_mode = CANVAS_SIZE_MODE_VIEW_PERCENT;
             canvas_settings_.view_percentage.width = percent_width;
             canvas_settings_.view_percentage.height = percent_heigth;
             canvas_settings_.view_percentage.square_canvas = false;
@@ -56,7 +56,7 @@ namespace CodArTelier
         void SetupPercentSquare(shared_ptr<DrawerBase> drawer, float percent_heigth, bool resize_when_view_change = false)
         {
             drawer_ = drawer;
-            canvas_settings_.size_mode = CanvasSizeMode::ViewPercentage;
+            canvas_settings_.size_mode = CANVAS_SIZE_MODE_VIEW_PERCENT;
             canvas_settings_.view_percentage.width = percent_heigth;
             canvas_settings_.view_percentage.height = percent_heigth;
             canvas_settings_.view_percentage.square_canvas = true;
@@ -130,7 +130,7 @@ namespace CodArTelier
             if( !drawer_) return;
 
             // TODO handle other SizeModes
-            if( canvas_settings_.size_mode == CanvasSizeMode::ViewPercentage)
+            if( canvas_settings_.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
             {
                 if( canvas_settings_.view_percentage.resize_when_view_change)
                 {
@@ -165,28 +165,32 @@ namespace CodArTelier
         /// Push current CodArt settings to ofxXmlSettings
         /// </summary>
         /// <param name="settings"></param>
-        void PushSettings(ofxXmlSettings& settings) {
+        void PushConfigToXmlSettings(ofxXmlSettings& settings) {
             settings.addTag("codart");
             settings.pushTag("codart");
 
             settings.addTag("canvas");
             settings.pushTag("canvas");
-            settings.setValue("size_mode", (int)canvas_settings_.size_mode);
-            switch(canvas_settings_.size_mode)
+            settings.setValue("size_mode", canvas_settings_.size_mode);
+            if( canvas_settings_.size_mode == CANVAS_SIZE_MODE_RAW)
             {
-                case CanvasSizeMode::Raw :
-                    settings.setValue("raw:width", canvas_settings_.raw.width);
-                    settings.setValue("raw:height", canvas_settings_.raw.height);
-                    break;
-                case CanvasSizeMode::PaperFormat:
-                    settings.setValue("paper", "not yet implemented");
-                    break;
-                case CanvasSizeMode::ViewPercentage:
-                    settings.setValue("view_percentage:square_canvas", canvas_settings_.view_percentage.square_canvas);
-                    settings.setValue("view_percentage:resize_when_view_change", canvas_settings_.view_percentage.resize_when_view_change);
-                    settings.setValue("view_percentage:width", canvas_settings_.view_percentage.width);
-                    settings.setValue("view_percentage:height", canvas_settings_.view_percentage.height);
-                    break;
+                settings.setValue("raw:width", canvas_settings_.raw.width);
+                settings.setValue("raw:height", canvas_settings_.raw.height);
+            }
+            else if(canvas_settings_.size_mode == CANVAS_SIZE_MODE_PAPER_FORMAT)
+            {
+                settings.setValue("paper", "not yet implemented");
+            }
+            else if(canvas_settings_.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
+            {
+                settings.setValue("view_percentage:square_canvas", canvas_settings_.view_percentage.square_canvas);
+                settings.setValue("view_percentage:resize_when_view_change", canvas_settings_.view_percentage.resize_when_view_change);
+                settings.setValue("view_percentage:width", canvas_settings_.view_percentage.width);
+                settings.setValue("view_percentage:height", canvas_settings_.view_percentage.height);
+            }
+            else
+            {
+                ofLogError("PushSettings") << "Unkown canvas size mode [" << canvas_settings_.size_mode << "]";
             }
             settings.popTag();
 
