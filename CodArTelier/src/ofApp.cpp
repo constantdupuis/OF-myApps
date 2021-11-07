@@ -44,7 +44,7 @@ void ofApp::UIDrawMenu()
             ui_show_new_dialog_ = true;
         }
         if (ImGui::MenuItem("Open ...", "")) {
-
+            ui_show_open_dialog_ = true;
         }
         if (ImGui::BeginMenu("Open recent ...", "")) {
             ImGui::EndMenu();
@@ -79,6 +79,7 @@ void ofApp::UIDrawMenu()
     ImGui::EndMainMenuBar();
 
     if( ui_show_new_dialog_ ) ImGui::OpenPopup("New CodArt");
+    if( ui_show_open_dialog_) UIShowOpenDialogs();
     if( ui_show_imgui_demo_ ) ImGui::ShowDemoWindow( &ui_show_imgui_demo_ );
     if (ui_show_save_dialog_)
     {
@@ -116,7 +117,8 @@ void ofApp::setupApp()
 void ofApp::setupImGui()
 {
     ImGuiIO& io = ImGui::GetIO();
-    io.Fonts->AddFontFromFileTTF("./data/fonts/Roboto-Regular.ttf", 18);
+    //io.Fonts->AddFontFromFileTTF("./data/fonts/Roboto-Regular.ttf", 18);
+    io.Fonts->AddFontFromFileTTF("./data/fonts/ShareTechMono-Regular.ttf", 18);
 
     gui.setup();
 
@@ -128,6 +130,15 @@ void ofApp::setupImGui()
     style.ScrollbarRounding = 2.0f;
     style.ChildRounding = 4.0f;
     style.TabRounding = 2.0f;
+}
+
+void ofApp::loadCodArt( ofxXmlSettings settings ){
+    if( activeCodArt_)
+    {
+        activeCodArt_.reset();
+    }
+
+
 }
 
 void ofApp::UIShowNewDialogs()
@@ -239,6 +250,18 @@ void ofApp::UIShowNewDialogs()
             
 
         ImGui::EndPopup();
+    }
+}
+
+void ofApp::UIShowOpenDialogs()
+{
+    ui_show_open_dialog_ = false;
+    auto ret = ofSystemLoadDialog("Open an CodArt", false, "./codarts");
+    if (ret.bSuccess)
+    {
+        ofxXmlSettings settings;
+        settings.loadFile(ret.filePath);
+        loadCodArt( settings );
     }
 }
 

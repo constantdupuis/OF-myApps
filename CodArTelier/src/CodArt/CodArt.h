@@ -166,7 +166,6 @@ namespace CodArTelier
             settings.addTag("canvas");
             settings.pushTag("canvas");
             settings.setValue("size_mode", (int)canvas_settings_.size_mode);
-            // TODO : only save settings for active mode !!!!!
             switch(canvas_settings_.size_mode)
             {
                 case CanvasSizeMode::Raw :

@@ -38,6 +38,7 @@ class ofApp : public ofBaseApp{
         bool ui_show_imgui_demo_ = false;
         bool ui_show_new_dialog_ = false;
 		bool ui_show_save_dialog_ = false;
+        bool ui_show_open_dialog_ = false;
 
 		bool ctrl_key_was_pressed_ = false;
 
@@ -50,8 +51,10 @@ class ofApp : public ofBaseApp{
 
         void setupApp();
         void setupImGui();
+        void loadCodArt(ofxXmlSettings settings);
         void UIDrawMenu();
         void UIShowNewDialogs();
+        void UIShowOpenDialogs();
 		void UIShowMessageBoxes();
         void UICodArt();
 

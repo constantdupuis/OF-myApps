@@ -18,7 +18,6 @@ Project{
             "src/CodArt/CodArtDocument.h",
             "src/CodArt/DrawerBase.h",
             "src/CodArt/Drawers/ArdoiseFbm.h",
-            "src/CodArt/Drawers/Noise.h",
             "src/lib/ofxBasicParticle.h",
             "src/lib/ofxBronianMotion.h",
             "src/lib/ofxHelpers.h",
