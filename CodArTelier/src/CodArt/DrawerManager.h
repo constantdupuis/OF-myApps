@@ -24,7 +24,12 @@ namespace CodArTelier
             return drawers_names_;
         }
 
-        shared_ptr<DrawerInfoAndFactoryBase> DrawerInfoNFactory( int drawerIdx)
+        const vector<shared_ptr<DrawerInfoAndFactoryBase>>& DrawersNfoNFactories()
+        {
+            return drawers_info_factory_;
+        }
+
+        shared_ptr<DrawerInfoAndFactoryBase> GetDrawerInfoNFactory( int drawerIdx )
         {
             if( drawerIdx > -1 && drawerIdx < drawers_info_factory_.size())
             {
@@ -34,7 +39,7 @@ namespace CodArTelier
             return nullptr;
         }
 
-        shared_ptr<DrawerInfoAndFactoryBase> DrawerInfoNFactory( string drawerId)
+        shared_ptr<DrawerInfoAndFactoryBase> GetDrawerInfoNFactory( string drawerId )
         {
             if( drawers_info_n_factory_by_id_.find(drawerId) == drawers_info_n_factory_by_id_.end())
             {

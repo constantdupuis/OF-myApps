@@ -9,29 +9,31 @@
 
 namespace CodArTelier
 {
-    enum class CanvasSizeMode {Raw = 0, PaperFormat, ViewPercentage};
+    struct CanvasSizeModeRawSize {
+        int width;
+        int height;
+    };
+
+    struct CanvasSizeModePaperformat
+    {
+        string format_name;
+        int resolution;
+    };
+
+    struct CanvasSizeModeViewPercentage
+    {
+        float width;
+        float height;
+        bool square_canvas;
+        bool resize_when_view_change;
+    };
 
     struct CanvasSettings {
-        CanvasSettings() {}
-        ~CanvasSettings() {}
-
         string size_mode {CANVAS_SIZE_MODE_VIEW_PERCENT};
-        union {
-            struct {
-                int width { 400 };
-                int height { 400 };
-            } raw;
-            struct {
-                string format_name {"A4"};
-                int resolution {300};
-            } paper_format;
-            struct {
-                float width {90.0f};
-                float height {90.0f};
-                bool square_canvas = false;
-                bool resize_when_view_change = false;
-            } view_percentage;
-        };
+
+        CanvasSizeModeRawSize raw {400,400};
+        CanvasSizeModePaperformat paper_format {"A4", 300};
+        CanvasSizeModeViewPercentage view_percentage {90.0f, 90.0f, false, false};
     };
 }
 

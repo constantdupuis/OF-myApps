@@ -305,6 +305,12 @@
     <ClInclude Include="src\CodArt\CodArtDocument.h">
       <Filter>src\CodArt</Filter>
     </ClInclude>
+    <ClInclude Include="src\CodArt\DrawerManager.h">
+      <Filter>src\CodArt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CodArt\CodArtManager.h">
+      <Filter>src\CodArt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
