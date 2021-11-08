@@ -16,6 +16,7 @@ Project{
             "src/CodArt/CanvasSettings.h",
             "src/CodArt/CodArt.h",
             "src/CodArt/CodArtDocument.h",
+            "src/CodArt/CodArtManager.h",
             "src/CodArt/DrawerBase.h",
             "src/CodArt/DrawerManager.h",
             "src/CodArt/Drawers/ArdoiseFbm.h",

@@ -47,6 +47,39 @@ namespace CodArTelier
         /// <returns></returns>
         shared_ptr<CodArt> CreateCodArtFromXmlSettings(ofxXmlSettings settings)
         {
+            shared_ptr<CodArt> codart;
+            CanvasSettings canvas_settings;
+
+            auto drawer_id = settings.getValue("codart:drawer:id", "none");
+
+            canvas_settings.size_mode  = settings.getValue("codart:canvas:size_mode", "none");
+
+            if( canvas_settings.size_mode == "none" )
+            {
+                ofLogError("CodArtManager") << "No size mode in config file.";
+            }
+            else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_RAW)
+            {
+                canvas_settings.raw.width = settings.getValue("codart:canvas:raw:width", 0);
+                canvas_settings.raw.height = settings.getValue("codart:canvas:raw:height", 0);
+            }
+            else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_PAPER_FORMAT)
+            {
+                // TODO
+            }
+            else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
+            {
+                canvas_settings.view_percentage.square_canvas = settings.getValue("codart:canvas:view_percentage:square_canvas", true);
+                canvas_settings.view_percentage.resize_when_view_change = settings.getValue("codart:canvas:view_percentage:resize_when_view_change", true);
+                canvas_settings.view_percentage.width = settings.getValue("codart:canvas:view_percentage:width", 90.0);
+                canvas_settings.view_percentage.height = settings.getValue("codart:canvas:view_percentage:height", 90.0);
+            }
+            else
+            {
+                ofLogError("CodArtManager") << "Inknown canavs size mode [" << canvas_settings.size_mode << "] in config file.";
+            }
+
+            return CreateCodArt(drawer_id, canvas_settings);
 
         }
 

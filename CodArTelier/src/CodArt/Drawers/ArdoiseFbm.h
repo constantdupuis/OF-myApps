@@ -112,7 +112,6 @@ namespace CodArTelier
             }
 
             void PushSettings(ofxXmlSettings& settings) {
-                settings.setValue("id", id_);
                 settings.setValue("fbm_mode", (int)fbm_mode_);
                 settings.setValue("animation_speed", animation_speed_);
                 settings.setValue("grid:cols", grid_col_nbr_);

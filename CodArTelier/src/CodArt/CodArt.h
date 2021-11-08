@@ -158,6 +158,9 @@ namespace CodArTelier
             settings.addTag("codart");
             settings.pushTag("codart");
 
+            settings.setValue("name", name_);
+            settings.setValue("description", description_);
+
             settings.addTag("canvas");
             settings.pushTag("canvas");
             settings.setValue("size_mode", canvas_settings_.size_mode);
@@ -185,6 +188,7 @@ namespace CodArTelier
 
             settings.addTag("drawer");
             settings.pushTag("drawer");
+            settings.setValue("id",drawer_->Id());
             drawer_->PushSettings(settings);
             settings.popTag();
         }
@@ -193,9 +197,29 @@ namespace CodArTelier
 
         }
 
-        
+        const string& getName()
+        {
+            return name_;
+        }
+
+        void setName( const string& name )
+        {
+            name_ = name;
+        }
+
+        const string& getDescription()
+        {
+            return description_;
+        }
+
+        void setDescription( const string& description )
+        {
+            description_ = description;
+        }
 
     private:
+        string name_ = "";
+        string description_= "";
         shared_ptr<Canvas> canvas_;
         shared_ptr<DrawerBase> drawer_;
         CanvasSettings canvas_settings_;
