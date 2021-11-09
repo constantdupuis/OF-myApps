@@ -300,26 +300,14 @@ void ofApp::UICodArt()
 {
     if( activeCodArt_ )
     {
-        //auto drawer_nfo = drawers_by_id_[activeCodArt_->Id];
-        std::stringstream title;
-        title << activeCodArt_->getName() ;
-
-        std::stringstream description;
-        description << activeCodArt_->getDescription() ;
-
-
-        if (!ImGui::Begin(title.str().c_str()))
+        if (!ImGui::Begin("CodArt"))
         {
             ImGui::End();
             return;
         }
-        
-        //ImGui::InputText()
 
-        if( ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
-        {
-            activeCodArt_->DrawUI();
-        }
+        activeCodArt_->DrawUI();
+       
         ImGui::End();
     }
 

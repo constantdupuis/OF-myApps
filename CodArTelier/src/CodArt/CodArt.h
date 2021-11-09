@@ -103,9 +103,28 @@ namespace CodArTelier
 
         void DrawUI()
         {
+            char* cString = new char[256];
+
+            strcpy(cString, name_.c_str());
+            if (ImGui::InputText(" name", cString, 128))
+            {
+                name_ = cString;
+            }
+
+           /* strcpy(cString, description_.c_str());
+            if (ImGui::InputTextMultiline(" description", cString, 256))
+            {
+                description_ = cString;
+            }*/
+
+            delete[] cString;
+
             if( drawer_)
             {
-                drawer_->DrawUI();
+                if (ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
+                {
+                    drawer_->DrawUI();
+                }
             }
         }
 
@@ -118,7 +137,7 @@ namespace CodArTelier
         void windowResized(int w, int h){
             if( !drawer_) return;
 
-            // TODO handle other SizeModes
+            // TODO handle other Size Modes
             if( canvas_settings_.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
             {
                 if( canvas_settings_.view_percentage.resize_when_view_change)
@@ -218,8 +237,9 @@ namespace CodArTelier
         }
 
     private:
-        string name_ = "";
-        string description_= "";
+        string name_;
+        string description_;
+       
         shared_ptr<Canvas> canvas_;
         shared_ptr<DrawerBase> drawer_;
         CanvasSettings canvas_settings_;
