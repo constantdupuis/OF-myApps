@@ -52,6 +52,9 @@ namespace CodArTelier
 
             auto drawer_id = settings.getValue("codart:drawer:id", "none");
 
+            codart->setName( settings.getValue("codart:name", "") );
+            codart->setDescription( settings.getValue("codart:description", "") );
+
             canvas_settings.size_mode  = settings.getValue("codart:canvas:size_mode", "none");
 
             if( canvas_settings.size_mode == "none" )
@@ -83,14 +86,13 @@ namespace CodArTelier
                 return nullptr;
             }
 
-
-
             auto drawer = drawer_manager_.BuildDrawer(drawer_id);
             if (!drawer)
             {
                 ofLogError("CodArtManager") << "CreateCodArt, drawer [" << drawer_id << "] doesn't exists!";
                 return nullptr;
             }
+
             settings.pushTag("codart"); 
             settings.pushTag("drawer");
             drawer->ConfigureFromXmlSettings(settings);

@@ -2,6 +2,7 @@
 #define CODART_H
 
 #include "ofMain.h"
+#include "ofxImGui.h"
 #include "Canvas.h"
 #include "DrawerBase.h"
 #include "ofxXmlSettings.h"
@@ -26,6 +27,7 @@ namespace CodArTelier
                 // TODO : Calculate a scale if needed
                 canvas_ = make_shared<Canvas>(canvas_settings_.raw.width, canvas_settings_.raw.height);
                 drawer_->setCanvasSize(glm::vec2(canvas_settings_.raw.width, canvas_settings_.raw.height));
+                CalculateViewParams(canvas_settings_.raw.width, canvas_settings_.raw.height);
             }
             else if (canvas_settings_.size_mode == CANVAS_SIZE_MODE_PAPER_FORMAT)
             {
@@ -39,7 +41,6 @@ namespace CodArTelier
                 {
                     w = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height / 100.0));
                     h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height / 100.0));
-                    
                 }
                 else
                 {
@@ -47,17 +48,19 @@ namespace CodArTelier
                     h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height / 100.0));
                 }
 
-                translate_.x = (ofGetWidth() - w) / 2;
-                translate_.y = (ofGetHeight() - h) / 2;
+                CalculateViewParams(w,h);
 
-                if (!canvas_settings_.view_percentage.resize_when_view_change)
-                {
-                    canvas_calculated_size_.x = w;
-                    canvas_calculated_size_.y = h;
-                }
+//                translate_.x = (ofGetWidth() - w) / 2;
+//                translate_.y = (ofGetHeight() - h) / 2;
 
-                canvas_ = make_shared<Canvas>(h,w);
-                drawer_->setCanvasSize(glm::vec2(h, w));
+//                if (!canvas_settings_.view_percentage.resize_when_view_change)
+//                {
+//                    canvas_calculated_size_.x = w;
+//                    canvas_calculated_size_.y = h;
+//                }
+
+                canvas_ = make_shared<Canvas>(w, h);
+                drawer_->setCanvasSize(glm::vec2(w, h));
             }
             else 
             {
@@ -67,10 +70,10 @@ namespace CodArTelier
             return ret;
         }
       
-        static shared_ptr<CodArt> SetupFromXmlSettings( ofxXmlSettings settings)
-        {
-              
-        }
+//        static shared_ptr<CodArt> SetupFromXmlSettings( ofxXmlSettings settings)
+//        {
+//              return nullptr;
+//        }
 
         void Start() 
         {
@@ -97,6 +100,7 @@ namespace CodArTelier
             // draw canvas to screen
             ofPushMatrix();
             ofTranslate( translate_ );
+            ofScale( scale_) ;
             canvas_->draw(0,0);
             ofPopMatrix();
         }
@@ -119,7 +123,9 @@ namespace CodArTelier
 
             delete[] cString;
 
-            if( drawer_)
+            ImGui::Spacing();
+
+            if(drawer_)
             {
                 if (ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
                 {
@@ -145,8 +151,7 @@ namespace CodArTelier
                     if( canvas_settings_.view_percentage.square_canvas)
                     {
                         int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
-                        translate_.x = (ofGetWidth() - h ) / 2;
-                        translate_.y = (ofGetHeight() - h ) / 2;
+                        CalculateViewParams(h, h);
                         canvas_->Resize(h, h);
                         drawer_->setCanvasSize(glm::vec2(h,h));
                     }
@@ -154,17 +159,51 @@ namespace CodArTelier
                     {
                         int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
                         int w = (int)((float)ofGetWidth() * (canvas_settings_.view_percentage.width/100.0));
-                        translate_.x = (ofGetWidth() - w ) / 2;
-                        translate_.y = (ofGetHeight() - h ) / 2;
+                        CalculateViewParams(w, h);
                         canvas_->Resize(w, h);
                         drawer_->setCanvasSize(glm::vec2(w,h));
                     }
-
                 }
                 else
                 {
-                    translate_.x = (ofGetWidth() - canvas_calculated_size_.x ) / 2;
-                    translate_.y = (ofGetHeight() - canvas_calculated_size_.y ) / 2;
+                    CalculateViewParams(canvas_calculated_size_.x, canvas_calculated_size_.y);
+                }
+            }
+            CalculateViewParams(canvas_calculated_size_.x, canvas_calculated_size_.y);
+        }
+
+        void CalculateViewParams( int canvas_w, int canvas_h)
+        {
+            canvas_calculated_size_.x = canvas_w;
+            canvas_calculated_size_.y = canvas_h;
+            auto view_w = ofGetWidth();
+            auto view_h = ofGetHeight();
+
+            if( canvas_calculated_size_.x < view_w && canvas_calculated_size_.y < view_h)
+            {
+                scale_ = 1.0f;
+                translate_.x = (view_w - canvas_calculated_size_.x ) / 2;
+                translate_.y = (view_h - canvas_calculated_size_.y ) / 2;
+            }
+            else
+            {
+                if( canvas_calculated_size_.x > canvas_calculated_size_.y)
+                {
+                    auto ratio = (float)(view_w-margin*2)/(float)canvas_calculated_size_.x;
+                    auto scaled_w = canvas_calculated_size_.x * ratio;
+                    auto scaled_h = canvas_calculated_size_.y * ratio;
+                    scale_ = ratio;
+                    translate_.x = (view_w - scaled_w ) / 2;
+                    translate_.y = (view_h - scaled_h ) / 2;
+                }
+                else if( canvas_calculated_size_.x < canvas_calculated_size_.y)
+                {
+                    auto ratio = (float)(view_h-margin*2)/(float)canvas_calculated_size_.y;
+                    auto scaled_w = canvas_calculated_size_.x * ratio;
+                    auto scaled_h = canvas_calculated_size_.y * ratio;
+                    scale_ = ratio;
+                    translate_.x = (view_w - scaled_w ) / 2;
+                    translate_.y = (view_h - scaled_h ) / 2;
                 }
             }
         }
@@ -243,9 +282,11 @@ namespace CodArTelier
         shared_ptr<Canvas> canvas_;
         shared_ptr<DrawerBase> drawer_;
         CanvasSettings canvas_settings_;
+
+        float scale_;
         glm::vec2 translate_;
         glm::vec2 canvas_calculated_size_;
-        
+        const int margin = 10;
     };
 }
 

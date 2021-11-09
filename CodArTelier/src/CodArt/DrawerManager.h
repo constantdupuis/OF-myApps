@@ -4,6 +4,7 @@
 #include "ofMain.h"
 #include "DrawerBase.h"
 #include "CodArt/Drawers/ArdoiseFbm.h"
+#include "CodArt/Drawers/TestDrawer.h"
 
 namespace CodArTelier
 {
@@ -12,6 +13,12 @@ namespace CodArTelier
         DrawerManager() {
 
             shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
+            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
+            drawers_info_factory_.push_back( d );
+            drawers_names_.push_back( d->Name());
+            drawers_info_n_factory_by_id_[d->Id()] = d;
+
+            d = make_shared<CodArTelier::Drawer::TestDrawerInfoNFactory>();
             ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
             drawers_info_factory_.push_back( d );
             drawers_names_.push_back( d->Name());

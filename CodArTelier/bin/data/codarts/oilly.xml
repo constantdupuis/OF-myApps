@@ -1,0 +1,25 @@
+<codart>
+    <name>TOTO</name>
+    <description></description>
+    <canvas>
+        <size_mode>Raw</size_mode>
+        <raw>
+            <width>2000</width>
+            <height>400</height>
+        </raw>
+    </canvas>
+    <drawer>
+        <id>ArdoiseFbm</id>
+        <fbm_mode>1</fbm_mode>
+        <animation_speed>5.560999870</animation_speed>
+        <grid>
+            <cols>300</cols>
+            <rows>100</rows>
+        </grid>
+        <fbm>
+            <octaves>2</octaves>
+            <frequency>0.002000000</frequency>
+            <frequency_multiplier>1.042000055</frequency_multiplier>
+        </fbm>
+    </drawer>
+</codart>

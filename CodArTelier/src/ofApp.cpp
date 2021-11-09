@@ -3,7 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetWindowTitle("CodarTelier");
-    ofSetEscapeQuitsApp(false );
+    ofSetEscapeQuitsApp(false);
     setupApp();
     setupImGui();
 }
@@ -100,8 +100,6 @@ void ofApp::UIDrawMenu()
                 settings.saveFile(ret.filePath);
             }
         }
-
-        
     }
 }
 
@@ -134,7 +132,9 @@ void ofApp::loadCodArt( ofxXmlSettings settings ){
     {
         activeCodArt_.reset();
     }
+
     activeCodArt_ = codart_manager_.CreateCodArtFromXmlSettings(settings);
+
     if (activeCodArt_)
     {
         ofLogNotice("ofApp") << "CodArt created from xml settings";

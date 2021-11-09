@@ -18,7 +18,7 @@ namespace CodArTelier
         class ArdoiseFbm : public DrawerBase
         {
         public:
-            ArdoiseFbm(string id ) : DrawerBase(id) {
+            ArdoiseFbm( string id ) : DrawerBase(id) {
 
             }
 

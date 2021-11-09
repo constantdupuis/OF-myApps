@@ -8,10 +8,11 @@ namespace CodArTelier
 {
     class DrawerBase {
     public:
-        DrawerBase()
-        {
-            id_ = "none";
-        }
+//        DrawerBase()
+//        {
+//            id_ = "none";
+//        }
+
         DrawerBase( string id) {
             id_ = id;
         }
