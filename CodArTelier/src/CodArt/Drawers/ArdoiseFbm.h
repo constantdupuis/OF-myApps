@@ -122,7 +122,20 @@ namespace CodArTelier
                 settings.setValue("fbm:frequency_multiplier", bronian_motion_.frequencyMultiplier());
             }
 
-            void PopSettings(ofxXmlSettings& settings) {
+             bool ConfigureFromXmlSettings(ofxXmlSettings& settings) {
+             
+                fbm_mode_ = (FbmMode)settings.getValue("fbm_mode", 0);
+                animation_speed_ = settings.getValue("animation_speed", 1.0f);
+                grid_col_nbr_ = settings.getValue("grid:cols", 50);
+                grid_row_nbr_ = settings.getValue("grid:rows", 50);
+
+                bronian_motion_.setOctavesNbr( settings.getValue("fbm:octaves", 2 ));
+                bronian_motion_.setFrequency(settings.getValue("fbm:frequency", 0.005f));
+                bronian_motion_.setFrequencyMultiplier(settings.getValue("fbm:frequency_multiplier", 2.0f));
+
+                CanvasResized();
+
+                return true;
             }
 
         private:

@@ -1,6 +1,6 @@
 <codart>
     <canvas>
-        <size_mode>2</size_mode>
+        <size_mode>ViewPercent</size_mode>
         <view_percentage>
             <square_canvas>1</square_canvas>
             <resize_when_view_change>1</resize_when_view_change>

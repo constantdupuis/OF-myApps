@@ -44,14 +44,11 @@ class ofApp : public ofBaseApp{
 
 		bool ctrl_key_was_pressed_ = false;
 
-		//TODO remove
-        //DrawerManager drawer_manager_;
-
 		CodArtManager codart_manager_;
 
-        std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_;
-        std::vector<std::string> drawers_names_;
-        std::map<string, shared_ptr<DrawerInfoAndFactoryBase>> drawers_by_id_;
+		vector<string> drawer_names;
+		vector<string> drawer_descriptions;
+		vector<string> drawer_ids;
 
 		std::shared_ptr<CodArt> activeCodArt_;
         CodArtDocument codArtDoc_;
@@ -64,5 +61,4 @@ class ofApp : public ofBaseApp{
         void UIShowOpenDialogs();
 		void UIShowMessageBoxes();
         void UICodArt();
-
 };

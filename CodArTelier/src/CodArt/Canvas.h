@@ -9,6 +9,8 @@ namespace CodArTelier
     class Canvas : public ofFbo
     {
     public:
+
+        Canvas() {}
         // create raw sized canvas
         Canvas(int width, int height) {
             allocate(width, height, GL_RGBA);

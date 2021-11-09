@@ -1,10 +1,6 @@
 <codart>
     <canvas>
-        <size_mode>2</size_mode>
-        <raw>
-            <width>1118437376</width>
-            <height>1118437376</height>
-        </raw>
+        <size_mode>ViewPercent</size_mode>
         <view_percentage>
             <square_canvas>1</square_canvas>
             <resize_when_view_change>1</resize_when_view_change>
@@ -20,5 +16,10 @@
             <cols>150</cols>
             <rows>150</rows>
         </grid>
+        <fbm>
+            <octaves>2</octaves>
+            <frequency>0.003000000</frequency>
+            <frequency_multiplier>1.378000021</frequency_multiplier>
+        </fbm>
     </drawer>
 </codart>

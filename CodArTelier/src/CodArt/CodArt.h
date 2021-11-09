@@ -12,10 +12,10 @@ namespace CodArTelier
     public:
         CodArt()
         {
-
+            
         }
 
-        bool Setup(shared_ptr<DrawerBase> drawer, CanvasSettings canvas_settings)
+        bool Setup(shared_ptr<DrawerBase>& drawer, CanvasSettings canvas_settings)
         {
             bool ret = true;
             drawer_ = drawer;

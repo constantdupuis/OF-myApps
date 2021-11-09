@@ -1,4 +1,6 @@
 <codart>
+    <name>test</name>
+    <description>good question</description>
     <canvas>
         <size_mode>ViewPercent</size_mode>
         <view_percentage>
@@ -10,7 +12,7 @@
     </canvas>
     <drawer>
         <id>ArdoiseFbm</id>
-        <fbm_mode>0</fbm_mode>
+        <fbm_mode>1</fbm_mode>
         <animation_speed>1.000000000</animation_speed>
         <grid>
             <cols>150</cols>
@@ -18,8 +20,8 @@
         </grid>
         <fbm>
             <octaves>2</octaves>
-            <frequency>0.003000000</frequency>
-            <frequency_multiplier>1.378000021</frequency_multiplier>
+            <frequency>0.005000000</frequency>
+            <frequency_multiplier>2.000000000</frequency_multiplier>
         </fbm>
     </drawer>
 </codart>

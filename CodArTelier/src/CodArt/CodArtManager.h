@@ -47,7 +47,7 @@ namespace CodArTelier
         /// <returns></returns>
         shared_ptr<CodArt> CreateCodArtFromXmlSettings(ofxXmlSettings settings)
         {
-            shared_ptr<CodArt> codart;
+            shared_ptr<CodArt> codart = make_shared<CodArt>();
             CanvasSettings canvas_settings;
 
             auto drawer_id = settings.getValue("codart:drawer:id", "none");
@@ -57,6 +57,7 @@ namespace CodArTelier
             if( canvas_settings.size_mode == "none" )
             {
                 ofLogError("CodArtManager") << "No size mode in config file.";
+                return nullptr;
             }
             else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_RAW)
             {
@@ -66,6 +67,8 @@ namespace CodArTelier
             else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_PAPER_FORMAT)
             {
                 // TODO
+                ofLogWarning("CodArtManager") << "CANVAS_SIZE_MODE_PAPER_FORMAT not yet implemented.";
+                return nullptr;
             }
             else if(canvas_settings.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
             {
@@ -76,11 +79,33 @@ namespace CodArTelier
             }
             else
             {
-                ofLogError("CodArtManager") << "Inknown canavs size mode [" << canvas_settings.size_mode << "] in config file.";
+                ofLogError("CodArtManager") << "Unknown canvas size mode [" << canvas_settings.size_mode << "] in config file.";
+                return nullptr;
             }
 
-            return CreateCodArt(drawer_id, canvas_settings);
 
+
+            auto drawer = drawer_manager_.BuildDrawer(drawer_id);
+            if (!drawer)
+            {
+                ofLogError("CodArtManager") << "CreateCodArt, drawer [" << drawer_id << "] doesn't exists!";
+                return nullptr;
+            }
+            settings.pushTag("codart"); 
+            settings.pushTag("drawer");
+            drawer->ConfigureFromXmlSettings(settings);
+            settings.popTag(); 
+            settings.popTag();
+
+            // Build CodArt with given parameters
+            if (!codart->Setup(drawer, canvas_settings))
+            {
+                ofLogNotice("CodArtManager") << "CodArt creation failed, drawer id [" << drawer_id << "]";
+                return nullptr;
+            }
+
+            ofLogNotice("CodArtManager") << "CodArt created with drawer id [" << drawer_id << "]";
+            return codart;
         }
 
         /// <summary>

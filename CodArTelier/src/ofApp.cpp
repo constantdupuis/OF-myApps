@@ -107,11 +107,8 @@ void ofApp::UIDrawMenu()
 
 void ofApp::setupApp()
 {
-    // push drawers in list for later selection
-    shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
-    drawers_.push_back( d );
-    drawers_names_.push_back( d->Name());
-    drawers_by_id_[d->Id()] = d;
+    // Get list of drawer, names, description and ids
+    codart_manager_.GetDrawersInfos(drawer_names, drawer_descriptions, drawer_ids);
 }
 
 void ofApp::setupImGui()
@@ -137,7 +134,15 @@ void ofApp::loadCodArt( ofxXmlSettings settings ){
     {
         activeCodArt_.reset();
     }
-
+    activeCodArt_ = codart_manager_.CreateCodArtFromXmlSettings(settings);
+    if (activeCodArt_)
+    {
+        ofLogNotice("ofApp") << "CodArt created from xml settings";
+    }
+    else
+    {
+        ofLogError("ofApp") << "Failed to create CodArt from xml settings";
+    }
 }
 
 void ofApp::UIShowNewDialogs()
@@ -157,15 +162,11 @@ void ofApp::UIShowNewDialogs()
         static int view_percent_height = 85;
         static bool square_canvas = true;
         static bool resize_canvas_when_view_change = true;
-        static char filename[128] = "";
+        static char name[128] = "";
+        static char description[512] = "";
 
-        static vector<string> drawer_names;
-        static vector<string> drawer_descriptions;
-        static vector<string> drawer_ids;
-
-        codart_manager_.GetDrawersInfos(drawer_names, drawer_descriptions, drawer_ids);
-
-        ImGui::InputTextWithHint("name", "enter a name", filename, IM_ARRAYSIZE(filename));
+        ImGui::InputTextWithHint(" name", "give it a name", name, IM_ARRAYSIZE(name));
+        ImGui::InputTextWithHint(" description", "what's is it", description, IM_ARRAYSIZE(description));
 
         if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawer_names))
         {
@@ -252,7 +253,8 @@ void ofApp::UIShowNewDialogs()
             }
 
             activeCodArt_ = codart_manager_.CreateCodArt(drawer_ids[selected_drawer], cnvSettings);
-            
+            activeCodArt_->setName( name );
+            activeCodArt_->setDescription(description);
         }
         ImGui::SetItemDefaultFocus();
 
@@ -299,11 +301,21 @@ void ofApp::UICodArt()
     if( activeCodArt_ )
     {
         //auto drawer_nfo = drawers_by_id_[activeCodArt_->Id];
-        if (!ImGui::Begin("CodArt [name]"))
+        std::stringstream title;
+        title << activeCodArt_->getName() ;
+
+        std::stringstream description;
+        description << activeCodArt_->getDescription() ;
+
+
+        if (!ImGui::Begin(title.str().c_str()))
         {
             ImGui::End();
             return;
         }
+        
+        //ImGui::InputText()
+
         if( ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
         {
             activeCodArt_->DrawUI();

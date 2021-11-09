@@ -8,6 +8,10 @@ namespace CodArTelier
 {
     class DrawerBase {
     public:
+        DrawerBase()
+        {
+            id_ = "none";
+        }
         DrawerBase( string id) {
             id_ = id;
         }
@@ -20,7 +24,11 @@ namespace CodArTelier
         virtual void DrawUI() {}
         virtual void keyPressed(int key) {}
         virtual void PushSettings(ofxXmlSettings& settings) {}
-        virtual void PopSettings(ofxXmlSettings& settings) {}
+        //virtual void PopSettings(ofxXmlSettings& settings) {}
+        virtual bool ConfigureFromXmlSettings(ofxXmlSettings& settings) { 
+            ofLogFatalError("DrawerBase") << "You forgot to override ConfigureFromXmlSettings!";
+            return false; 
+        }
 
         void Start()
         {
