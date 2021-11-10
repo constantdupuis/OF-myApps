@@ -168,17 +168,30 @@ void ofApp::UIShowNewDialogs()
         ImGui::InputTextWithHint(" name", "give it a name", name, IM_ARRAYSIZE(name));
         ImGui::InputTextWithHint(" description", "what's is it", description, IM_ARRAYSIZE(description));
 
+        ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
         if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawer_names))
         {
             ofLog() << "Selected drawer id [" << selected_drawer << "]";
         }
+
         ImGui::Spacing();
+        ImGui::Separator();
+        ImGui::Spacing();
+
         if ( ImGui::Combo(" canvas size mode", &selected_canvas_size_mode, "Raw\0Paper Format\0View Percentage\0"))
         {
             ofLog() << "Selected Canvas Size Mode [" << selected_canvas_size_mode << "]";
         }
+
         ImGui::Spacing();
-        ImGui::Text("canvas size");
+        ImGui::Separator();
+        ImGui::Spacing();
+
+//        ImGui::Spacing();
+//        ImGui::Text("canvas size");
         switch (selected_canvas_size_mode)
         {
         case 0:
@@ -186,7 +199,7 @@ void ofApp::UIShowNewDialogs()
             ImGui::InputInt(" height", &canvas_heigth);
             break;
         case 1:
-            ofxImGui::VectorCombo(" paper format", &selected_paper_size, paper_formats_);
+            ofxImGui::VectorCombo(" paper format", &selected_paper_size, paper_formats_.APaperFormatNames());
             ImGui::InputInt(" dpi", &canvas_resolution);
             ImGui::RadioButton(" portrait", &orientation, 0); ImGui::SameLine();
             ImGui::RadioButton(" landscape", &orientation, 1);
@@ -224,7 +237,7 @@ void ofApp::UIShowNewDialogs()
             }
 
             CanvasSettings cnvSettings;
-
+            glm::vec2 size;
             switch (selected_canvas_size_mode)
             {
             case 0: // RAW, width and heigth
@@ -233,7 +246,13 @@ void ofApp::UIShowNewDialogs()
                 cnvSettings.raw.height = canvas_heigth;
                 break;
             case 1: // paper size based width and heigth
-                // TODO
+                cnvSettings.size_mode = CANVAS_SIZE_MODE_RAW;
+                size = paper_formats_.PaperToPixels(
+                            (ofxPaperFormat::APaperFormat)selected_paper_size,
+                            canvas_resolution,
+                            (ofxPaperFormat::Orientation)orientation);
+                cnvSettings.raw.width = size.x;
+                cnvSettings.raw.height = size.y;
                 break;
             case 2: // percent of view based width and heigth
                 cnvSettings.size_mode = CANVAS_SIZE_MODE_VIEW_PERCENT;

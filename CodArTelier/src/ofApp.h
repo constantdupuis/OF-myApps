@@ -6,6 +6,7 @@
 
 #include "ofMain.h"
 #include "ofxImGui.h"
+#include "lib/ofxPaperFormat.h"
 #include "CodArt/CodArt.h"
 #include "CodArt/CodArtDocument.h"
 #include "CodArt/DrawerBase.h"
@@ -34,7 +35,8 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
    private:
-	    std::vector<std::string> paper_formats_ {"A0","A1","A2","A3","A4","A5","A6","A7","A8"};
+        //std::vector<std::string> paper_formats_ {"A0","A1","A2","A3","A4","A5","A6","A7","A8"};
+        ofxPaperFormat paper_formats_;
         bool show_ui_ = true;
         ofxImGui::Gui gui;
         bool ui_show_imgui_demo_ = false;

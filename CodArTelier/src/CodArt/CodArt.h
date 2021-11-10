@@ -124,6 +124,12 @@ namespace CodArTelier
             delete[] cString;
 
             ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
+
+            ImGui::SliderFloat(" scale", &scale_, 0.1f, 2.0f);
+
+            ImGui::Spacing();
 
             if(drawer_)
             {
