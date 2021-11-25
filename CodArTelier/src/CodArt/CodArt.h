@@ -24,7 +24,6 @@ namespace CodArTelier
 
             if (canvas_settings_.size_mode == CANVAS_SIZE_MODE_RAW)
             {
-                // TODO : Calculate a scale if needed
                 canvas_ = make_shared<Canvas>(canvas_settings_.raw.width, canvas_settings_.raw.height);
                 drawer_->setCanvasSize(glm::vec2(canvas_settings_.raw.width, canvas_settings_.raw.height));
                 CalculateViewParams(canvas_settings_.raw.width, canvas_settings_.raw.height);
@@ -50,15 +49,6 @@ namespace CodArTelier
 
                 CalculateViewParams(w,h);
 
-//                translate_.x = (ofGetWidth() - w) / 2;
-//                translate_.y = (ofGetHeight() - h) / 2;
-
-//                if (!canvas_settings_.view_percentage.resize_when_view_change)
-//                {
-//                    canvas_calculated_size_.x = w;
-//                    canvas_calculated_size_.y = h;
-//                }
-
                 canvas_ = make_shared<Canvas>(w, h);
                 drawer_->setCanvasSize(glm::vec2(w, h));
             }
@@ -69,11 +59,6 @@ namespace CodArTelier
             }
             return ret;
         }
-      
-//        static shared_ptr<CodArt> SetupFromXmlSettings( ofxXmlSettings settings)
-//        {
-//              return nullptr;
-//        }
 
         void Start() 
         {
