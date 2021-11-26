@@ -156,6 +156,9 @@
     <Filter Include="src\lib">
       <UniqueIdentifier>{e3b04751-8605-43e9-914b-2fd67b4f81ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\lib\ofxImGuiThemes">
+      <UniqueIdentifier>{6f3d8705-38e3-44d3-976b-94b6f85b8b81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
@@ -310,6 +313,27 @@
     </ClInclude>
     <ClInclude Include="src\CodArt\CodArtManager.h">
       <Filter>src\CodArt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CodArt\Drawers\TestDrawer.h">
+      <Filter>src\CodArt\Drawers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CodArt\Drawers\PFlowFeathers.h">
+      <Filter>src\CodArt\Drawers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxImGuiThemes\CorporateGrey.h">
+      <Filter>src\lib\ofxImGuiThemes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxImGuiThemes\MiniDart.h">
+      <Filter>src\lib\ofxImGuiThemes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxImGuiThemes\YetAnotherDark.h">
+      <Filter>src\lib\ofxImGuiThemes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxImGuiThemes\BlueGreen.h">
+      <Filter>src\lib\ofxImGuiThemes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lib\ofxImGuiThemes\DeepDark.h">
+      <Filter>src\lib\ofxImGuiThemes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

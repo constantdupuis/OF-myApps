@@ -224,9 +224,16 @@
     <ClInclude Include="src\CodArt\DrawerBase.h" />
     <ClInclude Include="src\CodArt\DrawerManager.h" />
     <ClInclude Include="src\CodArt\Drawers\ArdoiseFbm.h" />
+    <ClInclude Include="src\CodArt\Drawers\PFlowFeathers.h" />
+    <ClInclude Include="src\CodArt\Drawers\TestDrawer.h" />
     <ClInclude Include="src\lib\ofxBasicParticle.h" />
     <ClInclude Include="src\lib\ofxBronianMotion.h" />
     <ClInclude Include="src\lib\ofxHelpers.h" />
+    <ClInclude Include="src\lib\ofxImGuiThemes\BlueGreen.h" />
+    <ClInclude Include="src\lib\ofxImGuiThemes\CorporateGrey.h" />
+    <ClInclude Include="src\lib\ofxImGuiThemes\DeepDark.h" />
+    <ClInclude Include="src\lib\ofxImGuiThemes\MiniDart.h" />
+    <ClInclude Include="src\lib\ofxImGuiThemes\YetAnotherDark.h" />
     <ClInclude Include="src\lib\ofxValueGrid.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h" />

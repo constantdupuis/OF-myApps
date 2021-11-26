@@ -125,6 +125,9 @@ void ofApp::setupImGui()
     style.ScrollbarRounding = 2.0f;
     style.ChildRounding = 4.0f;
     style.TabRounding = 2.0f;
+
+    auto theme = ofxImGui::Themes::DeepDark();
+    theme.setup();
 }
 
 void ofApp::loadCodArt( ofxXmlSettings settings ){
@@ -171,14 +174,17 @@ void ofApp::UIShowNewDialogs()
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
+        ImGui::Spacing();
 
-        if( ofxImGui::VectorCombo(" drawer", &selected_drawer, drawer_names))
+        if( ofxImGui::VectorListBox(" drawer", &selected_drawer, drawer_names))
         {
             ofLog() << "Selected drawer id [" << selected_drawer << "]";
         }
 
         ImGui::Spacing();
+        ImGui::Spacing();
         ImGui::Separator();
+        ImGui::Spacing();
         ImGui::Spacing();
 
         if ( ImGui::Combo(" canvas size mode", &selected_canvas_size_mode, "Raw\0Paper Format\0View Percentage\0"))
@@ -186,6 +192,7 @@ void ofApp::UIShowNewDialogs()
             ofLog() << "Selected Canvas Size Mode [" << selected_canvas_size_mode << "]";
         }
 
+        ImGui::Spacing();
         ImGui::Spacing();
         ImGui::Separator();
         ImGui::Spacing();
@@ -352,8 +359,8 @@ void ofApp::keyPressed(int key){
         return;
     }
 
-    if( key == 'f') ofToggleFullscreen();
-    if( key == 'h') show_ui_ = !show_ui_;
+    /*if( key == 'f') ofToggleFullscreen();
+    if( key == 'h') show_ui_ = !show_ui_;*/
 
     if( activeCodArt_ ) activeCodArt_->keyPressed(key);
 }

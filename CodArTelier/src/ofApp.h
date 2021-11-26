@@ -13,6 +13,11 @@
 #include "CodArt/DrawerManager.h"
 #include "CodArt/CodArtManager.h"
 //#include "CodArt/Drawers/ArdoiseFbm.h"
+#include "lib/ofxImGuiThemes/CorporateGrey.h"
+#include "lib/ofxImGuiThemes/MiniDart.h"
+#include "lib/ofxImGuiThemes/YetAnotherDark.h"
+#include "lib/ofxImGuiThemes/BlueGreen.h"
+#include "lib/ofxImGuiThemes/DeepDark.h"
 
 using namespace CodArTelier;
 

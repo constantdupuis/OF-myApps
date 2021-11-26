@@ -275,7 +275,7 @@ namespace CodArTelier
         shared_ptr<DrawerBase> drawer_;
         CanvasSettings canvas_settings_;
 
-        float scale_;
+        float scale_ = 1.0f;
         glm::vec2 translate_;
         glm::vec2 canvas_calculated_size_;
         const int margin = 10;

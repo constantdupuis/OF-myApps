@@ -5,6 +5,7 @@
 #include "DrawerBase.h"
 #include "CodArt/Drawers/ArdoiseFbm.h"
 #include "CodArt/Drawers/TestDrawer.h"
+#include "CodArt/Drawers/PFlowFeathers.h"
 
 namespace CodArTelier
 {
@@ -12,7 +13,11 @@ namespace CodArTelier
     public:
         DrawerManager() {
 
-            shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
+            RegisterDrawer(make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>());
+            RegisterDrawer(make_shared<CodArTelier::Drawer::TestDrawerInfoNFactory>());
+            RegisterDrawer(make_shared<CodArTelier::Drawer::PFlowFeathersInfoNFactory>());
+
+            /*shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
             ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
             drawers_info_factory_.push_back( d );
             drawers_names_.push_back( d->Name());
@@ -23,6 +28,12 @@ namespace CodArTelier
             drawers_info_factory_.push_back( d );
             drawers_names_.push_back( d->Name());
             drawers_info_n_factory_by_id_[d->Id()] = d;
+
+            d = make_shared<CodArTelier::Drawer::PFlowFeathers>();
+            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
+            drawers_info_factory_.push_back(d);
+            drawers_names_.push_back(d->Name());
+            drawers_info_n_factory_by_id_[d->Id()] = d;*/
 
         }
 
@@ -82,6 +93,14 @@ namespace CodArTelier
         std::vector<shared_ptr<DrawerInfoAndFactoryBase>> drawers_info_factory_;
         std::vector<std::string> drawers_names_;
         std::map<string, shared_ptr<DrawerInfoAndFactoryBase>> drawers_info_n_factory_by_id_;
+
+        void RegisterDrawer(shared_ptr<DrawerInfoAndFactoryBase> drawer_info_n_factory)
+        {
+            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << drawer_info_n_factory->Name() << "] id [" << drawer_info_n_factory->Id() << "]";
+            drawers_info_factory_.push_back(drawer_info_n_factory);
+            drawers_names_.push_back(drawer_info_n_factory->Name());
+            drawers_info_n_factory_by_id_[drawer_info_n_factory->Id()] = drawer_info_n_factory;
+        }
     };
 }
 

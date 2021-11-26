@@ -23,6 +23,7 @@ public:
 
         for( int i = 0; i < octaves_; i++)
         {
+
             val += ofNoise(glm::vec3(x*freq,y*freq,z*freq)) * amplitude;
             amplitude *= 0.5f;
             freq *= frequencyMultiplier_;
