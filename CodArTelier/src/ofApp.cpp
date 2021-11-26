@@ -113,7 +113,9 @@ void ofApp::setupImGui()
 {
     ImGuiIO& io = ImGui::GetIO();
     //io.Fonts->AddFontFromFileTTF("./data/fonts/Roboto-Regular.ttf", 18);
-    io.Fonts->AddFontFromFileTTF("./data/fonts/ShareTechMono-Regular.ttf", 18);
+    //io.Fonts->AddFontFromFileTTF("./data/fonts/ShareTechMono-Regular.ttf", 18);
+    io.Fonts->AddFontFromFileTTF("./data/fonts/DMMono-Regular.ttf", 18);
+    //io.Fonts->AddFontFromFileTTF("./data/fonts/DMMono-Light.ttf", 18);
 
     gui.setup();
 
