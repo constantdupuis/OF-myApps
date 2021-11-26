@@ -175,6 +175,7 @@ namespace CodArTelier
                     CalculateViewParams(canvas_calculated_size_.x, canvas_calculated_size_.y);
                 }
             }
+
             CalculateViewParams(canvas_calculated_size_.x, canvas_calculated_size_.y);
         }
 
