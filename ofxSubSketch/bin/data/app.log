@@ -1,6 +1,6 @@
 
 
---------------------------------------- 2021-11-09-22-52-23-672
+--------------------------------------- 2021-11-26-22-00-54-701
 [verbose] ofFbo: GL frame buffer object supported
 [verbose] ofFbo: checkGLSupport(): maxColorAttachments: 8, maxDrawBuffers: 8, maxSamples: 16
 [verbose] ofFbo: FRAMEBUFFER_COMPLETE - OK
