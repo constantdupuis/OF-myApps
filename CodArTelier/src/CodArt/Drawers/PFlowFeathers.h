@@ -12,9 +12,13 @@ namespace CodArTelier
         class PFlowFeathers : public DrawerBase {
         public:
             PFlowFeathers(string id) : DrawerBase(id) {
-                bronian_motion_.setOctavesNbr(2);
-                bronian_motion_.setFrequency(0.005f);
+                bronian_motion_.setOctavesNbr(1);
+                bronian_motion_.setFrequency(0.002f);
                 bronian_motion_.setFrequencyMultiplier(2.0f);
+            }
+
+            void Setup() {
+
             }
 
             void Update()
@@ -25,13 +29,34 @@ namespace CodArTelier
 
             void Draw() {
                 if (!is_drawing_) return;
-
+                ofSetRectMode(OF_RECTMODE_CENTER);
                 ofBackground(20);
                 float a;
                 for (auto& c : value_grid_->cells()) {
                     a = bronian_motion_.fbm(c->left(), c->top(), animation_);
-                    ofSetColor(255 * a);
-                    ofDrawRectangle(translate_.x + c->pointX(), translate_.y  +c->pointY(), c->width() * 0.5f, c->height() * 0.5f);
+
+                    ofPushMatrix();
+
+                    ofTranslate(translate_.x + c->pointX(), translate_.y + c->pointY());
+                    ofRotateDeg(a*360);
+                    ofScale(5);
+
+                    ofFill();
+                    ofSetColor(a * 255, alpha_);
+
+                    if( use_ellipse_)
+                        ofDrawEllipse(0, 0, c->width()*2., c->height() * 0.4);
+                    else
+                        ofDrawRectangle(0, 0, c->width()*2., c->height() * 0.4);
+
+//                    ofNoFill();
+//                    ofSetColor(255-(a * 255), 255);
+//                    if( use_ellipse_)
+//                        ofDrawEllipse(0, 0, c->width()*2., c->height() * 0.4);
+//                    else
+//                        ofDrawRectangle(0, 0, c->width()*2., c->height() * 0.4);
+
+                    ofPopMatrix();
                 }
             }
 
@@ -52,13 +77,16 @@ namespace CodArTelier
 
         private:
             float animation_ = 0.0f;
-            float animation_speed_ = 1.0f;
+            float animation_speed_ = 0.5f;
             ofxBronianMotion bronian_motion_;
             shared_ptr<ofxValueGrid<ofxValueGridCell>> value_grid_;
             int grid_col_nbr_ = 50;
             int grid_row_nbr_ = 50;
             float margin_ = 0.80f;
             glm::vec2 translate_;
+            bool use_ellipse_ = false;
+            int alpha_ = 200;
+
         };
 
         ///
