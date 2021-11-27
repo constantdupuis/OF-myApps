@@ -330,7 +330,7 @@ void ofApp::UICodArt()
     {
         ofxImGui::Settings settings;
 
-        if( !ofxImGui::BeginWindow( "CodArt", settings, false ))
+        if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
         {
             EndWindow(settings);
             return;
@@ -338,27 +338,14 @@ void ofApp::UICodArt()
 
         // CodArt parameters
 
-        if(!ofxImGui::BeginTree("Drawer", settings))
+        if(ofxImGui::BeginTree("CodArt [name]", settings))
         {
+            activeCodArt_->DrawUI();
             ofxImGui::EndTree(settings);
-            return;
         }
-        // Called drawer GUI
-        ofxImGui::EndTree(settings);
 
 
         EndWindow(settings);
-
-//        if (!ImGui::Begin("CodArt"))
-//        {
-//            ImGui::End();
-//            return;
-//        }
-
-//        activeCodArt_->DrawUI();
-       
-//        ImGui::End();
-
     }
 
 }
