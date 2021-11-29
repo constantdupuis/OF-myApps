@@ -335,7 +335,7 @@ void ofApp::UICodArt()
     pGroup.add(pGroup2);
 
     //string str = pGroup.toString();
-    cout << str;
+    //cout << str;
 
     if( activeCodArt_ )
     {
@@ -356,13 +356,6 @@ void ofApp::UICodArt()
             activeCodArt_->DrawUI();
             ofxImGui::EndTree(settings);
         }
-<<<<<<< HEAD
-        // Called drawer GUI
-        activeCodArt_->DrawUI();
-        ofxImGui::EndTree(settings);
-=======
->>>>>>> 919beeaa141e942f79305994471a56c20ad02d38
-
 
         EndWindow(settings);
     }
