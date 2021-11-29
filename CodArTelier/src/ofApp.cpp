@@ -344,6 +344,7 @@ void ofApp::UICodArt()
             return;
         }
         // Called drawer GUI
+        activeCodArt_->DrawUI();
         ofxImGui::EndTree(settings);
 
 
