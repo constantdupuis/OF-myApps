@@ -4,7 +4,7 @@
 * Template linux64
 */
 
-#include "ofMain.h"
+#include "ofMain.h" 
 #include "ofxImGui.h"
 #include "lib/ofxPaperFormat.h"
 #include "CodArt/CodArt.h"
@@ -12,7 +12,6 @@
 #include "CodArt/DrawerBase.h"
 #include "CodArt/DrawerManager.h"
 #include "CodArt/CodArtManager.h"
-//#include "CodArt/Drawers/ArdoiseFbm.h"
 #include "lib/ofxImGuiThemes/CorporateGrey.h"
 #include "lib/ofxImGuiThemes/MiniDart.h"
 #include "lib/ofxImGuiThemes/YetAnotherDark.h"

@@ -326,40 +326,45 @@ void ofApp::UIShowMessageBoxes()
 
 void ofApp::UICodArt()
 {
+    ofParameterGroup pGroup("pGroup");
+    ofParameter<float> pF01("float01", 0.5, 0.0, 1.0);
+    pGroup.add( pF01);
+    ofParameterGroup pGroup2("pGrou2");
+    ofParameter<float> pF02("float02", 0.5, 0.0, 1.0);
+    pGroup2.add( pF02);
+    pGroup.add(pGroup2);
+
+    //string str = pGroup.toString();
+    cout << str;
+
     if( activeCodArt_ )
     {
         ofxImGui::Settings settings;
+        settings.windowPos.y += 20;
 
-        if( !ofxImGui::BeginWindow( "CodArt", settings, false ))
+        if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
         {
             EndWindow(settings);
             return;
         }
+        ofxImGui::AddGroup(pGroup, settings);
 
         // CodArt parameters
 
-        if(!ofxImGui::BeginTree("Drawer", settings))
+        if(ofxImGui::BeginTree("CodArt [name]", settings))
         {
+            activeCodArt_->DrawUI();
             ofxImGui::EndTree(settings);
-            return;
         }
+<<<<<<< HEAD
         // Called drawer GUI
         activeCodArt_->DrawUI();
         ofxImGui::EndTree(settings);
+=======
+>>>>>>> 919beeaa141e942f79305994471a56c20ad02d38
 
 
         EndWindow(settings);
-
-//        if (!ImGui::Begin("CodArt"))
-//        {
-//            ImGui::End();
-//            return;
-//        }
-
-//        activeCodArt_->DrawUI();
-       
-//        ImGui::End();
-
     }
 
 }
