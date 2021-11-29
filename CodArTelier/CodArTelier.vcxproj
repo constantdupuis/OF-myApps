@@ -216,6 +216,7 @@
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CodArtParams.h" />
     <ClInclude Include="src\CodArt\Canvas.h" />
     <ClInclude Include="src\CodArt\CanvasSettings.h" />
     <ClInclude Include="src\CodArt\CodArt.h" />
