@@ -334,9 +334,6 @@ void ofApp::UICodArt()
     pGroup2.add( pF02);
     pGroup.add(pGroup2);
 
-    //string str = pGroup.toString();
-    cout << str;
-
     if( activeCodArt_ )
     {
         ofxImGui::Settings settings;
