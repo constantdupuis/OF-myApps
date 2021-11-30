@@ -335,6 +335,9 @@
     <ClInclude Include="src\lib\ofxImGuiThemes\DeepDark.h">
       <Filter>src\lib\ofxImGuiThemes</Filter>
     </ClInclude>
+    <ClInclude Include="CodArtParams.h">
+      <Filter>src\CodArt</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

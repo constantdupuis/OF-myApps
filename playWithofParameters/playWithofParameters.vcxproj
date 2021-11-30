@@ -20,13 +20,13 @@
   </ItemGroup>
   <PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
     <LatestTargetPlatformVersion>$([Microsoft.Build.Utilities.ToolLocationHelper]::GetLatestSDKTargetPlatformVersion('Windows', '10.0'))</LatestTargetPlatformVersion>
-    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion Condition="'$(WindowsTargetPlatformVersion)' == ''">$(LatestTargetPlatformVersion)</WindowsTargetPlatformVersion>
     <TargetPlatformVersion>$(WindowsTargetPlatformVersion)</TargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7FD42DF7-442E-479A-BA76-D0022F99702A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CodArTelier</RootNamespace>
+    <RootNamespace>playWithofParameters</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -100,10 +100,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -121,11 +120,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -142,11 +140,10 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -166,10 +163,9 @@
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxOsc\libs;..\..\..\addons\ofxOsc\libs\oscpack;..\..\..\addons\ofxOsc\libs\oscpack\src;..\..\..\addons\ofxOsc\libs\oscpack\src\ip;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\posix;..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32;..\..\..\addons\ofxOsc\libs\oscpack\src\osc;..\..\..\addons\ofxOsc\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);src;..\..\..\addons\ofxImGui\libs;..\..\..\addons\ofxImGui\libs\imgui;..\..\..\addons\ofxImGui\libs\imgui\src;..\..\..\addons\ofxImGui\src;..\..\..\addons\ofxXmlSettings\libs;..\..\..\addons\ofxXmlSettings\src</AdditionalIncludeDirectories>
       <CompileAs>CompileAsCpp</CompileAs>
       <ObjectFileName>$(IntDir)%(RelativeDir)</ObjectFileName>
-      <PreprocessorDefinitions>OSC_HOST_LITTLE_ENDIAN</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -186,93 +182,41 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineVk.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\ImHelpers.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\DefaultTheme.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineGLFW.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\Gui.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.cpp" />
     <ClCompile Include="..\..\..\addons\ofxImGui\src\BaseEngine.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_demo.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\DefaultTheme.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineGLFW.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineVk.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\Gui.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\ImHelpers.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.cpp" />
     <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscSender.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\NetworkingUtils.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\win32\UdpSocket.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_widgets.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.cpp" />
-    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp" />
+    <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlparser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CodArtParams.h" />
-    <ClInclude Include="src\CodArt\Canvas.h" />
-    <ClInclude Include="src\CodArt\CanvasSettings.h" />
-    <ClInclude Include="src\CodArt\CodArt.h" />
-    <ClInclude Include="src\CodArt\CodArtDocument.h" />
-    <ClInclude Include="src\CodArt\CodArtManager.h" />
-    <ClInclude Include="src\CodArt\DrawerBase.h" />
-    <ClInclude Include="src\CodArt\DrawerManager.h" />
-    <ClInclude Include="src\CodArt\Drawers\ArdoiseFbm.h" />
-    <ClInclude Include="src\CodArt\Drawers\PFlowFeathers.h" />
-    <ClInclude Include="src\CodArt\Drawers\TestDrawer.h" />
-    <ClInclude Include="src\lib\ofxBasicParticle.h" />
-    <ClInclude Include="src\lib\ofxBronianMotion.h" />
-    <ClInclude Include="src\lib\ofxHelpers.h" />
-    <ClInclude Include="src\lib\ofxImGuiThemes\BlueGreen.h" />
-    <ClInclude Include="src\lib\ofxImGuiThemes\CorporateGrey.h" />
-    <ClInclude Include="src\lib\ofxImGuiThemes\DeepDark.h" />
-    <ClInclude Include="src\lib\ofxImGuiThemes\MiniDart.h" />
-    <ClInclude Include="src\lib\ofxImGuiThemes\YetAnotherDark.h" />
-    <ClInclude Include="src\lib\ofxValueGrid.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseEngine.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\BaseTheme.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\Gui.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\ImHelpers.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\DefaultTheme.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\imconfig.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineVk.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineGLFW.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineOpenGLES.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\EngineVk.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\Gui.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\imconfig.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\ImHelpers.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGui.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\src\ofxImGuiLoggerChannel.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imgui_internal.h" />
-    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
     <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imstb_rectpack.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscParameterSync.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscReceiver.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscMessage.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOsc.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscArg.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscBundle.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\src\ofxOscSender.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscHostEndianness.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPacketListener.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscPrintReceivedElements.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\MessageMappingOscPacketListener.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscOutboundPacketStream.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscTypes.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscReceivedElements.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\osc\OscException.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\UdpSocket.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\PacketListener.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\IpEndpointName.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\NetworkingUtils.h" />
-    <ClInclude Include="..\..\..\addons\ofxOsc\libs\oscpack\src\ip\TimerListener.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\addons\ofxImGui\libs\imgui\src\imstb_truetype.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\src\ofxXmlSettings.h" />
     <ClInclude Include="..\..\..\addons\ofxXmlSettings\libs\tinyxml.h" />
   </ItemGroup>

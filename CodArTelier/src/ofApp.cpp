@@ -68,6 +68,13 @@ void ofApp::UIDrawMenu()
 
         ImGui::EndMenu();
     }
+    if (ImGui::BeginMenu("View"))
+    {
+        if (ImGui::MenuItem("Canvas params", "")) {
+            ui_show_canvas_params = !ui_show_canvas_params;
+        }
+        ImGui::EndMenu();
+    }
     if (ImGui::BeginMenu("Help"))
     {
         if (ImGui::MenuItem("ImGui demo", "")) {
@@ -100,6 +107,10 @@ void ofApp::UIDrawMenu()
                 settings.saveFile(ret.filePath);
             }
         }
+    }
+    if (ui_show_canvas_params)
+    {
+
     }
 }
 
@@ -309,6 +320,11 @@ void ofApp::UIShowOpenDialogs()
     }
 }
 
+void ofApp::UIShowCanvasParams()
+{
+
+}
+
 void ofApp::UIShowMessageBoxes()
 {
     if (ImGui::BeginPopupModal("No CodArt", NULL, ImGuiWindowFlags_AlwaysAutoResize))
@@ -328,8 +344,10 @@ void ofApp::UICodArt()
 {
     ofParameterGroup pGroup("pGroup");
     ofParameter<float> pF01("float01", 0.5, 0.0, 1.0);
+    ofParameter<void> pBTN("Bouton?");
     pGroup.add( pF01);
-    ofParameterGroup pGroup2("pGrou2");
+    pGroup.add( pBTN);
+    ofParameterGroup pGroup2("pGroup2");
     ofParameter<float> pF02("float02", 0.5, 0.0, 1.0);
     pGroup2.add( pF02);
     pGroup.add(pGroup2);
@@ -339,23 +357,24 @@ void ofApp::UICodArt()
         ofxImGui::Settings settings;
         settings.windowPos.y += 20;
 
-        if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
-        {
-            EndWindow(settings);
-            return;
-        }
         ofxImGui::AddGroup(pGroup, settings);
 
-        // CodArt parameters
+        //if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
+        //{
+        //    EndWindow(settings);
+        //    return;
+        //}
+        //ofxImGui::AddGroup(pGroup, settings);
 
-        if(ofxImGui::BeginTree("CodArt [name]", settings))
-        {
-            activeCodArt_->DrawUI();
-            ofxImGui::EndTree(settings);
-        }
+        //// CodArt parameters
 
+        //if(ofxImGui::BeginTree("CodArt [name]", settings))
+        //{
+        //    activeCodArt_->DrawUI();
+        //    ofxImGui::EndTree(settings);
+        //}
 
-        EndWindow(settings);
+        //EndWindow(settings);
     }
 
 }
