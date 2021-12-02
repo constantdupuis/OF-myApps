@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-OF_ROOT = /home/cdupuis/Dev/cpp/OF
+OF_ROOT = C:\Users\Cod\Dev\cpp\OF
 
 ################################################################################
 # PROJECT ROOT

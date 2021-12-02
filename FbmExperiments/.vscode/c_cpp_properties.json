@@ -125,8 +125,6 @@
         {
             "name": "Win32",
             "includePath": [
-                "C:/msys64/mingw32/include/c++/7.4.0",
-                "C:/msys64/mingw32/i686-w64-mingw32/include",
                 "${workspaceRoot}/../../../libs",
                 "${workspaceRoot}/../../../addons",
                 "${workspaceRoot}/../../../libs/openFrameworks",

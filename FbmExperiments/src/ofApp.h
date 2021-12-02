@@ -1,10 +1,9 @@
 #pragma once
 
-/*
-* Template linux64
-*/
 
 #include "ofMain.h"
+#include "libs/ofxValueGrid.h"
+
 
 class ofApp : public ofBaseApp{
 
@@ -24,5 +23,12 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+	private:
+		ofxBasicValueGrid grid_;
+		float view_ratio = 0.8;
+		int cols_;
+		int rows_;
+		glm::vec2 translate_;
+
+		void on_resize();
 };

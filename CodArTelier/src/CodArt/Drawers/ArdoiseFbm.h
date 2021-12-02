@@ -87,7 +87,7 @@ namespace CodArTelier
                 ImGui::Spacing();
                 
                 ImGui::Spacing();
-                ImGui::Text(" bfm settigns");
+                ImGui::Text(" bfm settings");
                 ImGui::SliderInt(" octaves number", &bronian_motion_.octavesNbr(), 1, 10);
                 ImGui::SliderFloat(" frequency", &bronian_motion_.frequency(), 0.001, 0.01);
                 ImGui::SliderFloat(" frequency multiplier", &bronian_motion_.frequencyMultiplier(), 0.5, 4.0);
