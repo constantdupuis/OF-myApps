@@ -118,7 +118,7 @@
                 ]
             },
             "intelliSenseMode": "clang-x64",
-            "compilerPath": "/usr/local/bin/gcc-8",
+            "compilerPath": "/usr/bin/gcc",
             "cStandard": "c11",
             "cppStandard": "c++17"
         },
