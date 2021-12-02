@@ -30,5 +30,9 @@ class ofApp : public ofBaseApp{
 		int rows_;
 		glm::vec2 translate_;
 
+        float animation_ = 0.0f;
+        float animation_speed_ = 0.001f;
+
 		void on_resize();
+        float add( float x, float y);
 };
