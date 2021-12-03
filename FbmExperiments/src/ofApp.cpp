@@ -28,7 +28,7 @@ void ofApp::draw(){
 
         for (const auto& c : grid_.cells())
         {
-            auto n = add( c->pointX(), c->pointY() );
+            auto n = mult( c->pointX(), c->pointY() );
             ofSetColor(n*255);
             ofDrawRectangle( c->left(), c->top(), c->width(), c->height());
         }
@@ -105,6 +105,25 @@ void ofApp::on_resize()
     translate_ = glm::vec2(tx, ty);
 }
 
+float ofApp::fbm(float x, float y)
+{
+    auto freq = 0.001;
+    auto speed = 0.01f;
+    auto octave_nbr = 8;
+    float amplitude = 0.5f;
+    float n = 0.0;
+    glm::vec2 translate(10, 100);
+    for (auto o = 0; o < octave_nbr; o++)
+    {
+        auto s = amplitude * ofNoise((x + translate.x) * freq, (y + translate.y) * freq, animation_ * speed);
+        n += s;
+        freq *= 2.0f;
+        amplitude *= 0.5f;
+        //translate.x += 10;
+    }
+    return n;
+}
+
 float ofApp::add( float x, float y)
 {
     auto freq = 0.001;
@@ -116,10 +135,30 @@ float ofApp::add( float x, float y)
     {
         auto s = ofNoise((x + translate.x) * freq, (y  +translate.y) * freq, animation_ * speed);
         n += s;
-        freq *= 2.0f;
+        freq *= 2.0f; // 2 valeur de base, plus grand augmente le dispertion
         translate.x += 10;
     }
-    n /= octave_nbr;
-    //n = n * .5 + .5;
+    n /= octave_nbr; 
+    n = n * n; // augmente le contraste, encore plus si on ajout et * n
     return n;
 }
+
+float ofApp::mult(float x, float y)
+{
+    auto freq = 0.005;
+    auto speed = 0.005f;
+    auto octave_nbr = 4;
+    float n = 1.0;
+    glm::vec2 translate(10, 100);
+
+    for (auto o = 0; o < octave_nbr; o++)
+    {
+        auto s = ofNoise((x + translate.x) * freq, (y + translate.y) * freq, animation_ * speed);
+        n *= s;
+        freq *= 4.0f;
+        translate.x += 10;
+    }
+
+    return n;
+}
+

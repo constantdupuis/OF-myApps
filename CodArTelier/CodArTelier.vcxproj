@@ -184,6 +184,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\CodArt\Drawers\PFlowField.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="..\..\..\addons\ofxImGui\src\EngineVk.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="src\CodArt\DrawerManager.h" />
     <ClInclude Include="src\CodArt\Drawers\ArdoiseFbm.h" />
     <ClInclude Include="src\CodArt\Drawers\PFlowFeathers.h" />
+    <ClInclude Include="src\CodArt\Drawers\PFlowField.h" />
     <ClInclude Include="src\CodArt\Drawers\TestDrawer.h" />
     <ClInclude Include="src\lib\ofxBasicParticle.h" />
     <ClInclude Include="src\lib\ofxBronianMotion.h" />

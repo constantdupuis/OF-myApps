@@ -34,5 +34,7 @@ class ofApp : public ofBaseApp{
         float animation_speed_ = 0.001f;
 
 		void on_resize();
+		float fbm(float x, float y);
         float add( float x, float y);
+		float mult(float x, float y);
 };

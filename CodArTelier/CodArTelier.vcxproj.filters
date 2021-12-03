@@ -91,6 +91,9 @@
     <ClCompile Include="..\..\..\addons\ofxXmlSettings\libs\tinyxmlerror.cpp">
       <Filter>addons\ofxXmlSettings\libs</Filter>
     </ClCompile>
+    <ClCompile Include="src\CodArt\Drawers\PFlowField.cpp">
+      <Filter>src\CodArt\Drawers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -337,6 +340,9 @@
     </ClInclude>
     <ClInclude Include="CodArtParams.h">
       <Filter>src\CodArt</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CodArt\Drawers\PFlowField.h">
+      <Filter>src\CodArt\Drawers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
