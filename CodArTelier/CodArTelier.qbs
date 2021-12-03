@@ -12,6 +12,8 @@ Project{
         name: { return FileInfo.baseName(sourceDirectory) }
 
         files: [
+            "src/CodArt/Drawers/PFlowField.cpp",
+            "src/CodArt/Drawers/PFlowField.h",
             'src/CodArt/Canvas.h',
             'src/CodArt/CanvasSettings.h',
             'src/CodArt/CodArt.h',

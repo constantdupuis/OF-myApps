@@ -159,7 +159,7 @@ namespace CodArTelier
             ArdoiseFbmInfoNFactory(){
                 id_ = "ArdoiseFbm";
                 name_ = "Ardoise Fbm";
-                description_ = "Adrdoise pour jouer avec le Fractal Bronian Motion";
+                description_ = "Ardoise pour jouer avec le Fractal Bronian Motion";
             }
 
             shared_ptr<DrawerBase> Build(){

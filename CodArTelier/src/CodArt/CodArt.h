@@ -57,6 +57,9 @@ namespace CodArTelier
                 // TODO : error message
                 ret = false;
             }
+
+            drawer_->Setup();
+
             return ret;
         }
 

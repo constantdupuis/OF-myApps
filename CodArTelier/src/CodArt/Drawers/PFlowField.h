@@ -47,9 +47,9 @@ namespace CodArTelier
         {
         public:
             PFlowFieldInfoNFactory() {
-                id_ = "ArdoiseFbm";
-                name_ = "Ardoise Fbm";
-                description_ = "Adrdoise pour jouer avec le Fractal Bronian Motion";
+                id_ = "PFlowField";
+                name_ = "Perlin Noise flow field";
+                description_ = "Perlin noise or Fbm flow field";
             }
 
             shared_ptr<DrawerBase> Build() {

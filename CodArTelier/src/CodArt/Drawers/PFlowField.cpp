@@ -11,18 +11,29 @@ namespace CodArTelier
         void PFlowField::Setup()
         {
             bronian_motion_.setOctavesNbr(1);
+
+            fill_particles();
         }
 
         void PFlowField::Update()
         {
             if (!is_drawing_) return;
             animation_ += animation_speed_;
+
         }
 
         void PFlowField::Draw() {
             if (!is_drawing_) return;
 
+            ofFill();
+            ofSetColor(ofColor().yellowGreen);
+            ofDrawRectangle(0,0, canvas_size_.x, canvas_size_.y);
+            ofSetColor(100);
 
+            for( const auto& p : particles_ )
+            {
+                ofDrawCircle( p->pos(), 2 );
+            }
         }
 
         void PFlowField::DrawUI()

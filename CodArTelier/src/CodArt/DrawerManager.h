@@ -6,6 +6,7 @@
 #include "CodArt/Drawers/ArdoiseFbm.h"
 #include "CodArt/Drawers/TestDrawer.h"
 #include "CodArt/Drawers/PFlowFeathers.h"
+#include "CodArt/Drawers/PFlowField.h"
 
 namespace CodArTelier
 {
@@ -16,24 +17,7 @@ namespace CodArTelier
             RegisterDrawer(make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>());
             RegisterDrawer(make_shared<CodArTelier::Drawer::TestDrawerInfoNFactory>());
             RegisterDrawer(make_shared<CodArTelier::Drawer::PFlowFeathersInfoNFactory>());
-
-            /*shared_ptr<DrawerInfoAndFactoryBase> d = make_shared<CodArTelier::Drawer::ArdoiseFbmInfoNFactory>();
-            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
-            drawers_info_factory_.push_back( d );
-            drawers_names_.push_back( d->Name());
-            drawers_info_n_factory_by_id_[d->Id()] = d;
-
-            d = make_shared<CodArTelier::Drawer::TestDrawerInfoNFactory>();
-            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
-            drawers_info_factory_.push_back( d );
-            drawers_names_.push_back( d->Name());
-            drawers_info_n_factory_by_id_[d->Id()] = d;
-
-            d = make_shared<CodArTelier::Drawer::PFlowFeathers>();
-            ofLog(OF_LOG_NOTICE, "DrawerManager") << "Register drawer [" << d->Name() << "] id [" << d->Id() << "]";
-            drawers_info_factory_.push_back(d);
-            drawers_names_.push_back(d->Name());
-            drawers_info_n_factory_by_id_[d->Id()] = d;*/
+            RegisterDrawer(make_shared<CodArTelier::Drawer::PFlowFieldInfoNFactory>());
 
         }
 
@@ -53,7 +37,7 @@ namespace CodArTelier
             {
                 return drawers_info_factory_[drawerIdx];
             }
-            ofLog(OF_LOG_ERROR,"DrawerManager") << "DuildDrawer - Drawer index out of range !";
+            ofLog(OF_LOG_ERROR,"DrawerManager") << "GetDrawerInfoNFactory - Drawer index out of range !";
             return nullptr;
         }
 
@@ -61,7 +45,7 @@ namespace CodArTelier
         {
             if( drawers_info_n_factory_by_id_.find(drawerId) == drawers_info_n_factory_by_id_.end())
             {
-                ofLog(OF_LOG_ERROR,"DrawerManager") << "DuildDrawer - Drawer ID ["<< drawerId <<"] not found !";
+                ofLog(OF_LOG_ERROR,"DrawerManager") << "GetDrawerInfoNFactory - Drawer ID ["<< drawerId <<"] not found !";
                 return nullptr;
             }
 
@@ -74,7 +58,7 @@ namespace CodArTelier
             {
                 return drawers_info_factory_[drawerIdx]->Build();
             }
-            ofLog(OF_LOG_ERROR,"DrawerManager") << "DuildDrawer - Drawer index out of range !";
+            ofLog(OF_LOG_ERROR,"DrawerManager") << "BuildDrawer - Drawer index out of range !";
             return nullptr;
         }
 
@@ -82,7 +66,7 @@ namespace CodArTelier
         {
             if( drawers_info_n_factory_by_id_.find(drawerId) == drawers_info_n_factory_by_id_.end())
             {
-                ofLog(OF_LOG_ERROR,"DrawerManager") << "DuildDrawer - Drawer ID ["<< drawerId <<"] not found !";
+                ofLog(OF_LOG_ERROR,"DrawerManager") << "BuildDrawer - Drawer ID ["<< drawerId <<"] not found !";
                 return nullptr;
             }
 

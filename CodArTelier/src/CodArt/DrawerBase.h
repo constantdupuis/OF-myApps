@@ -55,7 +55,6 @@ namespace CodArTelier
         glm::vec2 canvas_size_;
         bool is_drawing_ = true;
         string id_;
-        //DrawerInfoAndFactoryBase
     private:
 
         
