@@ -12,7 +12,11 @@ namespace CodArTelier
         {
             bronian_motion_.setOctavesNbr(1);
 
-            init_particles();
+            fill_particles();
+
+            ofFill();
+            ofSetColor(ofColor(255,255,255));
+            ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
         }
 
         void PFlowField::Update()
@@ -25,19 +29,33 @@ namespace CodArTelier
         void PFlowField::Draw() {
             if (!is_drawing_) return;
 
+            int x = 0;
+            int y = 0;
             ofFill();
-            ofSetColor(ofColor().yellowGreen);
-            ofDrawRectangle(0,0, canvas_size_.x, canvas_size_.y);
-            ofSetColor(100);
+            ofSetColor(ofColor(0,0,0,1));
+            //ofSetColor(ofColor().red);
 
-            for( const auto& p : particles_ )
+            for( auto& p : particles_ )
             {
-                // reborn out of the canvas particles
-                if( p->pos())
-                // update particle data
-                // update particle position
-                // dra particle
-                ofDrawCircle( p->pos(), 2 );
+                // Update particles
+                if (p->pos().x < 0 || p->pos().x > canvas_size_.x || p->pos().y < 0 || p->pos().y > canvas_size_.y)
+                {
+                    x = ofRandom(canvas_size_.x);
+                    y = ofRandom(canvas_size_.y);
+                    p->pos().x = x;
+                    p->pos().y = y;
+                }
+
+                // Update particles dir based on Fbm
+                auto rotation = bronian_motion_.fbm( p->pos().x, p->pos().y, 12578.21);
+                rotation *= glm::two_pi<float>();
+                p->velocity().x = glm::cos(rotation);
+                p->velocity().y = glm::sin(rotation);
+                p->update();
+
+                // Draw it
+
+                ofDrawCircle( p->pos(), 1 );
             }
         }
 
@@ -73,7 +91,7 @@ namespace CodArTelier
             {
                 x = ofRandom(canvas_size_.x);
                 y = ofRandom(canvas_size_.y);
-                particles_.push_back( make_shared<ofxBasicParticle>(x,y));
+                particles_.push_back( make_shared<ofxBasicParticle>(x,y) );
             }
         }
     }

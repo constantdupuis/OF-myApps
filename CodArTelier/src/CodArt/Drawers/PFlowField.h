@@ -33,7 +33,7 @@ namespace CodArTelier
             float animation_speed_ = 1.0f;
             ofxBronianMotion bronian_motion_;
 
-            int particle_nbr_ = 200;
+            int particle_nbr_ = 2000;
             vector<shared_ptr<ofxBasicParticle>> particles_;
 
             void init_particles();
