@@ -58,7 +58,11 @@ namespace CodArTelier
                 ret = false;
             }
 
+            // Allow drawer to draw on canvas on setup
+            canvas_->begin();
             drawer_->Setup();
+            canvas_->end();
+           
 
             return ret;
         }
