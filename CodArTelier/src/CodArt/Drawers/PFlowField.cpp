@@ -12,7 +12,7 @@ namespace CodArTelier
         {
             bronian_motion_.setOctavesNbr(1);
 
-            fill_particles();
+            init_particles();
         }
 
         void PFlowField::Update()
@@ -32,6 +32,11 @@ namespace CodArTelier
 
             for( const auto& p : particles_ )
             {
+                // reborn out of the canvas particles
+                if( p->pos())
+                // update particle data
+                // update particle position
+                // dra particle
                 ofDrawCircle( p->pos(), 2 );
             }
         }
@@ -59,7 +64,7 @@ namespace CodArTelier
         /// P R I V A T E
         /// 
         /// 
-        void PFlowField::fill_particles()
+        void PFlowField::init_particles()
         {
             int x = 0;
             int y = 0;

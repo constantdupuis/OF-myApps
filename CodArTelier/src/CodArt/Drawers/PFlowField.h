@@ -36,7 +36,7 @@ namespace CodArTelier
             int particle_nbr_ = 200;
             vector<shared_ptr<ofxBasicParticle>> particles_;
 
-            void fill_particles();
+            void init_particles();
         };
 
 
