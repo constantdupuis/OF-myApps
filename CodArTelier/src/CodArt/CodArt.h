@@ -13,7 +13,7 @@ namespace CodArTelier
     public:
         CodArt()
         {
-            
+            parameters_.setName("CodArt");
         }
 
         bool Setup(shared_ptr<DrawerBase>& drawer, CanvasSettings canvas_settings)
@@ -62,7 +62,8 @@ namespace CodArTelier
             canvas_->begin();
             drawer_->Setup();
             canvas_->end();
-           
+
+            parameters_.add( drawer_->getParameters());
 
             return ret;
         }
@@ -99,36 +100,9 @@ namespace CodArTelier
 
         void DrawUI()
         {
-            char* cString = new char[256];
-
-            strcpy(cString, name_.c_str());
-            if (ImGui::InputText(" name", cString, 128))
-            {
-                name_ = cString;
-            }
-
-           /* strcpy(cString, description_.c_str());
-            if (ImGui::InputTextMultiline(" description", cString, 256))
-            {
-                description_ = cString;
-            }*/
-
-            delete[] cString;
-
-            ImGui::Spacing();
-            ImGui::Separator();
-            ImGui::Spacing();
-
-            ImGui::SliderFloat(" scale", &scale_, 0.1f, 2.0f);
-
-            ImGui::Spacing();
-
             if(drawer_)
             {
-                if (ImGui::CollapsingHeader("Drawer", ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Leaf))
-                {
-                    drawer_->DrawUI();
-                }
+                drawer_->DrawUI();
             }
         }
 
@@ -274,9 +248,16 @@ namespace CodArTelier
             description_ = description;
         }
 
+        ofParameterGroup& getParameters()
+        {
+            return parameters_;
+        }
+
     private:
         string name_;
         string description_;
+
+        ofParameterGroup parameters_;
        
         shared_ptr<Canvas> canvas_;
         shared_ptr<DrawerBase> drawer_;

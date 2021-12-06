@@ -30,6 +30,7 @@ namespace CodArTelier
             ofLogFatalError("DrawerBase") << "You forgot to override ConfigureFromXmlSettings!";
             return false; 
         }
+        virtual ofParameterGroup& getParameters() { return parameters_;}
 
         void Start()
         {
@@ -55,6 +56,7 @@ namespace CodArTelier
         glm::vec2 canvas_size_;
         bool is_drawing_ = true;
         string id_;
+        ofParameterGroup parameters_ {"DrawnerBase"};
     private:
 
         

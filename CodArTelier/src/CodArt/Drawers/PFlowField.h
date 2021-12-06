@@ -25,6 +25,7 @@ namespace CodArTelier
             void CanvasResized();
             void PushSettings(ofxXmlSettings& settings);
             bool ConfigureFromXmlSettings(ofxXmlSettings& settings);
+            ofParameterGroup& getParameters();
 
         private:
             enum class FbmMode { normal = 0, turbulence, ridge };
@@ -32,11 +33,22 @@ namespace CodArTelier
             float animation_ = 0.0f;
             float animation_speed_ = 1.0f;
             ofxBronianMotion bronian_motion_;
+            bool clear_ = false;
 
             int particle_nbr_ = 2000;
             vector<shared_ptr<ofxBasicParticle>> particles_;
 
+            //ofParameterGroup parameters_;
+            ofParameter<float> angle_factor_;
+            ofParameter<float> velocity_factor_;
+
+            ofParameterGroup fbm_parameters_ {"Fbm"};
+            ofParameter<float> fbm_freq_ {0.001};
+            ofParameter<int> fbm_octaves_nbr_ {1};
+
             void init_particles();
+            void fbmOctavesChanged( int & octaves_nbr);
+            void fbmFreqChanged( float & freq );
         };
 
 
