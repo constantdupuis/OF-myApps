@@ -87,6 +87,7 @@ namespace CodArTelier
         {
             // Allow drawer to draw on canvas
             canvas_->begin();
+            glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
             drawer_->Draw();
             canvas_->end();
 
@@ -96,6 +97,7 @@ namespace CodArTelier
             ofScale( scale_) ;
             canvas_->draw(0,0);
             ofPopMatrix();
+            ofEnableAlphaBlending();
         }
 
         void DrawUI()

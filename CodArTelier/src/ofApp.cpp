@@ -19,7 +19,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    //ofBackground( ofColor().whiteSmoke);
+    ofBackground( ofColor(128));
 
     if( activeCodArt_)
         activeCodArt_->Draw();

@@ -50,6 +50,7 @@ namespace CodArTelier
             void init_particles();
             void fbmOctavesChanged( int & octaves_nbr);
             void fbmFreqChanged( float & freq );
+            void clearCanvas();
         };
 
 

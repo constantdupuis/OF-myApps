@@ -30,9 +30,7 @@ namespace CodArTelier
             init_particles();
 
             // default canvas background
-            ofFill();
-            ofSetColor(background_color_.get());
-            ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
+            clearCanvas();
         }
 
         void PFlowField::Update()
@@ -47,9 +45,7 @@ namespace CodArTelier
             if(clear_)
             {
                clear_ = false;
-               ofFill();
-               ofSetColor(background_color_.get());
-               ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
+               clearCanvas();
             }
 
             if (!is_drawing_) return;
@@ -160,6 +156,15 @@ namespace CodArTelier
 
         void PFlowField::fbmFreqChanged( float & freq ){
             bronian_motion_.setFrequency(freq);
+        }
+
+        void PFlowField::clearCanvas()
+        {
+            ofFill();
+            ofSetColor(background_color_.get());
+            ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
+            ofSetColor(background_color_.get());
+            ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
         }
     }
 }
