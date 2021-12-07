@@ -38,7 +38,8 @@ namespace CodArTelier
             int particle_nbr_ = 2000;
             vector<shared_ptr<ofxBasicParticle>> particles_;
 
-            //ofParameterGroup parameters_;
+            ofParameter<ofFloatColor> background_color_;
+            ofParameter<ofFloatColor> pen_color_;
             ofParameter<float> angle_factor_;
             ofParameter<float> velocity_factor_;
 

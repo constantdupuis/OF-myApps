@@ -11,13 +11,15 @@ namespace CodArTelier
         void PFlowField::Setup()
         {
             parameters_.setName("PNoise Flow");
-            parameters_.add( angle_factor_.set("angle factor", 1.0, 0.01, 10.0) );
-            parameters_.add( velocity_factor_.set("velocity factor", 1.0, 0.01, 50.0) );
+            parameters_.add(background_color_.set("background color", ofColor(255)));
+            parameters_.add(pen_color_.set("pen color", ofColor(0,0,0,2)));
+            parameters_.add(angle_factor_.set("angle factor", 1.0, 0.01, 7.0) );
+            parameters_.add(velocity_factor_.set("velocity factor", 1.0, 0.01, 5.0) );
 
             fbm_freq_.addListener(this, &PFlowField::fbmFreqChanged);
             fbm_octaves_nbr_.addListener(this, &PFlowField::fbmOctavesChanged);
 
-            fbm_parameters_.add( fbm_freq_.set("freq", 0.001));
+            fbm_parameters_.add( fbm_freq_.set("freq", 0.001, 0.0001, 0.01));
             fbm_parameters_.add( fbm_octaves_nbr_.set("octaves", 1, 1, 10));
             parameters_.add(fbm_parameters_);
 
@@ -29,7 +31,7 @@ namespace CodArTelier
 
             // default canvas background
             ofFill();
-            ofSetColor(ofColor(255,255,255));
+            ofSetColor(background_color_.get());
             ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
         }
 
@@ -46,7 +48,7 @@ namespace CodArTelier
             {
                clear_ = false;
                ofFill();
-               ofSetColor(ofColor(255,255,255));
+               ofSetColor(background_color_.get());
                ofDrawRectangle(0, 0, canvas_size_.x, canvas_size_.y);
             }
 
@@ -55,7 +57,7 @@ namespace CodArTelier
             int x = 0;
             int y = 0;
             ofFill();
-            ofSetColor(ofColor(0,0,0,2));
+            ofSetColor(pen_color_.get());
             //ofSetColor(ofColor().red);
 
             for( auto& p : particles_ )
