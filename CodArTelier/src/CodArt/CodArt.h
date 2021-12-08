@@ -154,33 +154,56 @@ namespace CodArTelier
             auto view_w = ofGetWidth();
             auto view_h = ofGetHeight();
 
-            if( canvas_calculated_size_.x < view_w && canvas_calculated_size_.y < view_h)
+            if( canvas_calculated_size_.x > view_w || canvas_calculated_size_.y > view_h)
+            {
+                auto window_ratio = (float)view_w / (float)view_h;
+                auto canvas_ratio = canvas_calculated_size_.x / canvas_calculated_size_.y;
+                if( window_ratio >= canvas_ratio)
+                {
+                    scale_ = view_h / canvas_calculated_size_.y;
+                }
+                else
+                {
+                    scale_ = view_w / canvas_calculated_size_.x;
+                }
+                scale_ *= 0.9f;
+                translate_.x = (view_w - (canvas_calculated_size_.x*scale_) ) / 2;
+                translate_.y = (view_h - (canvas_calculated_size_.y*scale_) ) / 2;
+            }
+            else
             {
                 scale_ = 1.0f;
                 translate_.x = (view_w - canvas_calculated_size_.x ) / 2;
                 translate_.y = (view_h - canvas_calculated_size_.y ) / 2;
             }
-            else
-            {
-                if( canvas_calculated_size_.x > canvas_calculated_size_.y)
-                {
-                    auto ratio = (float)(view_w-margin*2)/(float)canvas_calculated_size_.x;
-                    auto scaled_w = canvas_calculated_size_.x * ratio;
-                    auto scaled_h = canvas_calculated_size_.y * ratio;
-                    scale_ = ratio;
-                    translate_.x = (view_w - scaled_w ) / 2;
-                    translate_.y = (view_h - scaled_h ) / 2;
-                }
-                else if( canvas_calculated_size_.x < canvas_calculated_size_.y)
-                {
-                    auto ratio = (float)(view_h-margin*2)/(float)canvas_calculated_size_.y;
-                    auto scaled_w = canvas_calculated_size_.x * ratio;
-                    auto scaled_h = canvas_calculated_size_.y * ratio;
-                    scale_ = ratio;
-                    translate_.x = (view_w - scaled_w ) / 2;
-                    translate_.y = (view_h - scaled_h ) / 2;
-                }
-            }
+
+//            if( canvas_calculated_size_.x < view_w && canvas_calculated_size_.y < view_h)
+//            {
+//                scale_ = 1.0f;
+//                translate_.x = (view_w - canvas_calculated_size_.x ) / 2;
+//                translate_.y = (view_h - canvas_calculated_size_.y ) / 2;
+//            }
+//            else
+//            {
+//                if( canvas_calculated_size_.x > canvas_calculated_size_.y)
+//                {
+//                    auto ratio = (float)(view_w-margin*2)/(float)canvas_calculated_size_.x;
+//                    auto scaled_w = canvas_calculated_size_.x * ratio;
+//                    auto scaled_h = canvas_calculated_size_.y * ratio;
+//                    scale_ = ratio;
+//                    translate_.x = (view_w - scaled_w ) / 2;
+//                    translate_.y = (view_h - scaled_h ) / 2;
+//                }
+//                else if( canvas_calculated_size_.x < canvas_calculated_size_.y)
+//                {
+//                    auto ratio = (float)(view_h-margin*2)/(float)canvas_calculated_size_.y;
+//                    auto scaled_w = canvas_calculated_size_.x * ratio;
+//                    auto scaled_h = canvas_calculated_size_.y * ratio;
+//                    scale_ = ratio;
+//                    translate_.x = (view_w - scaled_w ) / 2;
+//                    translate_.y = (view_h - scaled_h ) / 2;
+//                }
+//            }
         }
 
         /// <summary>
