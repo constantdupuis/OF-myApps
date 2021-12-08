@@ -11,6 +11,7 @@ namespace CodArTelier
         void PFlowField::Setup()
         {
             parameters_.setName("PNoise Flow");
+            parameters_.add(particle_nbr_.set("particle number", 5000, 1, 100000));
             parameters_.add(background_color_.set("background color", ofColor(255)));
             parameters_.add(pen_color_.set("pen color", ofColor(0,0,0,2)));
             parameters_.add(angle_factor_.set("angle factor", 1.0, 0.01, 7.0) );
@@ -19,7 +20,7 @@ namespace CodArTelier
             fbm_freq_.addListener(this, &PFlowField::fbmFreqChanged);
             fbm_octaves_nbr_.addListener(this, &PFlowField::fbmOctavesChanged);
 
-            fbm_parameters_.add( fbm_freq_.set("freq", 0.001, 0.0001, 0.01));
+            fbm_parameters_.add( fbm_freq_.set("freq", 0.0001, 0.0001, 0.01));
             fbm_parameters_.add( fbm_octaves_nbr_.set("octaves", 1, 1, 10));
             parameters_.add(fbm_parameters_);
 

@@ -17,6 +17,7 @@
 #include "lib/ofxImGuiThemes/YetAnotherDark.h"
 #include "lib/ofxImGuiThemes/BlueGreen.h"
 #include "lib/ofxImGuiThemes/DeepDark.h"
+#include "lib/ofxHelpers.h"
 
 using namespace CodArTelier;
 

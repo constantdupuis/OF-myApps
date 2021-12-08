@@ -35,13 +35,13 @@ namespace CodArTelier
             ofxBronianMotion bronian_motion_;
             bool clear_ = false;
 
-            int particle_nbr_ = 2000;
             vector<shared_ptr<ofxBasicParticle>> particles_;
 
+            ofParameter<int> particle_nbr_ {5000};
             ofParameter<ofFloatColor> background_color_;
             ofParameter<ofFloatColor> pen_color_;
-            ofParameter<float> angle_factor_;
-            ofParameter<float> velocity_factor_;
+            ofParameter<float> angle_factor_ {1.0f};
+            ofParameter<float> velocity_factor_ {1.0f};
 
             ofParameterGroup fbm_parameters_ {"Fbm"};
             ofParameter<float> fbm_freq_ {0.001};

@@ -14,6 +14,7 @@ Project{
         files: [
             "src/CodArt/Drawers/PFlowField.cpp",
             "src/CodArt/Drawers/PFlowField.h",
+            "src/lib/ofxHelpers.cpp",
             'src/CodArt/Canvas.h',
             'src/CodArt/CanvasSettings.h',
             'src/CodArt/CodArt.h',

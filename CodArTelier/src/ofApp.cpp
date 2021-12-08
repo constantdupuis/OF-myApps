@@ -58,7 +58,11 @@ void ofApp::UIDrawMenu()
 
         }
         if (ImGui::MenuItem("Save As Image", "")) {
-
+            if( activeCodArt_)
+            {
+                string fn = GenDateFileName();
+                SaveFbo( activeCodArt_->getFbo(), "render/" + fn + ".png");
+            }
         }
         if (ImGui::MenuItem("Exit", "")) {
             

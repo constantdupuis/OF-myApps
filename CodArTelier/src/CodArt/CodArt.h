@@ -255,6 +255,11 @@ namespace CodArTelier
             return parameters_;
         }
 
+        ofFbo& getFbo()
+        {
+            return *canvas_;
+        }
+
     private:
         string name_;
         string description_;
