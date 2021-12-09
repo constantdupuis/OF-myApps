@@ -173,8 +173,8 @@ void ofApp::UIShowNewDialogs()
     {
         static int selected_drawer = 0;
         static int selected_canvas_size_mode = 2;
-        static int selected_paper_size = 0;
-        static int orientation = 0;
+        static int selected_paper_size = 4;
+        static int orientation = 1;
 
         static int canvas_width = 400;
         static int canvas_heigth = 400;
@@ -348,43 +348,18 @@ void ofApp::UIShowMessageBoxes()
 
 void ofApp::UICodArt()
 {
-    ofParameterGroup pGroup("Parameters");
-//    ofParameter<float> pF01("float01", 0.5, 0.0, 1.0);
-//    ofParameter<void> pBTN("Bouton?");
-//    pGroup.add( pF01);
-//    pGroup.add( pBTN);
-//    ofParameterGroup pGroup2("pGroup2");
-//    ofParameter<float> pF02("float02", 0.5, 0.0, 1.0);
-//    pGroup2.add( pF02);
-//    pGroup.add(pGroup2);
-
     if( activeCodArt_ )
     {
         ofxImGui::Settings settings;
         settings.windowPos.y += 20;
 
-        pGroup.add( activeCodArt_->getParameters());
-
-        ofxImGui::AddGroup(pGroup, settings);
-
+        if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
+        {
+            EndWindow(settings);
+            return;
+        }
         activeCodArt_->DrawUI();
-
-        //if( !ofxImGui::BeginWindow( "Parameters", settings, true ))
-        //{
-        //    EndWindow(settings);
-        //    return;
-        //}
-        //ofxImGui::AddGroup(pGroup, settings);
-
-        //// CodArt parameters
-
-        //if(ofxImGui::BeginTree("CodArt [name]", settings))
-        //{
-        //    activeCodArt_->DrawUI();
-        //    ofxImGui::EndTree(settings);
-        //}
-
-        //EndWindow(settings);
+        EndWindow(settings);
     }
 
 }

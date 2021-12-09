@@ -117,30 +117,22 @@ namespace CodArTelier
         void windowResized(int w, int h){
             if( !drawer_) return;
 
-            // TODO handle other Size Modes
-            if( canvas_settings_.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT)
+            if( canvas_settings_.size_mode == CANVAS_SIZE_MODE_VIEW_PERCENT && canvas_settings_.view_percentage.resize_when_view_change)
             {
-                if( canvas_settings_.view_percentage.resize_when_view_change)
+                if( canvas_settings_.view_percentage.square_canvas)
                 {
-                    if( canvas_settings_.view_percentage.square_canvas)
-                    {
-                        int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
-                        CalculateViewParams(h, h);
-                        canvas_->Resize(h, h);
-                        drawer_->setCanvasSize(glm::vec2(h,h));
-                    }
-                    else
-                    {
-                        int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
-                        int w = (int)((float)ofGetWidth() * (canvas_settings_.view_percentage.width/100.0));
-                        CalculateViewParams(w, h);
-                        canvas_->Resize(w, h);
-                        drawer_->setCanvasSize(glm::vec2(w,h));
-                    }
+                    int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
+                    CalculateViewParams(h, h);
+                    canvas_->Resize(h, h);
+                    drawer_->setCanvasSize(glm::vec2(h,h));
                 }
                 else
                 {
-                    CalculateViewParams(canvas_calculated_size_.x, canvas_calculated_size_.y);
+                    int h = (int)((float)ofGetHeight() * (canvas_settings_.view_percentage.height/100.0));
+                    int w = (int)((float)ofGetWidth() * (canvas_settings_.view_percentage.width/100.0));
+                    CalculateViewParams(w, h);
+                    canvas_->Resize(w, h);
+                    drawer_->setCanvasSize(glm::vec2(w,h));
                 }
             }
 
@@ -176,34 +168,6 @@ namespace CodArTelier
                 translate_.x = (view_w - canvas_calculated_size_.x ) / 2;
                 translate_.y = (view_h - canvas_calculated_size_.y ) / 2;
             }
-
-//            if( canvas_calculated_size_.x < view_w && canvas_calculated_size_.y < view_h)
-//            {
-//                scale_ = 1.0f;
-//                translate_.x = (view_w - canvas_calculated_size_.x ) / 2;
-//                translate_.y = (view_h - canvas_calculated_size_.y ) / 2;
-//            }
-//            else
-//            {
-//                if( canvas_calculated_size_.x > canvas_calculated_size_.y)
-//                {
-//                    auto ratio = (float)(view_w-margin*2)/(float)canvas_calculated_size_.x;
-//                    auto scaled_w = canvas_calculated_size_.x * ratio;
-//                    auto scaled_h = canvas_calculated_size_.y * ratio;
-//                    scale_ = ratio;
-//                    translate_.x = (view_w - scaled_w ) / 2;
-//                    translate_.y = (view_h - scaled_h ) / 2;
-//                }
-//                else if( canvas_calculated_size_.x < canvas_calculated_size_.y)
-//                {
-//                    auto ratio = (float)(view_h-margin*2)/(float)canvas_calculated_size_.y;
-//                    auto scaled_w = canvas_calculated_size_.x * ratio;
-//                    auto scaled_h = canvas_calculated_size_.y * ratio;
-//                    scale_ = ratio;
-//                    translate_.x = (view_w - scaled_w ) / 2;
-//                    translate_.y = (view_h - scaled_h ) / 2;
-//                }
-//            }
         }
 
         /// <summary>

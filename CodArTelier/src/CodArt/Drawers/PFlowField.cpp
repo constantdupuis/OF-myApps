@@ -10,9 +10,11 @@ namespace CodArTelier
         /// 
         void PFlowField::Setup()
         {
+            // Add parameter to group to be saved and restored
             parameters_.setName("PNoise Flow");
             parameters_.add(particle_nbr_.set("particle number", 5000, 1, 100000));
             parameters_.add(background_color_.set("background color", ofColor(255)));
+            parameters_.add(pen_width_.set("pen width", 1, 1, 100));
             parameters_.add(pen_color_.set("pen color", ofColor(0,0,0,2)));
             parameters_.add(angle_factor_.set("angle factor", 1.0, 0.01, 7.0) );
             parameters_.add(velocity_factor_.set("velocity factor", 1.0, 0.01, 5.0) );
@@ -20,7 +22,7 @@ namespace CodArTelier
             fbm_freq_.addListener(this, &PFlowField::fbmFreqChanged);
             fbm_octaves_nbr_.addListener(this, &PFlowField::fbmOctavesChanged);
 
-            fbm_parameters_.add( fbm_freq_.set("freq", 0.0001, 0.0001, 0.01));
+            fbm_parameters_.add( fbm_freq_.set("freq", 0.0001f, 0.0f, 0.0f));
             fbm_parameters_.add( fbm_octaves_nbr_.set("octaves", 1, 1, 10));
             parameters_.add(fbm_parameters_);
 
@@ -77,41 +79,61 @@ namespace CodArTelier
 
                 // Draw it
 
-                ofDrawCircle( p->pos(), 1 );
+                ofDrawCircle( p->pos(), pen_width_ );
             }
         }
 
         void PFlowField::DrawUI()
         {
-            if( is_drawing_)
+            ofxImGui::Settings settings;
+
+            ofxImGui::AddInput(particle_nbr_);
+
+            ofxImGui::AddParameter(background_color_);
+            ofxImGui::AddParameter(pen_color_);
+            ofxImGui::AddParameter(pen_width_);
+
+            ofxImGui::AddParameter(angle_factor_);
+            ofxImGui::AddParameter(velocity_factor_);
+
+            ofxImGui::AddInput(fbm_freq_, 0.0001f, 0.001f, "%.5f");
+            ofxImGui::AddParameter(fbm_octaves_nbr_);
+
+            if( ofxImGui::BeginTree("Actions", settings))
             {
-                if( ImGui::Button("Stop Drawing"))
+                if( is_drawing_)
                 {
-                    is_drawing_ = false;
+                    if( ImGui::Button("Stop Drawing"))
+                    {
+                        is_drawing_ = false;
+                    }
                 }
-            }
-            else
-            {
-                if( ImGui::Button("Start Drawing"))
+                else
                 {
-                    is_drawing_ = true;
+                    if( ImGui::Button("Start Drawing"))
+                    {
+                        is_drawing_ = true;
+                    }
                 }
+                if( ImGui::Button("Reset Canvas"))
+                {
+                    clear_ = true;
+                }
+                if( ImGui::Button("Reset Partiles"))
+                {
+                    init_particles();
+                }
+                if( ImGui::Button("Reset Parameters"))
+                {
+                    angle_factor_ = 1.0f;
+                    velocity_factor_ = 1.0f;
+                    fbm_freq_ = 0.001f;
+                    fbm_octaves_nbr_ = 1;
+                }
+
+                ofxImGui::EndTree(settings);
             }
-            if( ImGui::Button("Reset Canvas"))
-            {
-                clear_ = true;
-            }
-            if( ImGui::Button("Reset Partiles"))
-            {
-                init_particles();
-            }
-            if( ImGui::Button("Reset Parameters"))
-            {
-                angle_factor_ = 1.0f;
-                velocity_factor_ = 1.0f;
-                fbm_freq_ = 0.001f;
-                fbm_octaves_nbr_ = 1;
-            }
+
         }
 
         void PFlowField::CanvasResized()

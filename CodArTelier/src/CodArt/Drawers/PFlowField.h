@@ -40,6 +40,7 @@ namespace CodArTelier
             ofParameter<int> particle_nbr_ {5000};
             ofParameter<ofFloatColor> background_color_;
             ofParameter<ofFloatColor> pen_color_;
+            ofParameter<int> pen_width_ {1};
             ofParameter<float> angle_factor_ {1.0f};
             ofParameter<float> velocity_factor_ {1.0f};
 
